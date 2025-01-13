@@ -54,28 +54,37 @@ namespace WindowsFormsApp1.Repositories
             return Bookinglist;  // Return list of Booking objects
         }
 
-        public Booking GetBooking(int BookingID)
+        public Booking GetBooking(int bookingID)
         {
             try
             {
                 using (SqlConnection connection = new SqlConnection(connectionString))
                 {
                     connection.Open();
-                    string sql = "SELECT * FROM Bookings WHERE BookingID=@BookingID";
+                    string sql = @"
+                SELECT b.BookingID, b.ClientID, b.BookingDate, b.TotalAmount, c.Name AS ClientName 
+                FROM Bookings b
+                JOIN Clients c ON b.ClientID = c.ClientID
+                WHERE b.BookingID = @BookingID";
+
                     using (SqlCommand command = new SqlCommand(sql, connection))
                     {
-                        command.Parameters.AddWithValue("@BookingID", BookingID);
+                        command.Parameters.AddWithValue("@BookingID", bookingID);
+
                         using (SqlDataReader reader = command.ExecuteReader())
                         {
                             if (reader.Read())
                             {
-                                Booking bookings = new Booking();
-                                bookings.BookingID = reader.GetInt32(0);
-                                bookings.ClientID = reader.GetInt32(1);
-                                bookings.BookingDate = reader.GetDateTime(2);
-                                bookings.TotalAmount = reader.GetDecimal(3);
+                                Booking booking = new Booking
+                                {
+                                    BookingID = reader.GetInt32(0),
+                                    ClientID = reader.GetInt32(1),
+                                    BookingDate = reader.GetDateTime(2),
+                                    TotalAmount = reader.GetDecimal(3),
+                                    ClientName = reader.GetString(4) // Fetch the ClientName from the database
+                                };
 
-                                return bookings;
+                                return booking;
                             }
                         }
                     }
@@ -83,11 +92,12 @@ namespace WindowsFormsApp1.Repositories
             }
             catch (Exception ex)
             {
-                Console.WriteLine("Exception " + ex.Message);
+                Console.WriteLine("Exception: " + ex.Message);
             }
 
             return null;
         }
+
 
         public void CreateBooking(Booking booking)
         {
@@ -114,6 +124,59 @@ namespace WindowsFormsApp1.Repositories
             }
         }
 
+        public void DeleteBooking(int BookingID)
+        {
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(connectionString))
+                {
+                    connection.Open();
+
+                    string sql = "DELETE FROM Bookings WHERE BookingID=@BookingID";
+                    using (SqlCommand command = new SqlCommand(sql, connection))
+                    {
+                        command.Parameters.AddWithValue("@BookingID", BookingID);
+
+                        command.ExecuteNonQuery();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+
+                Console.WriteLine("Exception " + ex.Message);
+            }
+        }
+        // Add the UpdateBooking method here
+        public void UpdateBooking(Booking booking)
+        {
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(connectionString))
+                {
+                    connection.Open();
+
+                    string sql = @"
+                UPDATE Bookings 
+                SET ClientID = @ClientID, BookingDate = @BookingDate, TotalAmount = @TotalAmount
+                WHERE BookingID = @BookingID";
+
+                    using (SqlCommand command = new SqlCommand(sql, connection))
+                    {
+                        command.Parameters.AddWithValue("@BookingID", booking.BookingID);  // Ensure the correct BookingID
+                        command.Parameters.AddWithValue("@ClientID", booking.ClientID);
+                        command.Parameters.AddWithValue("@BookingDate", booking.BookingDate);
+                        command.Parameters.AddWithValue("@TotalAmount", booking.TotalAmount);
+
+                        command.ExecuteNonQuery();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Exception: " + ex.Message);
+            }
+        }
 
     }
 }

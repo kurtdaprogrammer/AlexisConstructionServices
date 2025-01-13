@@ -22,7 +22,6 @@ namespace WindowsFormsApp1.Repositories
                 using (SqlConnection connection = new SqlConnection(connectionString))
                 {
                     connection.Open();
-
                     string sql = "SELECT * FROM Services ORDER BY ServiceID DESC";
                     using (SqlCommand command = new SqlCommand(sql, connection))
                     {
@@ -30,12 +29,13 @@ namespace WindowsFormsApp1.Repositories
                         {
                             while (reader.Read())
                             {
-                                Service services = new Service();
-                                services.ServiceID = reader.GetInt32(0);
-                                services.ServiceName = reader.GetString(1);
-                                services.HourlyRate = reader.GetDecimal(2);
-
-                                serviceList.Add(services);
+                                var service = new Service
+                                {
+                                    ServiceID = reader.GetInt32(0),
+                                    ServiceName = reader.GetString(1),
+                                    HourlyRate = reader.GetDecimal(2)
+                                };
+                                serviceList.Add(service);
                             }
                         }
                     }
@@ -43,12 +43,10 @@ namespace WindowsFormsApp1.Repositories
             }
             catch (Exception ex)
             {
-
                 Console.WriteLine("Exception " + ex.Message);
             }
 
             return serviceList;
-
 
         }
 
@@ -62,17 +60,18 @@ namespace WindowsFormsApp1.Repositories
                     string sql = "SELECT * FROM Services WHERE ServiceID=@ServiceID";
                     using (SqlCommand command = new SqlCommand(sql, connection))
                     {
-                        command.Parameters.AddWithValue("@ServiceID", ServiceID);
+                        command.Parameters.AddWithValue("@ServiceID", ServiceID); // Use the method parameter ServiceID
                         using (SqlDataReader reader = command.ExecuteReader())
                         {
                             if (reader.Read())
                             {
-                                Service services = new Service();
-                                services.ServiceID = reader.GetInt32(0);
-                                services.ServiceName = reader.GetString(1);
-                                services.HourlyRate = reader.GetDecimal(2);
-
-                                return services;
+                                var service = new Service
+                                {
+                                    ServiceID = reader.GetInt32(0),
+                                    ServiceName = reader.GetString(1),
+                                    HourlyRate = reader.GetDecimal(2)
+                                };
+                                return service;
                             }
                         }
                     }
@@ -85,6 +84,7 @@ namespace WindowsFormsApp1.Repositories
 
             return null;
         }
+
 
         public void CreateService(Service service)
         {

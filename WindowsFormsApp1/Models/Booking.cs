@@ -8,7 +8,7 @@ namespace WindowsFormsApp1.Models
 {
     public class Booking
     {
-        private decimal _totalAmount;
+         private decimal _totalAmount;
 
         public int BookingID { get; set; }
         public int ClientID { get; set; }
@@ -35,8 +35,36 @@ namespace WindowsFormsApp1.Models
             BookingID = bookingID;
             ClientID = clientID;
             BookingDate = bookingDate;
-            TotalAmount = totalAmount;  
+            TotalAmount = totalAmount;
+            ServiceDetails = new List<ServiceDetail>();  // Initialize the list
         }
+
+        public List<ServiceDetail> ServiceDetails { get; set; } = new List<ServiceDetail>();
+
+        public void AddService(ServiceDetail serviceDetail)
+        {
+            // Ensure ServiceDetails list is initialized (if not already)
+            if (ServiceDetails == null)
+            {
+                ServiceDetails = new List<ServiceDetail>();
+            }
+
+            ServiceDetails.Add(serviceDetail);
+            TotalAmount += serviceDetail.TotalAmount;
+        }
+
+        public void RemoveService(ServiceDetail serviceDetail)
+        {
+            // Ensure ServiceDetails list is initialized (if not already)
+            if (ServiceDetails == null)
+            {
+                ServiceDetails = new List<ServiceDetail>();
+            }
+
+            ServiceDetails.Remove(serviceDetail);
+            TotalAmount -= serviceDetail.TotalAmount;
+        }
+
 
         public Booking() { }
     }

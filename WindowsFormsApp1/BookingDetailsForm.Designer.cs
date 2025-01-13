@@ -1,6 +1,6 @@
 ﻿namespace WindowsFormsApp1
 {
-    partial class BookingsPage
+    partial class BookingDetailsForm
     {
         /// <summary>
         /// Required designer variable.
@@ -33,13 +33,17 @@
             System.Windows.Forms.Label clientIDLabel;
             System.Windows.Forms.Label bookingDateLabel;
             System.Windows.Forms.Label totalAmountLabel;
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(BookingsPage));
-            this.BookingsTable = new System.Windows.Forms.DataGridView();
+            System.Windows.Forms.Label serviceIDLabel;
+            System.Windows.Forms.Label serviceNameLabel;
+            System.Windows.Forms.Label label6;
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(BookingDetailsForm));
             this.label2 = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
             this.alexisconstructionDBDataSet = new WindowsFormsApp1.AlexisconstructionDBDataSet();
             this.bookingsBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.bookingsTableAdapter = new WindowsFormsApp1.AlexisconstructionDBDataSetTableAdapters.BookingsTableAdapter();
             this.tableAdapterManager = new WindowsFormsApp1.AlexisconstructionDBDataSetTableAdapters.TableAdapterManager();
+            this.servicesTableAdapter = new WindowsFormsApp1.AlexisconstructionDBDataSetTableAdapters.ServicesTableAdapter();
             this.bookingsBindingNavigator = new System.Windows.Forms.BindingNavigator(this.components);
             this.bindingNavigatorAddNewItem = new System.Windows.Forms.ToolStripButton();
             this.bindingNavigatorCountItem = new System.Windows.Forms.ToolStripLabel();
@@ -53,83 +57,120 @@
             this.bindingNavigatorMoveLastItem = new System.Windows.Forms.ToolStripButton();
             this.bindingNavigatorSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.bookingsBindingNavigatorSaveItem = new System.Windows.Forms.ToolStripButton();
-            this.ClientTb = new System.Windows.Forms.TextBox();
-            this.btnEditBooking = new System.Windows.Forms.Button();
-            this.btnDeleteBooking = new System.Windows.Forms.Button();
-            this.btnAddBooking = new System.Windows.Forms.Button();
-            this.datetimepickertb = new System.Windows.Forms.DateTimePicker();
+            this.label3 = new System.Windows.Forms.Label();
+            this.servicesBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.numberofhoursnum = new System.Windows.Forms.NumericUpDown();
+            this.bookingidtb = new System.Windows.Forms.TextBox();
+            this.label4 = new System.Windows.Forms.Label();
+            this.servicesdatagrid = new System.Windows.Forms.DataGridView();
+            this.label5 = new System.Windows.Forms.Label();
             this.totalamounttb = new System.Windows.Forms.TextBox();
-            this.bookingidlb = new System.Windows.Forms.Label();
+            this.bookingsave = new System.Windows.Forms.Button();
+            this.Bookingdetailscancel = new System.Windows.Forms.Button();
+            this.servicecmb = new System.Windows.Forms.ComboBox();
+            this.button1 = new System.Windows.Forms.Button();
+            this.Removeservice = new System.Windows.Forms.Button();
+            this.clienttb = new System.Windows.Forms.TextBox();
+            this.bookingtb = new System.Windows.Forms.DateTimePicker();
+            this.HourlyRatetb = new System.Windows.Forms.TextBox();
             bookingIDLabel = new System.Windows.Forms.Label();
             clientIDLabel = new System.Windows.Forms.Label();
             bookingDateLabel = new System.Windows.Forms.Label();
             totalAmountLabel = new System.Windows.Forms.Label();
-            ((System.ComponentModel.ISupportInitialize)(this.BookingsTable)).BeginInit();
+            serviceIDLabel = new System.Windows.Forms.Label();
+            serviceNameLabel = new System.Windows.Forms.Label();
+            label6 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.alexisconstructionDBDataSet)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.bookingsBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.bookingsBindingNavigator)).BeginInit();
             this.bookingsBindingNavigator.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.servicesBindingSource)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numberofhoursnum)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.servicesdatagrid)).BeginInit();
             this.SuspendLayout();
             // 
             // bookingIDLabel
             // 
             bookingIDLabel.AutoSize = true;
-            bookingIDLabel.Location = new System.Drawing.Point(12, 102);
+            bookingIDLabel.Location = new System.Drawing.Point(14, 113);
             bookingIDLabel.Name = "bookingIDLabel";
             bookingIDLabel.Size = new System.Drawing.Size(63, 13);
-            bookingIDLabel.TabIndex = 3;
+            bookingIDLabel.TabIndex = 4;
             bookingIDLabel.Text = "Booking ID:";
             // 
             // clientIDLabel
             // 
             clientIDLabel.AutoSize = true;
-            clientIDLabel.Location = new System.Drawing.Point(12, 128);
+            clientIDLabel.Location = new System.Drawing.Point(14, 139);
             clientIDLabel.Name = "clientIDLabel";
             clientIDLabel.Size = new System.Drawing.Size(50, 13);
-            clientIDLabel.TabIndex = 5;
+            clientIDLabel.TabIndex = 6;
             clientIDLabel.Text = "Client ID:";
             // 
             // bookingDateLabel
             // 
             bookingDateLabel.AutoSize = true;
-            bookingDateLabel.Location = new System.Drawing.Point(12, 155);
+            bookingDateLabel.Location = new System.Drawing.Point(14, 166);
             bookingDateLabel.Name = "bookingDateLabel";
             bookingDateLabel.Size = new System.Drawing.Size(75, 13);
-            bookingDateLabel.TabIndex = 7;
+            bookingDateLabel.TabIndex = 8;
             bookingDateLabel.Text = "Booking Date:";
             // 
             // totalAmountLabel
             // 
             totalAmountLabel.AutoSize = true;
-            totalAmountLabel.Location = new System.Drawing.Point(12, 180);
+            totalAmountLabel.Location = new System.Drawing.Point(14, 567);
             totalAmountLabel.Name = "totalAmountLabel";
             totalAmountLabel.Size = new System.Drawing.Size(73, 13);
-            totalAmountLabel.TabIndex = 9;
+            totalAmountLabel.TabIndex = 10;
             totalAmountLabel.Text = "Total Amount:";
             // 
-            // BookingsTable
+            // serviceIDLabel
             // 
-            this.BookingsTable.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.BookingsTable.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.BookingsTable.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.BookingsTable.Location = new System.Drawing.Point(364, 102);
-            this.BookingsTable.MultiSelect = false;
-            this.BookingsTable.Name = "BookingsTable";
-            this.BookingsTable.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.BookingsTable.Size = new System.Drawing.Size(552, 424);
-            this.BookingsTable.TabIndex = 0;
+            serviceIDLabel.AutoSize = true;
+            serviceIDLabel.Location = new System.Drawing.Point(17, 231);
+            serviceIDLabel.Name = "serviceIDLabel";
+            serviceIDLabel.Size = new System.Drawing.Size(46, 13);
+            serviceIDLabel.TabIndex = 12;
+            serviceIDLabel.Text = "Service:";
+            // 
+            // serviceNameLabel
+            // 
+            serviceNameLabel.AutoSize = true;
+            serviceNameLabel.Location = new System.Drawing.Point(17, 257);
+            serviceNameLabel.Name = "serviceNameLabel";
+            serviceNameLabel.Size = new System.Drawing.Size(90, 13);
+            serviceNameLabel.TabIndex = 14;
+            serviceNameLabel.Text = "Number of Hours:";
+            // 
+            // label6
+            // 
+            label6.AutoSize = true;
+            label6.Location = new System.Drawing.Point(17, 285);
+            label6.Name = "label6";
+            label6.Size = new System.Drawing.Size(66, 13);
+            label6.TabIndex = 31;
+            label6.Text = "Hourly Rate:";
             // 
             // label2
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(371, 43);
+            this.label2.Location = new System.Drawing.Point(137, 37);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(165, 25);
-            this.label2.TabIndex = 1;
-            this.label2.Text = "List of Bookings";
+            this.label2.Size = new System.Drawing.Size(162, 25);
+            this.label2.TabIndex = 2;
+            this.label2.Text = "Booking Details";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.Location = new System.Drawing.Point(12, 75);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(202, 25);
+            this.label1.TabIndex = 3;
+            this.label1.Text = "Booking Information";
             // 
             // alexisconstructionDBDataSet
             // 
@@ -150,8 +191,12 @@
             this.tableAdapterManager.BackupDataSetBeforeUpdate = false;
             this.tableAdapterManager.BookingsTableAdapter = this.bookingsTableAdapter;
             this.tableAdapterManager.ClientsTableAdapter = null;
-            this.tableAdapterManager.ServicesTableAdapter = null;
+            this.tableAdapterManager.ServicesTableAdapter = this.servicesTableAdapter;
             this.tableAdapterManager.UpdateOrder = WindowsFormsApp1.AlexisconstructionDBDataSetTableAdapters.TableAdapterManager.UpdateOrderOption.InsertUpdateDelete;
+            // 
+            // servicesTableAdapter
+            // 
+            this.servicesTableAdapter.ClearBeforeFill = true;
             // 
             // bookingsBindingNavigator
             // 
@@ -179,8 +224,8 @@
             this.bookingsBindingNavigator.MovePreviousItem = this.bindingNavigatorMovePreviousItem;
             this.bookingsBindingNavigator.Name = "bookingsBindingNavigator";
             this.bookingsBindingNavigator.PositionItem = this.bindingNavigatorPositionItem;
-            this.bookingsBindingNavigator.Size = new System.Drawing.Size(928, 25);
-            this.bookingsBindingNavigator.TabIndex = 2;
+            this.bookingsBindingNavigator.Size = new System.Drawing.Size(404, 25);
+            this.bookingsBindingNavigator.TabIndex = 4;
             this.bookingsBindingNavigator.Text = "bindingNavigator1";
             // 
             // bindingNavigatorAddNewItem
@@ -276,98 +321,186 @@
             this.bookingsBindingNavigatorSaveItem.Name = "bookingsBindingNavigatorSaveItem";
             this.bookingsBindingNavigatorSaveItem.Size = new System.Drawing.Size(23, 22);
             this.bookingsBindingNavigatorSaveItem.Text = "Save Data";
-            this.bookingsBindingNavigatorSaveItem.Click += new System.EventHandler(this.bookingsBindingNavigatorSaveItem_Click);
             // 
-            // ClientTb
+            // label3
             // 
-            this.ClientTb.Location = new System.Drawing.Point(102, 125);
-            this.ClientTb.Name = "ClientTb";
-            this.ClientTb.Size = new System.Drawing.Size(247, 20);
-            this.ClientTb.TabIndex = 10;
+            this.label3.AutoSize = true;
+            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label3.Location = new System.Drawing.Point(12, 197);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(139, 25);
+            this.label3.TabIndex = 12;
+            this.label3.Text = "Add Services";
             // 
-            // btnEditBooking
+            // servicesBindingSource
             // 
-            this.btnEditBooking.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnEditBooking.Location = new System.Drawing.Point(176, 230);
-            this.btnEditBooking.Name = "btnEditBooking";
-            this.btnEditBooking.Size = new System.Drawing.Size(96, 23);
-            this.btnEditBooking.TabIndex = 15;
-            this.btnEditBooking.Text = "Booking Details";
-            this.btnEditBooking.UseVisualStyleBackColor = true;
-            this.btnEditBooking.Click += new System.EventHandler(this.btnEditBooking_Click);
+            this.servicesBindingSource.DataMember = "Services";
+            this.servicesBindingSource.DataSource = this.alexisconstructionDBDataSet;
             // 
-            // btnDeleteBooking
+            // numberofhoursnum
             // 
-            this.btnDeleteBooking.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnDeleteBooking.Location = new System.Drawing.Point(278, 230);
-            this.btnDeleteBooking.Name = "btnDeleteBooking";
-            this.btnDeleteBooking.Size = new System.Drawing.Size(71, 23);
-            this.btnDeleteBooking.TabIndex = 14;
-            this.btnDeleteBooking.Text = "Delete";
-            this.btnDeleteBooking.UseVisualStyleBackColor = true;
-            this.btnDeleteBooking.Click += new System.EventHandler(this.btnDeleteBooking_Click);
+            this.numberofhoursnum.Location = new System.Drawing.Point(131, 257);
+            this.numberofhoursnum.Name = "numberofhoursnum";
+            this.numberofhoursnum.Size = new System.Drawing.Size(168, 20);
+            this.numberofhoursnum.TabIndex = 16;
             // 
-            // btnAddBooking
+            // bookingidtb
             // 
-            this.btnAddBooking.Location = new System.Drawing.Point(15, 230);
-            this.btnAddBooking.Name = "btnAddBooking";
-            this.btnAddBooking.Size = new System.Drawing.Size(86, 23);
-            this.btnAddBooking.TabIndex = 13;
-            this.btnAddBooking.Text = "Add Booking";
-            this.btnAddBooking.UseVisualStyleBackColor = true;
-            this.btnAddBooking.Click += new System.EventHandler(this.btnAddBooking_Click);
+            this.bookingidtb.Location = new System.Drawing.Point(114, 113);
+            this.bookingidtb.Name = "bookingidtb";
+            this.bookingidtb.Size = new System.Drawing.Size(185, 20);
+            this.bookingidtb.TabIndex = 18;
             // 
-            // datetimepickertb
+            // label4
             // 
-            this.datetimepickertb.Location = new System.Drawing.Point(102, 154);
-            this.datetimepickertb.Name = "datetimepickertb";
-            this.datetimepickertb.Size = new System.Drawing.Size(247, 20);
-            this.datetimepickertb.TabIndex = 16;
+            this.label4.AutoSize = true;
+            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label4.Location = new System.Drawing.Point(9, 313);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(172, 25);
+            this.label4.TabIndex = 20;
+            this.label4.Text = "Services Availed";
+            // 
+            // servicesdatagrid
+            // 
+            this.servicesdatagrid.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.servicesdatagrid.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.servicesdatagrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.servicesdatagrid.Location = new System.Drawing.Point(17, 342);
+            this.servicesdatagrid.Name = "servicesdatagrid";
+            this.servicesdatagrid.Size = new System.Drawing.Size(372, 174);
+            this.servicesdatagrid.TabIndex = 21;
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label5.Location = new System.Drawing.Point(12, 530);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(102, 25);
+            this.label5.TabIndex = 22;
+            this.label5.Text = "Summary";
             // 
             // totalamounttb
             // 
-            this.totalamounttb.Location = new System.Drawing.Point(102, 180);
+            this.totalamounttb.Location = new System.Drawing.Point(240, 564);
             this.totalamounttb.Name = "totalamounttb";
-            this.totalamounttb.ReadOnly = true;
-            this.totalamounttb.Size = new System.Drawing.Size(247, 20);
-            this.totalamounttb.TabIndex = 12;
+            this.totalamounttb.Size = new System.Drawing.Size(137, 20);
+            this.totalamounttb.TabIndex = 23;
             // 
-            // bookingidlb
+            // bookingsave
             // 
-            this.bookingidlb.AutoSize = true;
-            this.bookingidlb.Location = new System.Drawing.Point(101, 102);
-            this.bookingidlb.Name = "bookingidlb";
-            this.bookingidlb.Size = new System.Drawing.Size(0, 13);
-            this.bookingidlb.TabIndex = 17;
+            this.bookingsave.Location = new System.Drawing.Point(173, 619);
+            this.bookingsave.Name = "bookingsave";
+            this.bookingsave.Size = new System.Drawing.Size(89, 23);
+            this.bookingsave.TabIndex = 24;
+            this.bookingsave.Text = "Save Booking";
+            this.bookingsave.UseVisualStyleBackColor = true;
+            this.bookingsave.Click += new System.EventHandler(this.bookingsave_Click);
             // 
-            // BookingsPage
+            // Bookingdetailscancel
+            // 
+            this.Bookingdetailscancel.Location = new System.Drawing.Point(288, 619);
+            this.Bookingdetailscancel.Name = "Bookingdetailscancel";
+            this.Bookingdetailscancel.Size = new System.Drawing.Size(89, 23);
+            this.Bookingdetailscancel.TabIndex = 25;
+            this.Bookingdetailscancel.Text = "Cancel";
+            this.Bookingdetailscancel.UseVisualStyleBackColor = true;
+            this.Bookingdetailscancel.Click += new System.EventHandler(this.Bookingdetailscancel_Click);
+            // 
+            // servicecmb
+            // 
+            this.servicecmb.FormattingEnabled = true;
+            this.servicecmb.Location = new System.Drawing.Point(131, 231);
+            this.servicecmb.Name = "servicecmb";
+            this.servicecmb.Size = new System.Drawing.Size(168, 21);
+            this.servicecmb.TabIndex = 26;
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(222, 280);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(89, 23);
+            this.button1.TabIndex = 27;
+            this.button1.Text = "Add Service";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
+            // Removeservice
+            // 
+            this.Removeservice.Location = new System.Drawing.Point(317, 280);
+            this.Removeservice.Name = "Removeservice";
+            this.Removeservice.Size = new System.Drawing.Size(60, 23);
+            this.Removeservice.TabIndex = 28;
+            this.Removeservice.Text = "Remove ";
+            this.Removeservice.UseVisualStyleBackColor = true;
+            this.Removeservice.Click += new System.EventHandler(this.Removeservice_Click);
+            // 
+            // clienttb
+            // 
+            this.clienttb.Location = new System.Drawing.Point(114, 139);
+            this.clienttb.Name = "clienttb";
+            this.clienttb.Size = new System.Drawing.Size(185, 20);
+            this.clienttb.TabIndex = 17;
+            // 
+            // bookingtb
+            // 
+            this.bookingtb.Location = new System.Drawing.Point(114, 166);
+            this.bookingtb.Name = "bookingtb";
+            this.bookingtb.Size = new System.Drawing.Size(185, 20);
+            this.bookingtb.TabIndex = 29;
+            // 
+            // HourlyRatetb
+            // 
+            this.HourlyRatetb.Location = new System.Drawing.Point(131, 282);
+            this.HourlyRatetb.Name = "HourlyRatetb";
+            this.HourlyRatetb.ReadOnly = true;
+            this.HourlyRatetb.Size = new System.Drawing.Size(77, 20);
+            this.HourlyRatetb.TabIndex = 30;
+            // 
+            // BookingDetailsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(928, 538);
-            this.Controls.Add(this.bookingsBindingNavigator);
-            this.Controls.Add(this.bookingidlb);
-            this.Controls.Add(this.datetimepickertb);
-            this.Controls.Add(this.btnEditBooking);
-            this.Controls.Add(this.btnDeleteBooking);
-            this.Controls.Add(this.btnAddBooking);
+            this.ClientSize = new System.Drawing.Size(404, 656);
+            this.Controls.Add(label6);
+            this.Controls.Add(this.HourlyRatetb);
+            this.Controls.Add(this.bookingtb);
+            this.Controls.Add(this.Removeservice);
+            this.Controls.Add(this.button1);
+            this.Controls.Add(this.servicecmb);
+            this.Controls.Add(this.Bookingdetailscancel);
+            this.Controls.Add(this.bookingsave);
             this.Controls.Add(this.totalamounttb);
-            this.Controls.Add(this.ClientTb);
+            this.Controls.Add(this.label5);
+            this.Controls.Add(this.servicesdatagrid);
+            this.Controls.Add(this.label4);
+            this.Controls.Add(this.bookingidtb);
+            this.Controls.Add(this.clienttb);
+            this.Controls.Add(this.numberofhoursnum);
+            this.Controls.Add(serviceIDLabel);
+            this.Controls.Add(serviceNameLabel);
+            this.Controls.Add(this.label3);
             this.Controls.Add(bookingIDLabel);
             this.Controls.Add(clientIDLabel);
             this.Controls.Add(bookingDateLabel);
             this.Controls.Add(totalAmountLabel);
+            this.Controls.Add(this.bookingsBindingNavigator);
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.label2);
-            this.Controls.Add(this.BookingsTable);
-            this.Name = "BookingsPage";
-            this.Text = "BookingsPage";
-            this.Load += new System.EventHandler(this.BookingsPage_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.BookingsTable)).EndInit();
+            this.Name = "BookingDetailsForm";
+            this.Text = "BookingDetailsForm";
+            this.Load += new System.EventHandler(this.BookingDetailsForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.alexisconstructionDBDataSet)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.bookingsBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.bookingsBindingNavigator)).EndInit();
             this.bookingsBindingNavigator.ResumeLayout(false);
             this.bookingsBindingNavigator.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.servicesBindingSource)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numberofhoursnum)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.servicesdatagrid)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -375,8 +508,8 @@
 
         #endregion
 
-        private System.Windows.Forms.DataGridView BookingsTable;
         private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label label1;
         private AlexisconstructionDBDataSet alexisconstructionDBDataSet;
         private System.Windows.Forms.BindingSource bookingsBindingSource;
         private AlexisconstructionDBDataSetTableAdapters.BookingsTableAdapter bookingsTableAdapter;
@@ -394,12 +527,22 @@
         private System.Windows.Forms.ToolStripButton bindingNavigatorMoveLastItem;
         private System.Windows.Forms.ToolStripSeparator bindingNavigatorSeparator2;
         private System.Windows.Forms.ToolStripButton bookingsBindingNavigatorSaveItem;
-        private System.Windows.Forms.TextBox ClientTb;
-        private System.Windows.Forms.Button btnEditBooking;
-        private System.Windows.Forms.Button btnDeleteBooking;
-        private System.Windows.Forms.Button btnAddBooking;
-        private System.Windows.Forms.DateTimePicker datetimepickertb;
+        private AlexisconstructionDBDataSetTableAdapters.ServicesTableAdapter servicesTableAdapter;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.BindingSource servicesBindingSource;
+        private System.Windows.Forms.NumericUpDown numberofhoursnum;
+        private System.Windows.Forms.TextBox bookingidtb;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.DataGridView servicesdatagrid;
+        private System.Windows.Forms.Label label5;
         private System.Windows.Forms.TextBox totalamounttb;
-        private System.Windows.Forms.Label bookingidlb;
+        private System.Windows.Forms.Button bookingsave;
+        private System.Windows.Forms.Button Bookingdetailscancel;
+        private System.Windows.Forms.ComboBox servicecmb;
+        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button Removeservice;
+        private System.Windows.Forms.TextBox clienttb;
+        private System.Windows.Forms.DateTimePicker bookingtb;
+        private System.Windows.Forms.TextBox HourlyRatetb;
     }
 }

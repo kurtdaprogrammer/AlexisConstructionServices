@@ -18,6 +18,10 @@ namespace WindowsFormsApp1
         {
             InitializeComponent();
 
+            // Attach event handlers
+            BookingsTable.CellClick += BookingsTable_CellClick;
+        
+
             ReadBookings();
         }
 
@@ -66,28 +70,129 @@ namespace WindowsFormsApp1
 
         private void btnAddBooking_Click(object sender, EventArgs e)
         {
-            Booking booking = new Booking();
-            booking.ClientID = int.Parse(ClientTb.Text);  
-            booking.BookingDate = datetimepickertb.Value;  
-            booking.TotalAmount = decimal.Parse(totalamounttb.Text);
-
-
-            if (string.IsNullOrEmpty(ClientTb.Text) || string.IsNullOrEmpty(totalamounttb.Text))
+            if (string.IsNullOrEmpty(ClientTb.Text) || !int.TryParse(ClientTb.Text, out int clientId))
             {
-                MessageBox.Show("There are empty fields. Please enter a Fill the Values.");
+                MessageBox.Show("Please enter a valid Client ID.");
+                return;
+            }
+
+            Booking booking = new Booking
+            {
+                ClientID = clientId,
+                BookingDate = datetimepickertb.Value
+            };
+
+            var repo = new Bookingsrepository();
+            repo.CreateBooking(booking);
+
+            ReadBookings();
+        }
+      
+
+        
+
+        private void btnEditBooking_Click(object sender, EventArgs e)
+        {
+            if (BookingsTable.SelectedRows.Count > 0)
+            {
+                var row = BookingsTable.SelectedRows[0];
+
+                if (row.Cells["BookingID"].Value != null)
+                {
+                    string bookingIDValue = row.Cells["BookingID"].Value.ToString();
+                    Console.WriteLine($"Selected BookingID: {bookingIDValue}");
+
+                    if (int.TryParse(bookingIDValue, out int bookingID))
+                    {
+                        var repo = new Bookingsrepository();
+                        var booking = repo.GetBooking(bookingID);
+
+                        if (booking != null)
+                        {
+                            BookingDetailsForm form = new BookingDetailsForm(booking);
+
+                            if (form.ShowDialog() == DialogResult.OK)
+                            {
+                                ReadBookings(); // Refresh the grid after editing
+                            }
+                        }
+                        else
+                        {
+                            MessageBox.Show("Booking not found in the database.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        }
+                    }
+                    else
+                    {
+                        MessageBox.Show("Booking ID is not a valid number.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("No valid Booking ID found in the selected row.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
+            }
+            else
+            {
+                MessageBox.Show("No booking selected. Please select a booking to edit.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+        }
+
+
+        private void BookingsTable_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            // Ensure the clicked row index is valid
+            if (e.RowIndex >= 0)
+            {
+                // Clear previous selection
+                BookingsTable.ClearSelection();
+                BookingsTable.Rows[e.RowIndex].Selected = true;
+
+                var row = BookingsTable.Rows[e.RowIndex];
+
+                // Safely extract row values
+                var bookingIDValue = row.Cells["BookingID"].Value;
+                var clientNameValue = row.Cells["ClientName"].Value;
+                var bookingDateValue = row.Cells["BookingDate"].Value;
+                var totalAmountValue = row.Cells["TotalAmount"].Value;
+
+                // Log or use these values
+                Console.WriteLine($"BookingID: {bookingIDValue}, ClientName: {clientNameValue}, BookingDate: {bookingDateValue}, TotalAmount: {totalAmountValue}");
+            }
+            else
+            {
+                // If the click is invalid, skip processing
+                Console.WriteLine("Invalid row clicked.");
+            }
+        }
+
+        private void btnDeleteBooking_Click(object sender, EventArgs e)
+        {
+            Console.WriteLine("Delete button clicked.");
+
+            if (this.BookingsTable.SelectedRows.Count == 0)
+            {
+                MessageBox.Show("Please select a row to delete.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            var val = this.BookingsTable.SelectedRows[0].Cells[0].Value?.ToString();
+
+            if (string.IsNullOrEmpty(val)) return;
+
+            int bookingID = int.Parse(val);
+
+            DialogResult dialogResult = MessageBox.Show("Are you sure you want to delete this Booking?", "Delete Booking", MessageBoxButtons.YesNo);
+            Console.WriteLine($"Dialog result: {dialogResult}");
+
+            if (dialogResult == DialogResult.No)
+            {
                 return;
             }
 
             var repo = new Bookingsrepository();
-            if (booking.BookingID == 0)
-            {
-                repo.CreateBooking(booking);
-                ReadBookings();
-            }
-            // else
-            //  {
-            //     repo.UpdateClient(client);
-            // }
+            repo.DeleteBooking(bookingID);
+
+            ReadBookings();
         }
     }
 }

@@ -12,5 +12,11 @@ namespace WindowsFormsApp1.Models
         public string ServiceName { get; set; }
         public decimal HourlyRate { get; set; }
 
+        // Override ToString to control what is shown in the ComboBox
+        public override string ToString()
+        {
+            return $"{ServiceName} ({HourlyRate:C})"; // Customize the format as needed
+        }
+
     }
 }
