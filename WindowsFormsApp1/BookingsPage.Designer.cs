@@ -105,6 +105,7 @@
             this.BookingsTable.Location = new System.Drawing.Point(364, 102);
             this.BookingsTable.MultiSelect = false;
             this.BookingsTable.Name = "BookingsTable";
+            this.BookingsTable.ReadOnly = true;
             this.BookingsTable.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.BookingsTable.Size = new System.Drawing.Size(552, 424);
             this.BookingsTable.TabIndex = 0;

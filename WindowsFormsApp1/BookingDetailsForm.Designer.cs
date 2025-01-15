@@ -368,8 +368,10 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.servicesdatagrid.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.servicesdatagrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.servicesdatagrid.Enabled = false;
             this.servicesdatagrid.Location = new System.Drawing.Point(17, 342);
             this.servicesdatagrid.Name = "servicesdatagrid";
+            this.servicesdatagrid.ReadOnly = true;
             this.servicesdatagrid.Size = new System.Drawing.Size(372, 174);
             this.servicesdatagrid.TabIndex = 21;
             // 

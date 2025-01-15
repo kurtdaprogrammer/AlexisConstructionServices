@@ -11,6 +11,7 @@ namespace WindowsFormsApp1.Models
         public int ToolID { get; set; }
         public string ToolName { get; set; }
         public int ServiceID { get; set; }
+        public string ServiceName { get; set; } // Added for display purposes
         public int QuantityAvailable { get; set; }
     }
 }

@@ -36,8 +36,7 @@
             this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
             this.label2 = new System.Windows.Forms.Label();
             this.servicecb = new System.Windows.Forms.ComboBox();
-            this.btnEditTool = new System.Windows.Forms.Button();
-            this.btnDeleteClient = new System.Windows.Forms.Button();
+            this.btnDeleteTool = new System.Windows.Forms.Button();
             this.btnAddTool = new System.Windows.Forms.Button();
             this.Update = new System.Windows.Forms.Button();
             toollb = new System.Windows.Forms.Label();
@@ -83,6 +82,7 @@
             this.dataGridInventory.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridInventory.Location = new System.Drawing.Point(12, 160);
             this.dataGridInventory.Name = "dataGridInventory";
+            this.dataGridInventory.ReadOnly = true;
             this.dataGridInventory.Size = new System.Drawing.Size(592, 359);
             this.dataGridInventory.TabIndex = 0;
             // 
@@ -118,25 +118,16 @@
             this.servicecb.Size = new System.Drawing.Size(121, 21);
             this.servicecb.TabIndex = 22;
             // 
-            // btnEditTool
+            // btnDeleteTool
             // 
-            this.btnEditTool.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnEditTool.Location = new System.Drawing.Point(454, 131);
-            this.btnEditTool.Name = "btnEditTool";
-            this.btnEditTool.Size = new System.Drawing.Size(71, 23);
-            this.btnEditTool.TabIndex = 26;
-            this.btnEditTool.Text = "Edit Tool";
-            this.btnEditTool.UseVisualStyleBackColor = true;
-            // 
-            // btnDeleteClient
-            // 
-            this.btnDeleteClient.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnDeleteClient.Location = new System.Drawing.Point(531, 131);
-            this.btnDeleteClient.Name = "btnDeleteClient";
-            this.btnDeleteClient.Size = new System.Drawing.Size(71, 23);
-            this.btnDeleteClient.TabIndex = 25;
-            this.btnDeleteClient.Text = "Delete";
-            this.btnDeleteClient.UseVisualStyleBackColor = true;
+            this.btnDeleteTool.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnDeleteTool.Location = new System.Drawing.Point(531, 131);
+            this.btnDeleteTool.Name = "btnDeleteTool";
+            this.btnDeleteTool.Size = new System.Drawing.Size(71, 23);
+            this.btnDeleteTool.TabIndex = 25;
+            this.btnDeleteTool.Text = "Delete";
+            this.btnDeleteTool.UseVisualStyleBackColor = true;
+            this.btnDeleteTool.Click += new System.EventHandler(this.btnDeleteTool_Click);
             // 
             // btnAddTool
             // 
@@ -146,16 +137,18 @@
             this.btnAddTool.TabIndex = 24;
             this.btnAddTool.Text = "Add Tool";
             this.btnAddTool.UseVisualStyleBackColor = true;
+            this.btnAddTool.Click += new System.EventHandler(this.btnAddTool_Click);
             // 
             // Update
             // 
             this.Update.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.Update.Location = new System.Drawing.Point(377, 131);
+            this.Update.Location = new System.Drawing.Point(96, 131);
             this.Update.Name = "Update";
             this.Update.Size = new System.Drawing.Size(71, 23);
             this.Update.TabIndex = 27;
             this.Update.Text = "Update";
             this.Update.UseVisualStyleBackColor = true;
+            this.Update.Click += new System.EventHandler(this.Update_Click);
             // 
             // InventoryPage
             // 
@@ -163,8 +156,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(613, 524);
             this.Controls.Add(this.Update);
-            this.Controls.Add(this.btnEditTool);
-            this.Controls.Add(this.btnDeleteClient);
+            this.Controls.Add(this.btnDeleteTool);
             this.Controls.Add(this.btnAddTool);
             this.Controls.Add(Services);
             this.Controls.Add(this.servicecb);
@@ -190,8 +182,7 @@
         private System.Windows.Forms.NumericUpDown numericUpDown1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.ComboBox servicecb;
-        private System.Windows.Forms.Button btnEditTool;
-        private System.Windows.Forms.Button btnDeleteClient;
+        private System.Windows.Forms.Button btnDeleteTool;
         private System.Windows.Forms.Button btnAddTool;
         private System.Windows.Forms.Button Update;
     }

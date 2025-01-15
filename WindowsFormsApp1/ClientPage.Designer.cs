@@ -88,6 +88,7 @@
             this.ClientsTable.Location = new System.Drawing.Point(11, 107);
             this.ClientsTable.MultiSelect = false;
             this.ClientsTable.Name = "ClientsTable";
+            this.ClientsTable.ReadOnly = true;
             this.ClientsTable.RowHeadersVisible = false;
             this.ClientsTable.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.ClientsTable.Size = new System.Drawing.Size(659, 310);
