@@ -69,7 +69,6 @@
             this.Bookingdetailscancel = new System.Windows.Forms.Button();
             this.servicecmb = new System.Windows.Forms.ComboBox();
             this.button1 = new System.Windows.Forms.Button();
-            this.Removeservice = new System.Windows.Forms.Button();
             this.clienttb = new System.Windows.Forms.TextBox();
             this.bookingtb = new System.Windows.Forms.DateTimePicker();
             this.HourlyRatetb = new System.Windows.Forms.TextBox();
@@ -348,6 +347,7 @@
             // 
             this.bookingidtb.Location = new System.Drawing.Point(114, 113);
             this.bookingidtb.Name = "bookingidtb";
+            this.bookingidtb.ReadOnly = true;
             this.bookingidtb.Size = new System.Drawing.Size(185, 20);
             this.bookingidtb.TabIndex = 18;
             // 
@@ -387,6 +387,7 @@
             // 
             this.totalamounttb.Location = new System.Drawing.Point(240, 564);
             this.totalamounttb.Name = "totalamounttb";
+            this.totalamounttb.ReadOnly = true;
             this.totalamounttb.Size = new System.Drawing.Size(137, 20);
             this.totalamounttb.TabIndex = 23;
             // 
@@ -420,7 +421,7 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(222, 280);
+            this.button1.Location = new System.Drawing.Point(300, 285);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(89, 23);
             this.button1.TabIndex = 27;
@@ -428,25 +429,17 @@
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
-            // Removeservice
-            // 
-            this.Removeservice.Location = new System.Drawing.Point(317, 280);
-            this.Removeservice.Name = "Removeservice";
-            this.Removeservice.Size = new System.Drawing.Size(60, 23);
-            this.Removeservice.TabIndex = 28;
-            this.Removeservice.Text = "Remove ";
-            this.Removeservice.UseVisualStyleBackColor = true;
-            this.Removeservice.Click += new System.EventHandler(this.Removeservice_Click);
-            // 
             // clienttb
             // 
             this.clienttb.Location = new System.Drawing.Point(114, 139);
             this.clienttb.Name = "clienttb";
+            this.clienttb.ReadOnly = true;
             this.clienttb.Size = new System.Drawing.Size(185, 20);
             this.clienttb.TabIndex = 17;
             // 
             // bookingtb
             // 
+            this.bookingtb.Enabled = false;
             this.bookingtb.Location = new System.Drawing.Point(114, 166);
             this.bookingtb.Name = "bookingtb";
             this.bookingtb.Size = new System.Drawing.Size(185, 20);
@@ -468,7 +461,6 @@
             this.Controls.Add(label6);
             this.Controls.Add(this.HourlyRatetb);
             this.Controls.Add(this.bookingtb);
-            this.Controls.Add(this.Removeservice);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.servicecmb);
             this.Controls.Add(this.Bookingdetailscancel);
@@ -540,7 +532,6 @@
         private System.Windows.Forms.Button Bookingdetailscancel;
         private System.Windows.Forms.ComboBox servicecmb;
         private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Button Removeservice;
         private System.Windows.Forms.TextBox clienttb;
         private System.Windows.Forms.DateTimePicker bookingtb;
         private System.Windows.Forms.TextBox HourlyRatetb;

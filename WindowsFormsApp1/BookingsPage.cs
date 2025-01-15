@@ -51,6 +51,9 @@ namespace WindowsFormsApp1
 
             this.BookingsTable.DataSource = dataTable;
 
+            // Clear the selection after refreshing the data
+            BookingsTable.ClearSelection();
+
         }
 
         private void bookingsBindingNavigatorSaveItem_Click(object sender, EventArgs e)
@@ -65,14 +68,14 @@ namespace WindowsFormsApp1
         {
             // TODO: This line of code loads data into the 'alexisconstructionDBDataSet.Bookings' table. You can move, or remove it, as needed.
             this.bookingsTableAdapter.Fill(this.alexisconstructionDBDataSet.Bookings);
-
+            LoadClientsDropdown();
         }
 
         private void btnAddBooking_Click(object sender, EventArgs e)
         {
-            if (string.IsNullOrEmpty(ClientTb.Text) || !int.TryParse(ClientTb.Text, out int clientId))
+            if (clientcmb.SelectedValue == null || !int.TryParse(clientcmb.SelectedValue.ToString(), out int clientId))
             {
-                MessageBox.Show("Please enter a valid Client ID.");
+                MessageBox.Show("Please select a valid Client.");
                 return;
             }
 
@@ -85,7 +88,7 @@ namespace WindowsFormsApp1
             var repo = new Bookingsrepository();
             repo.CreateBooking(booking);
 
-            ReadBookings();
+            ReadBookings(); // Refresh the booking list
         }
       
 
@@ -114,6 +117,7 @@ namespace WindowsFormsApp1
                             if (form.ShowDialog() == DialogResult.OK)
                             {
                                 ReadBookings(); // Refresh the grid after editing
+                                BookingsTable.ClearSelection(); // Reset the selection after closing the form
                             }
                         }
                         else
@@ -141,7 +145,7 @@ namespace WindowsFormsApp1
         private void BookingsTable_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             // Ensure the clicked row index is valid
-            if (e.RowIndex >= 0)
+            if (e.RowIndex >= 0 && e.RowIndex < BookingsTable.Rows.Count)
             {
                 // Clear previous selection
                 BookingsTable.ClearSelection();
@@ -193,6 +197,21 @@ namespace WindowsFormsApp1
             repo.DeleteBooking(bookingID);
 
             ReadBookings();
+        }
+        private void LoadClientsDropdown()
+        {
+            var repo = new Clientrepository();
+            var clients = repo.GetClients(); // Fetch all clients from the repository
+
+            if (clients == null || clients.Count == 0)
+            {
+                MessageBox.Show("No clients found in the database.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            clientcmb.DataSource = clients;
+            clientcmb.DisplayMember = "Name"; // Display the client name
+            clientcmb.ValueMember = "ClientID";    // Store the ClientID in the value of ComboBox
         }
     }
 }

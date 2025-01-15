@@ -29,7 +29,6 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.Label bookingIDLabel;
             System.Windows.Forms.Label clientIDLabel;
             System.Windows.Forms.Label bookingDateLabel;
             System.Windows.Forms.Label totalAmountLabel;
@@ -53,14 +52,12 @@
             this.bindingNavigatorMoveLastItem = new System.Windows.Forms.ToolStripButton();
             this.bindingNavigatorSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.bookingsBindingNavigatorSaveItem = new System.Windows.Forms.ToolStripButton();
-            this.ClientTb = new System.Windows.Forms.TextBox();
             this.btnEditBooking = new System.Windows.Forms.Button();
             this.btnDeleteBooking = new System.Windows.Forms.Button();
             this.btnAddBooking = new System.Windows.Forms.Button();
             this.datetimepickertb = new System.Windows.Forms.DateTimePicker();
             this.totalamounttb = new System.Windows.Forms.TextBox();
-            this.bookingidlb = new System.Windows.Forms.Label();
-            bookingIDLabel = new System.Windows.Forms.Label();
+            this.clientcmb = new System.Windows.Forms.ComboBox();
             clientIDLabel = new System.Windows.Forms.Label();
             bookingDateLabel = new System.Windows.Forms.Label();
             totalAmountLabel = new System.Windows.Forms.Label();
@@ -71,19 +68,10 @@
             this.bookingsBindingNavigator.SuspendLayout();
             this.SuspendLayout();
             // 
-            // bookingIDLabel
-            // 
-            bookingIDLabel.AutoSize = true;
-            bookingIDLabel.Location = new System.Drawing.Point(12, 102);
-            bookingIDLabel.Name = "bookingIDLabel";
-            bookingIDLabel.Size = new System.Drawing.Size(63, 13);
-            bookingIDLabel.TabIndex = 3;
-            bookingIDLabel.Text = "Booking ID:";
-            // 
             // clientIDLabel
             // 
             clientIDLabel.AutoSize = true;
-            clientIDLabel.Location = new System.Drawing.Point(12, 128);
+            clientIDLabel.Location = new System.Drawing.Point(12, 111);
             clientIDLabel.Name = "clientIDLabel";
             clientIDLabel.Size = new System.Drawing.Size(50, 13);
             clientIDLabel.TabIndex = 5;
@@ -92,7 +80,7 @@
             // bookingDateLabel
             // 
             bookingDateLabel.AutoSize = true;
-            bookingDateLabel.Location = new System.Drawing.Point(12, 155);
+            bookingDateLabel.Location = new System.Drawing.Point(12, 138);
             bookingDateLabel.Name = "bookingDateLabel";
             bookingDateLabel.Size = new System.Drawing.Size(75, 13);
             bookingDateLabel.TabIndex = 7;
@@ -101,7 +89,7 @@
             // totalAmountLabel
             // 
             totalAmountLabel.AutoSize = true;
-            totalAmountLabel.Location = new System.Drawing.Point(12, 180);
+            totalAmountLabel.Location = new System.Drawing.Point(12, 163);
             totalAmountLabel.Name = "totalAmountLabel";
             totalAmountLabel.Size = new System.Drawing.Size(73, 13);
             totalAmountLabel.TabIndex = 9;
@@ -278,17 +266,10 @@
             this.bookingsBindingNavigatorSaveItem.Text = "Save Data";
             this.bookingsBindingNavigatorSaveItem.Click += new System.EventHandler(this.bookingsBindingNavigatorSaveItem_Click);
             // 
-            // ClientTb
-            // 
-            this.ClientTb.Location = new System.Drawing.Point(102, 125);
-            this.ClientTb.Name = "ClientTb";
-            this.ClientTb.Size = new System.Drawing.Size(247, 20);
-            this.ClientTb.TabIndex = 10;
-            // 
             // btnEditBooking
             // 
             this.btnEditBooking.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnEditBooking.Location = new System.Drawing.Point(176, 230);
+            this.btnEditBooking.Location = new System.Drawing.Point(176, 213);
             this.btnEditBooking.Name = "btnEditBooking";
             this.btnEditBooking.Size = new System.Drawing.Size(96, 23);
             this.btnEditBooking.TabIndex = 15;
@@ -299,7 +280,7 @@
             // btnDeleteBooking
             // 
             this.btnDeleteBooking.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnDeleteBooking.Location = new System.Drawing.Point(278, 230);
+            this.btnDeleteBooking.Location = new System.Drawing.Point(278, 213);
             this.btnDeleteBooking.Name = "btnDeleteBooking";
             this.btnDeleteBooking.Size = new System.Drawing.Size(71, 23);
             this.btnDeleteBooking.TabIndex = 14;
@@ -309,7 +290,7 @@
             // 
             // btnAddBooking
             // 
-            this.btnAddBooking.Location = new System.Drawing.Point(15, 230);
+            this.btnAddBooking.Location = new System.Drawing.Point(15, 213);
             this.btnAddBooking.Name = "btnAddBooking";
             this.btnAddBooking.Size = new System.Drawing.Size(86, 23);
             this.btnAddBooking.TabIndex = 13;
@@ -319,41 +300,39 @@
             // 
             // datetimepickertb
             // 
-            this.datetimepickertb.Location = new System.Drawing.Point(102, 154);
+            this.datetimepickertb.Location = new System.Drawing.Point(102, 137);
             this.datetimepickertb.Name = "datetimepickertb";
             this.datetimepickertb.Size = new System.Drawing.Size(247, 20);
             this.datetimepickertb.TabIndex = 16;
             // 
             // totalamounttb
             // 
-            this.totalamounttb.Location = new System.Drawing.Point(102, 180);
+            this.totalamounttb.Location = new System.Drawing.Point(102, 163);
             this.totalamounttb.Name = "totalamounttb";
             this.totalamounttb.ReadOnly = true;
             this.totalamounttb.Size = new System.Drawing.Size(247, 20);
             this.totalamounttb.TabIndex = 12;
             // 
-            // bookingidlb
+            // clientcmb
             // 
-            this.bookingidlb.AutoSize = true;
-            this.bookingidlb.Location = new System.Drawing.Point(101, 102);
-            this.bookingidlb.Name = "bookingidlb";
-            this.bookingidlb.Size = new System.Drawing.Size(0, 13);
-            this.bookingidlb.TabIndex = 17;
+            this.clientcmb.FormattingEnabled = true;
+            this.clientcmb.Location = new System.Drawing.Point(102, 108);
+            this.clientcmb.Name = "clientcmb";
+            this.clientcmb.Size = new System.Drawing.Size(247, 21);
+            this.clientcmb.TabIndex = 18;
             // 
             // BookingsPage
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(928, 538);
+            this.Controls.Add(this.clientcmb);
             this.Controls.Add(this.bookingsBindingNavigator);
-            this.Controls.Add(this.bookingidlb);
             this.Controls.Add(this.datetimepickertb);
             this.Controls.Add(this.btnEditBooking);
             this.Controls.Add(this.btnDeleteBooking);
             this.Controls.Add(this.btnAddBooking);
             this.Controls.Add(this.totalamounttb);
-            this.Controls.Add(this.ClientTb);
-            this.Controls.Add(bookingIDLabel);
             this.Controls.Add(clientIDLabel);
             this.Controls.Add(bookingDateLabel);
             this.Controls.Add(totalAmountLabel);
@@ -394,12 +373,11 @@
         private System.Windows.Forms.ToolStripButton bindingNavigatorMoveLastItem;
         private System.Windows.Forms.ToolStripSeparator bindingNavigatorSeparator2;
         private System.Windows.Forms.ToolStripButton bookingsBindingNavigatorSaveItem;
-        private System.Windows.Forms.TextBox ClientTb;
         private System.Windows.Forms.Button btnEditBooking;
         private System.Windows.Forms.Button btnDeleteBooking;
         private System.Windows.Forms.Button btnAddBooking;
         private System.Windows.Forms.DateTimePicker datetimepickertb;
         private System.Windows.Forms.TextBox totalamounttb;
-        private System.Windows.Forms.Label bookingidlb;
+        private System.Windows.Forms.ComboBox clientcmb;
     }
 }

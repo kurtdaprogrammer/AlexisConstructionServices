@@ -182,11 +182,20 @@ namespace WindowsFormsApp1
 
         private void servicesdatagrid_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            // Ensure the clicked row index is valid
+            // Ensure the clicked row index is valid (greater than or equal to 0)
             if (e.RowIndex >= 0 && e.RowIndex < servicesdatagrid.Rows.Count)
             {
-                var selectedRow = servicesdatagrid.Rows[e.RowIndex];
-                var serviceID = selectedRow.Cells["ServiceID"].Value;
+                // Clear previous selection
+                servicesdatagrid.ClearSelection();
+                servicesdatagrid.Rows[e.RowIndex].Selected = true;
+
+                var row = servicesdatagrid.Rows[e.RowIndex];
+
+                // Safe check for null values before proceeding
+                var serviceID = row.Cells["ServiceID"].Value;
+                var serviceName = row.Cells["ServiceName"].Value;
+
+                Console.WriteLine($"Selected Service - ServiceID: {serviceID}, ServiceName: {serviceName}");
 
                 if (serviceID != null && serviceID != DBNull.Value)
                 {
@@ -195,23 +204,23 @@ namespace WindowsFormsApp1
 
                     if (_selectedServiceDetail != null)
                     {
-                        MessageBox.Show($"Selected Service: {_selectedServiceDetail.ServiceName}");
+                        Console.WriteLine($"Service found: {_selectedServiceDetail.ServiceName}");
                     }
                     else
                     {
-                        MessageBox.Show("Selected service not found in the list.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        Console.WriteLine("Selected service not found in the booking's service list.");
                     }
                 }
                 else
                 {
-                    MessageBox.Show("No valid service selected.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    Console.WriteLine("No valid service selected.");
                 }
             }
             else
             {
-                // Invalid row clicked, ignore
-                MessageBox.Show("Invalid row clicked.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Console.WriteLine("Invalid row clicked, no selection.");
             }
+
         }
 
         private void Removeservice_Click(object sender, EventArgs e)
@@ -279,10 +288,17 @@ namespace WindowsFormsApp1
         private void servicecmb_SelectedIndexChanged(object sender, EventArgs e)
         {
             // Ensure the ComboBox has a selected item
-            if (servicecmb.SelectedItem is Service selectedService)
+            if (servicecmb.SelectedIndex >= 0) // Check that an item is selected
             {
-                // Update the HourlyRatetb with the selected service's hourly rate
-                HourlyRatetb.Text = selectedService.HourlyRate.ToString("C"); // Format as currency
+                if (servicecmb.SelectedItem is Service selectedService)
+                {
+                    // Update the HourlyRatetb with the selected service's hourly rate
+                    HourlyRatetb.Text = selectedService.HourlyRate.ToString("C"); // Format as currency
+                }
+            }
+            else
+            {
+                Console.WriteLine("No valid service selected.");
             }
         }
 
