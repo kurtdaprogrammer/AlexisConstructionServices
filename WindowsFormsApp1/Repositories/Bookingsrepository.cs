@@ -177,6 +177,38 @@ namespace WindowsFormsApp1.Repositories
                 Console.WriteLine("Exception: " + ex.Message);
             }
         }
+        public bool IsDateBooked(int clientId, DateTime bookingDate)
+        {
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(connectionString))
+                {
+                    connection.Open();
+
+                    // Query to check if there is already a booking on the selected date for the specific client
+                    string sql = @"
+                SELECT COUNT(1)
+                FROM Bookings
+                WHERE ClientID = @ClientID AND CAST(BookingDate AS DATE) = @BookingDate";
+
+                    using (SqlCommand command = new SqlCommand(sql, connection))
+                    {
+                        command.Parameters.AddWithValue("@ClientID", clientId);
+                        command.Parameters.AddWithValue("@BookingDate", bookingDate.Date); // Ensure we only check the date part
+
+                        int bookingCount = (int)command.ExecuteScalar();
+
+                        // If there's at least one booking, return true indicating the date is booked
+                        return bookingCount > 0;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Exception: " + ex.Message);
+                return false;  // Return false in case of an error (you may want to handle the error differently)
+            }
+        }
 
     }
 }

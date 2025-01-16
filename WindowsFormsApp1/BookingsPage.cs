@@ -79,20 +79,29 @@ namespace WindowsFormsApp1
                 return;
             }
 
+            DateTime newBookingDate = datetimepickertb.Value;
+
+            // Check if the selected date is already booked for the same client
+            var repo = new Bookingsrepository();
+            bool isDateBooked = repo.IsDateBooked(clientId, newBookingDate);
+
+            if (isDateBooked)
+            {
+                MessageBox.Show("This client already has a booking on the selected date. Please choose a different date.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            // If date is not booked, proceed to create the booking
             Booking booking = new Booking
             {
                 ClientID = clientId,
-                BookingDate = datetimepickertb.Value
+                BookingDate = newBookingDate
             };
 
-            var repo = new Bookingsrepository();
             repo.CreateBooking(booking);
 
             ReadBookings(); // Refresh the booking list
         }
-      
-
-        
 
         private void btnEditBooking_Click(object sender, EventArgs e)
         {
