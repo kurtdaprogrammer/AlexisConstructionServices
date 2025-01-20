@@ -31,6 +31,7 @@
             System.Windows.Forms.Label toollb;
             System.Windows.Forms.Label Toolamtlb;
             System.Windows.Forms.Label Services;
+            System.Windows.Forms.Label label1;
             this.dataGridInventory = new System.Windows.Forms.DataGridView();
             this.Tooltb = new System.Windows.Forms.TextBox();
             this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
@@ -39,9 +40,11 @@
             this.btnDeleteTool = new System.Windows.Forms.Button();
             this.btnAddTool = new System.Windows.Forms.Button();
             this.Update = new System.Windows.Forms.Button();
+            this.txtSearchInventory = new System.Windows.Forms.TextBox();
             toollb = new System.Windows.Forms.Label();
             Toolamtlb = new System.Windows.Forms.Label();
             Services = new System.Windows.Forms.Label();
+            label1 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridInventory)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
             this.SuspendLayout();
@@ -83,6 +86,7 @@
             this.dataGridInventory.Location = new System.Drawing.Point(12, 160);
             this.dataGridInventory.Name = "dataGridInventory";
             this.dataGridInventory.ReadOnly = true;
+            this.dataGridInventory.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dataGridInventory.Size = new System.Drawing.Size(592, 359);
             this.dataGridInventory.TabIndex = 0;
             // 
@@ -150,11 +154,29 @@
             this.Update.UseVisualStyleBackColor = true;
             this.Update.Click += new System.EventHandler(this.Update_Click);
             // 
+            // txtSearchInventory
+            // 
+            this.txtSearchInventory.Location = new System.Drawing.Point(475, 48);
+            this.txtSearchInventory.Name = "txtSearchInventory";
+            this.txtSearchInventory.Size = new System.Drawing.Size(129, 20);
+            this.txtSearchInventory.TabIndex = 28;
+            // 
+            // label1
+            // 
+            label1.AutoSize = true;
+            label1.Location = new System.Drawing.Point(425, 51);
+            label1.Name = "label1";
+            label1.Size = new System.Drawing.Size(44, 13);
+            label1.TabIndex = 29;
+            label1.Text = "Search:";
+            // 
             // InventoryPage
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(613, 524);
+            this.Controls.Add(label1);
+            this.Controls.Add(this.txtSearchInventory);
             this.Controls.Add(this.Update);
             this.Controls.Add(this.btnDeleteTool);
             this.Controls.Add(this.btnAddTool);
@@ -185,5 +207,6 @@
         private System.Windows.Forms.Button btnDeleteTool;
         private System.Windows.Forms.Button btnAddTool;
         private System.Windows.Forms.Button Update;
+        private System.Windows.Forms.TextBox txtSearchInventory;
     }
 }

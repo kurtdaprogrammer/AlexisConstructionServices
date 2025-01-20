@@ -8,10 +8,11 @@ namespace WindowsFormsApp1.Models
 {
     public class Booking
     {
-         private decimal _totalAmount;
+        private decimal _totalAmount;
 
         public int BookingID { get; set; }
         public int ClientID { get; set; }
+        public string BookingReference { get; set; } // Add the BookingReference property
         public DateTime BookingDate { get; set; }
 
         // Validate setting the TotalAmount field
@@ -30,16 +31,17 @@ namespace WindowsFormsApp1.Models
         public string Contact { get; set; }
         public string Address { get; set; }
 
-        public Booking(int bookingID, int clientID, DateTime bookingDate, decimal totalAmount)
+        public List<ServiceDetail> ServiceDetails { get; set; } = new List<ServiceDetail>();
+
+        public Booking(int bookingID, int clientID, string bookingReference, DateTime bookingDate, decimal totalAmount)
         {
             BookingID = bookingID;
             ClientID = clientID;
+            BookingReference = bookingReference; // Initialize BookingReference
             BookingDate = bookingDate;
             TotalAmount = totalAmount;
-            ServiceDetails = new List<ServiceDetail>();  // Initialize the list
+            ServiceDetails = new List<ServiceDetail>(); // Initialize the list
         }
-
-        public List<ServiceDetail> ServiceDetails { get; set; } = new List<ServiceDetail>();
 
         public void AddService(ServiceDetail serviceDetail)
         {
@@ -64,7 +66,6 @@ namespace WindowsFormsApp1.Models
             ServiceDetails.Remove(serviceDetail);
             TotalAmount -= serviceDetail.TotalAmount;
         }
-
 
         public Booking() { }
     }

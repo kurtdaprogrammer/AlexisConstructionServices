@@ -33,6 +33,8 @@
             this.btnDeleteClient = new System.Windows.Forms.Button();
             this.btnEditClient = new System.Windows.Forms.Button();
             this.ClientsTable = new System.Windows.Forms.DataGridView();
+            this.txtSearch = new System.Windows.Forms.TextBox();
+            this.label1 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.ClientsTable)).BeginInit();
             this.SuspendLayout();
             // 
@@ -70,7 +72,7 @@
             // btnEditClient
             // 
             this.btnEditClient.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnEditClient.Location = new System.Drawing.Point(522, 78);
+            this.btnEditClient.Location = new System.Drawing.Point(93, 78);
             this.btnEditClient.Name = "btnEditClient";
             this.btnEditClient.Size = new System.Drawing.Size(71, 23);
             this.btnEditClient.TabIndex = 3;
@@ -94,15 +96,33 @@
             this.ClientsTable.Size = new System.Drawing.Size(659, 310);
             this.ClientsTable.TabIndex = 4;
             // 
+            // txtSearch
+            // 
+            this.txtSearch.Location = new System.Drawing.Point(12, 42);
+            this.txtSearch.Name = "txtSearch";
+            this.txtSearch.Size = new System.Drawing.Size(222, 20);
+            this.txtSearch.TabIndex = 5;
+            // 
+            // label1
+            // 
+            this.label1.Location = new System.Drawing.Point(13, 23);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(52, 11);
+            this.label1.TabIndex = 0;
+            this.label1.Text = "Search:";
+            // 
             // ClientPage
             // 
             this.ClientSize = new System.Drawing.Size(682, 429);
+            this.Controls.Add(this.label1);
+            this.Controls.Add(this.txtSearch);
             this.Controls.Add(this.ClientsTable);
             this.Controls.Add(this.btnEditClient);
             this.Controls.Add(this.btnDeleteClient);
             this.Controls.Add(this.btnAddClient);
             this.Controls.Add(this.label2);
             this.Name = "ClientPage";
+            this.Text = "Clients";
             ((System.ComponentModel.ISupportInitialize)(this.ClientsTable)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -116,5 +136,7 @@
         private System.Windows.Forms.Button btnDeleteClient;
         private System.Windows.Forms.Button btnEditClient;
         private System.Windows.Forms.DataGridView ClientsTable;
+        private System.Windows.Forms.TextBox txtSearch;
+        private System.Windows.Forms.Label label1;
     }
 }

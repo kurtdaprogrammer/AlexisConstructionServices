@@ -29,7 +29,6 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.Label serviceIDLabel;
             System.Windows.Forms.Label serviceNameLabel;
             System.Windows.Forms.Label hourlyRateLabel;
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ServicesPage));
@@ -40,6 +39,8 @@
             this.label2 = new System.Windows.Forms.Label();
             this.servicesBindingNavigator = new System.Windows.Forms.BindingNavigator(this.components);
             this.bindingNavigatorAddNewItem = new System.Windows.Forms.ToolStripButton();
+            this.servicesBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.alexisconstructionDBDataSet = new WindowsFormsApp1.AlexisconstructionDBDataSet();
             this.bindingNavigatorCountItem = new System.Windows.Forms.ToolStripLabel();
             this.bindingNavigatorDeleteItem = new System.Windows.Forms.ToolStripButton();
             this.bindingNavigatorMoveFirstItem = new System.Windows.Forms.ToolStripButton();
@@ -53,12 +54,8 @@
             this.servicesBindingNavigatorSaveItem = new System.Windows.Forms.ToolStripButton();
             this.HourlyRatetb = new System.Windows.Forms.TextBox();
             this.Servicetb = new System.Windows.Forms.TextBox();
-            this.Serviceidlb = new System.Windows.Forms.Label();
-            this.servicesBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.alexisconstructionDBDataSet = new WindowsFormsApp1.AlexisconstructionDBDataSet();
             this.servicesTableAdapter = new WindowsFormsApp1.AlexisconstructionDBDataSetTableAdapters.ServicesTableAdapter();
             this.tableAdapterManager = new WindowsFormsApp1.AlexisconstructionDBDataSetTableAdapters.TableAdapterManager();
-            serviceIDLabel = new System.Windows.Forms.Label();
             serviceNameLabel = new System.Windows.Forms.Label();
             hourlyRateLabel = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.ServicesTable)).BeginInit();
@@ -68,19 +65,10 @@
             ((System.ComponentModel.ISupportInitialize)(this.alexisconstructionDBDataSet)).BeginInit();
             this.SuspendLayout();
             // 
-            // serviceIDLabel
-            // 
-            serviceIDLabel.AutoSize = true;
-            serviceIDLabel.Location = new System.Drawing.Point(12, 92);
-            serviceIDLabel.Name = "serviceIDLabel";
-            serviceIDLabel.Size = new System.Drawing.Size(60, 13);
-            serviceIDLabel.TabIndex = 8;
-            serviceIDLabel.Text = "Service ID:";
-            // 
             // serviceNameLabel
             // 
             serviceNameLabel.AutoSize = true;
-            serviceNameLabel.Location = new System.Drawing.Point(12, 118);
+            serviceNameLabel.Location = new System.Drawing.Point(12, 92);
             serviceNameLabel.Name = "serviceNameLabel";
             serviceNameLabel.Size = new System.Drawing.Size(77, 13);
             serviceNameLabel.TabIndex = 10;
@@ -89,7 +77,7 @@
             // hourlyRateLabel
             // 
             hourlyRateLabel.AutoSize = true;
-            hourlyRateLabel.Location = new System.Drawing.Point(12, 144);
+            hourlyRateLabel.Location = new System.Drawing.Point(12, 118);
             hourlyRateLabel.Name = "hourlyRateLabel";
             hourlyRateLabel.Size = new System.Drawing.Size(66, 13);
             hourlyRateLabel.TabIndex = 12;
@@ -104,13 +92,14 @@
             this.ServicesTable.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.ServicesTable.Location = new System.Drawing.Point(289, 92);
             this.ServicesTable.Name = "ServicesTable";
+            this.ServicesTable.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.ServicesTable.Size = new System.Drawing.Size(464, 248);
             this.ServicesTable.TabIndex = 0;
             // 
             // btnEditClient
             // 
             this.btnEditClient.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnEditClient.Location = new System.Drawing.Point(105, 317);
+            this.btnEditClient.Location = new System.Drawing.Point(95, 152);
             this.btnEditClient.Name = "btnEditClient";
             this.btnEditClient.Size = new System.Drawing.Size(84, 23);
             this.btnEditClient.TabIndex = 7;
@@ -121,7 +110,7 @@
             // btnDeleteClient
             // 
             this.btnDeleteClient.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnDeleteClient.Location = new System.Drawing.Point(195, 317);
+            this.btnDeleteClient.Location = new System.Drawing.Point(212, 152);
             this.btnDeleteClient.Name = "btnDeleteClient";
             this.btnDeleteClient.Size = new System.Drawing.Size(71, 23);
             this.btnDeleteClient.TabIndex = 6;
@@ -131,7 +120,7 @@
             // 
             // btnAddService
             // 
-            this.btnAddService.Location = new System.Drawing.Point(12, 317);
+            this.btnAddService.Location = new System.Drawing.Point(5, 152);
             this.btnAddService.Name = "btnAddService";
             this.btnAddService.Size = new System.Drawing.Size(84, 23);
             this.btnAddService.TabIndex = 5;
@@ -187,6 +176,16 @@
             this.bindingNavigatorAddNewItem.RightToLeftAutoMirrorImage = true;
             this.bindingNavigatorAddNewItem.Size = new System.Drawing.Size(23, 22);
             this.bindingNavigatorAddNewItem.Text = "Add new";
+            // 
+            // servicesBindingSource
+            // 
+            this.servicesBindingSource.DataMember = "Services";
+            this.servicesBindingSource.DataSource = this.alexisconstructionDBDataSet;
+            // 
+            // alexisconstructionDBDataSet
+            // 
+            this.alexisconstructionDBDataSet.DataSetName = "AlexisconstructionDBDataSet";
+            this.alexisconstructionDBDataSet.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
             // 
             // bindingNavigatorCountItem
             // 
@@ -276,35 +275,17 @@
             // 
             // HourlyRatetb
             // 
-            this.HourlyRatetb.Location = new System.Drawing.Point(105, 144);
+            this.HourlyRatetb.Location = new System.Drawing.Point(105, 118);
             this.HourlyRatetb.Name = "HourlyRatetb";
             this.HourlyRatetb.Size = new System.Drawing.Size(176, 20);
             this.HourlyRatetb.TabIndex = 18;
             // 
             // Servicetb
             // 
-            this.Servicetb.Location = new System.Drawing.Point(105, 118);
+            this.Servicetb.Location = new System.Drawing.Point(105, 92);
             this.Servicetb.Name = "Servicetb";
             this.Servicetb.Size = new System.Drawing.Size(176, 20);
             this.Servicetb.TabIndex = 17;
-            // 
-            // Serviceidlb
-            // 
-            this.Serviceidlb.AutoSize = true;
-            this.Serviceidlb.Location = new System.Drawing.Point(102, 92);
-            this.Serviceidlb.Name = "Serviceidlb";
-            this.Serviceidlb.Size = new System.Drawing.Size(0, 13);
-            this.Serviceidlb.TabIndex = 19;
-            // 
-            // servicesBindingSource
-            // 
-            this.servicesBindingSource.DataMember = "Services";
-            this.servicesBindingSource.DataSource = this.alexisconstructionDBDataSet;
-            // 
-            // alexisconstructionDBDataSet
-            // 
-            this.alexisconstructionDBDataSet.DataSetName = "AlexisconstructionDBDataSet";
-            this.alexisconstructionDBDataSet.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
             // 
             // servicesTableAdapter
             // 
@@ -323,10 +304,8 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(765, 353);
-            this.Controls.Add(this.Serviceidlb);
             this.Controls.Add(this.HourlyRatetb);
             this.Controls.Add(this.Servicetb);
-            this.Controls.Add(serviceIDLabel);
             this.Controls.Add(serviceNameLabel);
             this.Controls.Add(hourlyRateLabel);
             this.Controls.Add(this.servicesBindingNavigator);
@@ -336,7 +315,7 @@
             this.Controls.Add(this.label2);
             this.Controls.Add(this.ServicesTable);
             this.Name = "ServicesPage";
-            this.Text = "z";
+            this.Text = "Services";
             this.Load += new System.EventHandler(this.ServicesPage_Load);
             ((System.ComponentModel.ISupportInitialize)(this.ServicesTable)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.servicesBindingNavigator)).EndInit();
@@ -375,6 +354,5 @@
         private System.Windows.Forms.ToolStripButton servicesBindingNavigatorSaveItem;
         private System.Windows.Forms.TextBox HourlyRatetb;
         private System.Windows.Forms.TextBox Servicetb;
-        private System.Windows.Forms.Label Serviceidlb;
     }
 }

@@ -47,6 +47,11 @@ namespace WindowsFormsApp1
 
             this.ServicesTable.DataSource = dataTable;
 
+            if (this.ServicesTable.Columns["ServiceID"] != null)
+            {
+                this.ServicesTable.Columns["ServiceID"].Visible = false;
+            }
+
         }
 
         private void servicesBindingNavigatorSaveItem_Click(object sender, EventArgs e)
@@ -66,31 +71,36 @@ namespace WindowsFormsApp1
 
         private void btnAddService_Click(object sender, EventArgs e)
         {
-            Service service = new Service();
-            service.ServiceID = this.serviceID;
-            service.ServiceName = this.Servicetb.Text;
-            service.HourlyRate = decimal.Parse(HourlyRatetb.Text);
-          
-
-            if (string.IsNullOrEmpty(Servicetb.Text) && string.IsNullOrEmpty(HourlyRatetb.Text))
+            // Validate input fields before proceeding
+            if (string.IsNullOrEmpty(Servicetb.Text) || string.IsNullOrEmpty(HourlyRatetb.Text))
             {
-                MessageBox.Show("There are empty fields. Please enter a Fill the Values.");
+                MessageBox.Show("There are empty fields. Please fill in all the values.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
+            if (!decimal.TryParse(HourlyRatetb.Text, out decimal hourlyRate))
+            {
+                MessageBox.Show("Invalid Hourly Rate. Please enter a valid decimal value.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            // Create a new service object
+            Service service = new Service
+            {
+                ServiceID = this.serviceID, // Will be 0 for new services
+                ServiceName = this.Servicetb.Text,
+                HourlyRate = hourlyRate
+            };
+
             var repo = new Servicesrepository();
-            if (service.ServiceID == 0)
+            if (service.ServiceID == 0) // New service
             {
                 repo.CreateService(service);
                 ReadServices();
             }
-           // else
-          //  {
-           //     repo.UpdateClient(client);
-           // }
 
+            // Close the dialog with success result
             this.DialogResult = DialogResult.OK;
-            
         }
 
        
@@ -99,18 +109,25 @@ namespace WindowsFormsApp1
             if (this.ServicesTable.SelectedRows.Count == 0)
             {
                 MessageBox.Show("Please select a row to edit.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return; 
+                return;
             }
 
-            
-            var val = this.ServicesTable.SelectedRows[0].Cells[0].Value?.ToString();
+            var val = this.ServicesTable.SelectedRows[0].Cells["ServiceID"].Value?.ToString();
 
-            if (string.IsNullOrEmpty(val)) return; 
+            if (string.IsNullOrEmpty(val))
+            {
+                MessageBox.Show("ServiceID is missing or invalid. Please refresh the list and try again.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
 
-            int serviceID = int.Parse(val); 
+            if (!int.TryParse(val, out int serviceID))
+            {
+                MessageBox.Show("Invalid ServiceID format. Please refresh the list and try again.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
 
             var repo = new Servicesrepository();
-            var service = repo.GetService(serviceID); 
+            var service = repo.GetService(serviceID);
 
             if (service == null)
             {
@@ -118,21 +135,22 @@ namespace WindowsFormsApp1
                 return;
             }
 
-            
             service.ServiceName = Servicetb.Text;
-            service.HourlyRate = decimal.Parse(HourlyRatetb.Text);
-
-          
-            if (string.IsNullOrEmpty(Servicetb.Text) || string.IsNullOrEmpty(HourlyRatetb.Text))
+            if (!decimal.TryParse(HourlyRatetb.Text, out decimal hourlyRate))
             {
-                MessageBox.Show("All fields must be filled.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Invalid Hourly Rate. Please enter a valid decimal value.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            service.HourlyRate = hourlyRate;
+
+            if (string.IsNullOrEmpty(Servicetb.Text))
+            {
+                MessageBox.Show("Service Name cannot be empty.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
-            
             repo.UpdateService(service);
 
-          
             ReadServices();
 
             MessageBox.Show("Service updated successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -149,7 +167,7 @@ namespace WindowsFormsApp1
 
                 var row = ServicesTable.Rows[e.RowIndex];
 
-                Serviceidlb.Text = row.Cells["ServiceID"].Value.ToString();
+             
                 Servicetb.Text = row.Cells["ServiceName"].Value.ToString();
                 HourlyRatetb.Text = row.Cells["HourlyRate"].Value.ToString();
             }
@@ -157,33 +175,38 @@ namespace WindowsFormsApp1
 
         private void btnDeleteClient_Click(object sender, EventArgs e)
         {
-           
+
             if (this.ServicesTable.SelectedRows.Count == 0)
             {
                 MessageBox.Show("Please select a row to delete.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return; 
+                return;
             }
 
-           
-            var val = this.ServicesTable.SelectedRows[0].Cells[0].Value?.ToString();
+            var val = this.ServicesTable.SelectedRows[0].Cells["ServiceID"].Value?.ToString();
 
-            if (string.IsNullOrEmpty(val)) return; 
+            if (string.IsNullOrEmpty(val))
+            {
+                MessageBox.Show("ServiceID is missing or invalid. Please refresh the list and try again.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
 
-            int serviceID = int.Parse(val); 
+            if (!int.TryParse(val, out int serviceID))
+            {
+                MessageBox.Show("Invalid ServiceID format. Please refresh the list and try again.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
 
-            
             DialogResult dialogResult = MessageBox.Show("Are you sure you want to delete this Service?", "Delete Service", MessageBoxButtons.YesNo);
 
             if (dialogResult == DialogResult.No)
             {
-                return; 
+                return;
             }
 
             var repo = new Servicesrepository();
-            repo.DeleteService(serviceID); 
+            repo.DeleteService(serviceID);
 
-            
-            ReadServices(); 
+            ReadServices();
         }
     }
 }

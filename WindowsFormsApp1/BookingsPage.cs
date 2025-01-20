@@ -30,7 +30,8 @@ namespace WindowsFormsApp1
             DataTable dataTable = new DataTable();
 
             dataTable.Columns.Add("BookingID");
-            dataTable.Columns.Add("ClientName");
+            dataTable.Columns.Add("ClientName");  // Add ClientName column
+            dataTable.Columns.Add("BookingReference");  // Add BookingReference column
             dataTable.Columns.Add("BookingDate");
             dataTable.Columns.Add("TotalAmount");
 
@@ -42,7 +43,8 @@ namespace WindowsFormsApp1
                 var row = dataTable.NewRow();
 
                 row["BookingID"] = booking.BookingID;
-                row["ClientName"] = booking.ClientName;
+                row["ClientName"] = booking.ClientName; // Populate ClientName
+                row["BookingReference"] = booking.BookingReference; // Populate BookingReference
                 row["BookingDate"] = booking.BookingDate;
                 row["TotalAmount"] = booking.TotalAmount;
 
@@ -54,6 +56,12 @@ namespace WindowsFormsApp1
             // Clear the selection after refreshing the data
             BookingsTable.ClearSelection();
 
+            // Optionally, hide the BookingID column
+            if (this.BookingsTable.Columns["BookingID"] != null)
+            {
+                this.BookingsTable.Columns["BookingID"].Visible = false;
+            }
+
         }
 
         private void bookingsBindingNavigatorSaveItem_Click(object sender, EventArgs e)
@@ -61,7 +69,6 @@ namespace WindowsFormsApp1
             this.Validate();
             this.bookingsBindingSource.EndEdit();
             this.tableAdapterManager.UpdateAll(this.alexisconstructionDBDataSet);
-
         }
 
         private void BookingsPage_Load(object sender, EventArgs e)

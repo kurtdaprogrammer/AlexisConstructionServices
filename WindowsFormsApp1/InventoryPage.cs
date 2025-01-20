@@ -22,33 +22,17 @@ namespace WindowsFormsApp1
             LoadServicesDropdown();
             ReadInventory();
             dataGridInventory.CellClick += InventoryGrid_CellClick;
+            this.txtSearchInventory.TextChanged += new System.EventHandler(this.txtSearchInventory_TextChanged);
+
         }
 
         private void ReadInventory()
         {
-            DataTable dataTable = new DataTable();
-
-            dataTable.Columns.Add("ToolID");
-            dataTable.Columns.Add("Tool Name");
-            dataTable.Columns.Add("Service Name");
-            dataTable.Columns.Add("Quantity Available");
-
             var repo = new InventoryRepository();
             var inventoryList = repo.GetInventories();
 
-            foreach (var inventory in inventoryList)
-            {
-                var row = dataTable.NewRow();
-
-                row["ToolID"] = inventory.ToolID;
-                row["Tool Name"] = inventory.ToolName;
-                row["Service Name"] = inventory.ServiceName; // Use ServiceName instead of ServiceID
-                row["Quantity Available"] = inventory.QuantityAvailable;
-
-                dataTable.Rows.Add(row);
-            }
-
-            this.dataGridInventory.DataSource = dataTable;  
+            // Initially display all items
+            DisplayInventory(inventoryList);    
 
         }
         private void LoadServicesDropdown()
@@ -108,6 +92,9 @@ namespace WindowsFormsApp1
                 // Refresh the DataGridView to show the updated inventory
                 ReadInventory();
                 MessageBox.Show("Tool added successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                // Clear the fields after adding the tool
+                ClearFields();
             }
             catch (Exception ex)
             {
@@ -164,32 +151,66 @@ namespace WindowsFormsApp1
         private void InventoryGrid_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             // Ensure the clicked row index is valid
-            if (e.RowIndex >= 0 && e.RowIndex < dataGridInventory.Rows.Count)
+            if (e.RowIndex >= 0)
             {
-                // Clear previous selection
-                dataGridInventory.ClearSelection();
-                dataGridInventory.Rows[e.RowIndex].Selected = true;
-
+                // Get the clicked row
                 var row = dataGridInventory.Rows[e.RowIndex];
 
-                // Safely extract row values
-                var toolIDValue = row.Cells["ToolID"].Value;
-                var toolNameValue = row.Cells["Tool Name"].Value;
-                var serviceNameValue = row.Cells["Service Name"].Value;
-                var quantityValue = row.Cells["Quantity Available"].Value;
+                // Check if the required values are present in the row
+                if (row.Cells["Tool Name"].Value != null)
+                {
+                    Tooltb.Text = row.Cells["Tool Name"].Value?.ToString();
+                }
 
-                // Log or use these values
-                Console.WriteLine($"ToolID: {toolIDValue}, ToolName: {toolNameValue}, ServiceName: {serviceNameValue}, Quantity: {quantityValue}");
+                if (row.Cells["Service Name"].Value != null)
+                {
+                    // Find the Service ID that corresponds to the selected service name
+                    string serviceName = row.Cells["Service Name"].Value?.ToString();
+                    var repo = new Servicesrepository();
+                    var services = repo.GetServices(); // Get all services from the repository
+                    var selectedService = services.FirstOrDefault(s => s.ServiceName == serviceName);
+
+                    if (selectedService != null)
+                    {
+                        servicecb.SelectedValue = selectedService.ServiceID; // Set the ComboBox value
+                    }
+                }
+
+                if (row.Cells["Quantity Available"].Value != null)
+                {
+                    numericUpDown1.Value = Convert.ToInt32(row.Cells["Quantity Available"].Value);
+                }
             }
-            else
+        }
+        private void dataGridInventory_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            // Ensure the clicked row index is valid
+            if (e.RowIndex >= 0)
             {
-                // If the click is invalid, skip processing
-                Console.WriteLine("Invalid row clicked.");
+                // Get the clicked row
+                var row = dataGridInventory.Rows[e.RowIndex];
+
+                // Check if the required values are present in the row
+                if (row.Cells["Tool Name"].Value != null)
+                {
+                    Tooltb.Text = row.Cells["Tool Name"].Value?.ToString();
+                }
+
+                if (row.Cells["Service Name"].Value != null)
+                {
+                    servicecb.SelectedValue = row.Cells["Service Name"].Value?.ToString();
+                }
+
+                if (row.Cells["Quantity Available"].Value != null)
+                {
+                    numericUpDown1.Value = Convert.ToInt32(row.Cells["Quantity Available"].Value);
+                }
             }
         }
 
         private void Update_Click(object sender, EventArgs e)
         {
+            // Check if a row is selected in the grid
             if (dataGridInventory.SelectedRows.Count == 0)
             {
                 MessageBox.Show("Please select a row to update.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -236,6 +257,9 @@ namespace WindowsFormsApp1
                 repo.UpdateTool(updatedInventory);
                 ReadInventory(); // Refresh the grid
                 MessageBox.Show("Tool updated successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                // Clear the fields after update
+                ClearFields();
             }
             catch (Exception ex)
             {
@@ -243,18 +267,58 @@ namespace WindowsFormsApp1
             }
         }
 
-        private void dataGridInventory_CellClick(object sender, DataGridViewCellEventArgs e)
+        private void ClearFields()
         {
-            if (e.RowIndex >= 0) // Ensure a valid row is clicked
-            {
-                var row = dataGridInventory.Rows[e.RowIndex];
+            Tooltb.Clear(); // Clear the Tool Name textbox
+            servicecb.SelectedIndex = -1; // Reset the service dropdown
+            numericUpDown1.Value = 0; // Reset the quantity numeric up-down
+        }
 
-                // Populate controls with the selected row's data
-                Tooltb.Text = row.Cells["Tool Name"].Value?.ToString();
-                servicecb.SelectedValue = row.Cells["Service Name"].Value; // Ensure ServiceID is stored as the ValueMember
-                numericUpDown1.Value = Convert.ToInt32(row.Cells["Quantity Available"].Value);
+      
+        private void txtSearchInventory_TextChanged(object sender, EventArgs e)
+        {
+            string searchText = txtSearchInventory.Text.Trim().ToLower();
+
+            // Filter the inventory list based on search text
+            var repo = new InventoryRepository();
+            var inventoryList = repo.GetInventories();
+
+            // Filter the list using LINQ
+            var filteredInventory = inventoryList
+                .Where(item => item.ToolID.ToString().Contains(searchText) || item.ToolName.ToLower().Contains(searchText))
+                .ToList();
+
+            // Reload the grid with filtered data
+            DisplayInventory(filteredInventory);
+        }
+        private void DisplayInventory(List<Inventory> inventoryList)
+        {
+            DataTable dataTable = new DataTable();
+
+            dataTable.Columns.Add("ToolID");
+            dataTable.Columns.Add("Tool Name");
+            dataTable.Columns.Add("Service Name");
+            dataTable.Columns.Add("Quantity Available");
+
+            foreach (var inventory in inventoryList)
+            {
+                var row = dataTable.NewRow();
+                row["ToolID"] = inventory.ToolID;
+                row["Tool Name"] = inventory.ToolName;
+                row["Service Name"] = inventory.ServiceName; // Ensure ServiceName is correctly mapped
+                row["Quantity Available"] = inventory.QuantityAvailable;
+
+                dataTable.Rows.Add(row);
+            }
+
+            this.dataGridInventory.DataSource = dataTable;
+
+            if (this.dataGridInventory.Columns["ToolID"] != null)
+            {
+                this.dataGridInventory.Columns["ToolID"].Visible = false;
             }
         }
+
 
     }
 }

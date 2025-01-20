@@ -91,8 +91,9 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.dataGridBilling.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dataGridBilling.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridBilling.Location = new System.Drawing.Point(12, 229);
+            this.dataGridBilling.Location = new System.Drawing.Point(12, 227);
             this.dataGridBilling.Name = "dataGridBilling";
+            this.dataGridBilling.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dataGridBilling.Size = new System.Drawing.Size(424, 366);
             this.dataGridBilling.TabIndex = 0;
             // 

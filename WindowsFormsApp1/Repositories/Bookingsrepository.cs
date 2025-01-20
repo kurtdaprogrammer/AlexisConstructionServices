@@ -14,33 +14,40 @@ namespace WindowsFormsApp1.Repositories
 
         public List<Booking> GetBookings()  // Changed method name to GetBookings
         {
-            var Bookinglist = new List<Booking>();  // List should hold Booking objects
+            var Bookinglist = new List<Booking>();
 
             try
             {
-                using (SqlConnection connection = new SqlConnection(connectionString))
+                using (var connection = new SqlConnection(connectionString))
                 {
                     connection.Open();
-
-                    string sql = @"
-                                SELECT b.BookingID, b.ClientID, b.BookingDate, b.TotalAmount, c.Name AS ClientName 
-                                FROM Bookings b
-                                JOIN Clients c ON b.ClientID = c.ClientID
-                                ORDER BY b.BookingID DESC";
-                    using (SqlCommand command = new SqlCommand(sql, connection))
+                    var query = @"
+                SELECT 
+                    b.BookingID, 
+                    b.ClientID, 
+                    b.BookingReference, 
+                    b.BookingDate, 
+                    b.TotalAmount, 
+                    c.Name AS ClientName
+                FROM 
+                    Bookings b
+                JOIN 
+                    Clients c ON b.ClientID = c.ClientID";
+                    using (var command = new SqlCommand(query, connection))
                     {
-                        using (SqlDataReader reader = command.ExecuteReader())
+                        using (var reader = command.ExecuteReader())
                         {
                             while (reader.Read())
                             {
-                                Booking bookings = new Booking();
-                                bookings.BookingID = reader.GetInt32(0);  
-                                bookings.ClientID = reader.GetInt32(1);  
-                                bookings.BookingDate = reader.GetDateTime(2);  
-                                bookings.TotalAmount = reader.GetDecimal(3);
-                                bookings.ClientName = reader.GetString(4);
-
-                                Bookinglist.Add(bookings);
+                                Bookinglist.Add(new Booking
+                                {
+                                    BookingID = reader.GetInt32(0),
+                                    ClientID = reader.GetInt32(1),
+                                    BookingReference = reader.IsDBNull(2) ? null : reader.GetString(2), // Handle potential null
+                                    BookingDate = reader.GetDateTime(3),
+                                    TotalAmount = reader.GetDecimal(4),
+                                    ClientName = reader.GetString(5) // Fetch the ClientName
+                                });
                             }
                         }
                     }
@@ -51,7 +58,7 @@ namespace WindowsFormsApp1.Repositories
                 Console.WriteLine("Exception: " + ex.Message);
             }
 
-            return Bookinglist;  // Return list of Booking objects
+            return Bookinglist;
         }
 
         public Booking GetBooking(int bookingID)
@@ -103,16 +110,23 @@ namespace WindowsFormsApp1.Repositories
         {
             try
             {
-                using (SqlConnection connection = new SqlConnection(connectionString))
+                using (var connection = new SqlConnection(connectionString))
                 {
                     connection.Open();
-                    string sql = "INSERT INTO Bookings (ClientID, BookingDate, TotalAmount) VALUES (@ClientID, @BookingDate, @TotalAmount);";
 
-                    using (SqlCommand command = new SqlCommand(sql, connection))
+                    // Generate a unique BookingReference
+                    string bookingReference = GenerateBookingReference();
+
+                    string sql = @"
+                INSERT INTO Bookings (ClientID, BookingDate, TotalAmount, BookingReference) 
+                VALUES (@ClientID, @BookingDate, @TotalAmount, @BookingReference);";
+
+                    using (var command = new SqlCommand(sql, connection))
                     {
-                        command.Parameters.AddWithValue("@ClientID", booking.ClientID); 
-                        command.Parameters.AddWithValue("@BookingDate", booking.BookingDate); 
-                        command.Parameters.AddWithValue("@TotalAmount", booking.TotalAmount); 
+                        command.Parameters.AddWithValue("@ClientID", booking.ClientID);
+                        command.Parameters.AddWithValue("@BookingDate", booking.BookingDate);
+                        command.Parameters.AddWithValue("@TotalAmount", booking.TotalAmount);
+                        command.Parameters.AddWithValue("@BookingReference", bookingReference);
 
                         command.ExecuteNonQuery();
                     }
@@ -120,8 +134,14 @@ namespace WindowsFormsApp1.Repositories
             }
             catch (Exception ex)
             {
-                Console.WriteLine("Exception " + ex.Message);
+                Console.WriteLine("Exception: " + ex.Message);
             }
+        }
+
+        // Helper method to generate a unique BookingReference
+        private string GenerateBookingReference()
+        {
+            return "REF" + DateTime.Now.Ticks.ToString().Substring(10); // Simple example, customize as needed
         }
 
         public void DeleteBooking(int BookingID)
