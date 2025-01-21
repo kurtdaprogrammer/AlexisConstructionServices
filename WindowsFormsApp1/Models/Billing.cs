@@ -14,5 +14,7 @@ namespace WindowsFormsApp1.Models
         public decimal AmountPaid { get; set; }
         public string PaymentStatus { get; set; }
         public string BillingReference { get; set; }
+        public string BookingReference   { get; set; }
+        public string ClientName { get; set; }
     }
 }

@@ -33,6 +33,7 @@
             System.Windows.Forms.Label addressLabel;
             System.Windows.Forms.Label label1;
             System.Windows.Forms.Label label3;
+            System.Windows.Forms.Label label4;
             this.dataGridBilling = new System.Windows.Forms.DataGridView();
             this.label2 = new System.Windows.Forms.Label();
             this.Update = new System.Windows.Forms.Button();
@@ -43,22 +44,24 @@
             this.amtpaidtb = new System.Windows.Forms.TextBox();
             this.cbBookingID = new System.Windows.Forms.ComboBox();
             this.ClientNametb = new System.Windows.Forms.TextBox();
+            this.Searchbox = new System.Windows.Forms.TextBox();
             bookingid = new System.Windows.Forms.Label();
             contactLabel = new System.Windows.Forms.Label();
             addressLabel = new System.Windows.Forms.Label();
             label1 = new System.Windows.Forms.Label();
             label3 = new System.Windows.Forms.Label();
+            label4 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridBilling)).BeginInit();
             this.SuspendLayout();
             // 
             // bookingid
             // 
             bookingid.AutoSize = true;
-            bookingid.Location = new System.Drawing.Point(12, 52);
+            bookingid.Location = new System.Drawing.Point(12, 51);
             bookingid.Name = "bookingid";
-            bookingid.Size = new System.Drawing.Size(63, 13);
+            bookingid.Size = new System.Drawing.Size(102, 13);
             bookingid.TabIndex = 17;
-            bookingid.Text = "Booking ID:";
+            bookingid.Text = "Booking Reference:";
             // 
             // contactLabel
             // 
@@ -103,17 +106,17 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.dataGridBilling.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dataGridBilling.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridBilling.Location = new System.Drawing.Point(442, 48);
+            this.dataGridBilling.Location = new System.Drawing.Point(442, 75);
             this.dataGridBilling.Name = "dataGridBilling";
             this.dataGridBilling.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dataGridBilling.Size = new System.Drawing.Size(481, 417);
+            this.dataGridBilling.Size = new System.Drawing.Size(481, 390);
             this.dataGridBilling.TabIndex = 0;
             // 
             // label2
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(283, 9);
+            this.label2.Location = new System.Drawing.Point(379, 9);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(126, 25);
             this.label2.TabIndex = 26;
@@ -122,7 +125,7 @@
             // Update
             // 
             this.Update.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.Update.Location = new System.Drawing.Point(106, 194);
+            this.Update.Location = new System.Drawing.Point(90, 194);
             this.Update.Name = "Update";
             this.Update.Size = new System.Drawing.Size(86, 24);
             this.Update.TabIndex = 30;
@@ -161,40 +164,58 @@
             // 
             // amttb
             // 
-            this.amttb.Location = new System.Drawing.Point(102, 101);
+            this.amttb.Location = new System.Drawing.Point(120, 101);
             this.amttb.Name = "amttb";
             this.amttb.ReadOnly = true;
-            this.amttb.Size = new System.Drawing.Size(322, 20);
+            this.amttb.Size = new System.Drawing.Size(304, 20);
             this.amttb.TabIndex = 34;
             // 
             // amtpaidtb
             // 
-            this.amtpaidtb.Location = new System.Drawing.Point(102, 130);
+            this.amtpaidtb.Location = new System.Drawing.Point(120, 130);
             this.amtpaidtb.Name = "amtpaidtb";
-            this.amtpaidtb.Size = new System.Drawing.Size(322, 20);
+            this.amtpaidtb.Size = new System.Drawing.Size(304, 20);
             this.amtpaidtb.TabIndex = 35;
             // 
             // cbBookingID
             // 
             this.cbBookingID.FormattingEnabled = true;
-            this.cbBookingID.Location = new System.Drawing.Point(102, 48);
+            this.cbBookingID.Location = new System.Drawing.Point(120, 48);
             this.cbBookingID.Name = "cbBookingID";
-            this.cbBookingID.Size = new System.Drawing.Size(322, 21);
+            this.cbBookingID.Size = new System.Drawing.Size(304, 21);
             this.cbBookingID.TabIndex = 36;
             // 
             // ClientNametb
             // 
-            this.ClientNametb.Location = new System.Drawing.Point(102, 75);
+            this.ClientNametb.Location = new System.Drawing.Point(120, 75);
             this.ClientNametb.Name = "ClientNametb";
             this.ClientNametb.ReadOnly = true;
-            this.ClientNametb.Size = new System.Drawing.Size(322, 20);
+            this.ClientNametb.Size = new System.Drawing.Size(304, 20);
             this.ClientNametb.TabIndex = 37;
+            // 
+            // Searchbox
+            // 
+            this.Searchbox.Location = new System.Drawing.Point(718, 48);
+            this.Searchbox.Name = "Searchbox";
+            this.Searchbox.Size = new System.Drawing.Size(205, 20);
+            this.Searchbox.TabIndex = 39;
+            // 
+            // label4
+            // 
+            label4.AutoSize = true;
+            label4.Location = new System.Drawing.Point(668, 51);
+            label4.Name = "label4";
+            label4.Size = new System.Drawing.Size(44, 13);
+            label4.TabIndex = 40;
+            label4.Text = "Search:";
             // 
             // BillingPage
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(951, 494);
+            this.Controls.Add(label4);
+            this.Controls.Add(this.Searchbox);
             this.Controls.Add(label3);
             this.Controls.Add(this.ClientNametb);
             this.Controls.Add(this.cbBookingID);
@@ -230,5 +251,6 @@
         private System.Windows.Forms.TextBox amtpaidtb;
         private System.Windows.Forms.ComboBox cbBookingID;
         private System.Windows.Forms.TextBox ClientNametb;
+        private System.Windows.Forms.TextBox Searchbox;
     }
 }

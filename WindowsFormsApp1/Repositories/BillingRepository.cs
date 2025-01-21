@@ -26,7 +26,12 @@ namespace WindowsFormsApp1.Repositories
                 using (SqlConnection connection = new SqlConnection(connectionString))
                 {
                     connection.Open();
-                    string sql = "SELECT BillingID, BookingID, AmountDue, AmountPaid, PaymentStatus, BillingReference FROM Billings";
+                    string sql = @"
+                SELECT b.BillingID, b.BookingID, b.AmountDue, b.AmountPaid, b.PaymentStatus, b.BillingReference, c.Name AS ClientName
+                FROM Billings b
+                INNER JOIN Bookings bo ON b.BookingID = bo.BookingID
+                INNER JOIN Clients c ON bo.ClientID = c.ClientID";
+
                     using (SqlCommand command = new SqlCommand(sql, connection))
                     {
                         using (SqlDataReader reader = command.ExecuteReader())
@@ -40,7 +45,8 @@ namespace WindowsFormsApp1.Repositories
                                     AmountDue = reader.GetDecimal(2),
                                     AmountPaid = reader.GetDecimal(3),
                                     PaymentStatus = reader.GetString(4),
-                                    BillingReference = reader.GetString(5)  // Ensure this line correctly maps the BillingReference
+                                    BillingReference = reader.GetString(5),
+                                    ClientName = reader.GetString(reader.GetOrdinal("ClientName")) // Assuming ClientName exists in query
                                 };
                                 billingList.Add(billing);
                             }
@@ -57,6 +63,13 @@ namespace WindowsFormsApp1.Repositories
 
         public void CreateBilling(Billing billing)
         {
+            // Check if the BillingReference is null or empty
+            if (string.IsNullOrEmpty(billing.BillingReference))
+            {
+                // Generate a new BillingReference if not provided
+                billing.BillingReference = GenerateBillingReference();
+            }
+
             using (var connection = new SqlConnection(connectionString))
             {
                 string query = "INSERT INTO Billings (BookingID, AmountDue, AmountPaid, PaymentStatus, BillingReference) " +

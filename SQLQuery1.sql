@@ -1,2 +1,2 @@
-﻿ALTER TABLE Bookings
-ADD CONSTRAINT UQ_BookingReference UNIQUE (BookingReference);
+﻿ALTER TABLE Billings
+ADD BillingReference NVARCHAR(50) NOT NULL DEFAULT 'N/A';

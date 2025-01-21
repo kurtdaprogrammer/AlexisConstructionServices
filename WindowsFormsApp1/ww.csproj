@@ -57,6 +57,12 @@
     <Compile Include="BillingPage.Designer.cs">
       <DependentUpon>BillingPage.cs</DependentUpon>
     </Compile>
+    <Compile Include="BillingUpdateForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="BillingUpdateForm.Designer.cs">
+      <DependentUpon>BillingUpdateForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="BookingDetailsForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -117,6 +123,9 @@
     </Compile>
     <EmbeddedResource Include="BillingPage.resx">
       <DependentUpon>BillingPage.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="BillingUpdateForm.resx">
+      <DependentUpon>BillingUpdateForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="BookingDetailsForm.resx">
       <DependentUpon>BookingDetailsForm.cs</DependentUpon>
