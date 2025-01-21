@@ -43,10 +43,63 @@ namespace WindowsFormsApp1.Repositories
                                 {
                                     BookingID = reader.GetInt32(0),
                                     ClientID = reader.GetInt32(1),
-                                    BookingReference = reader.IsDBNull(2) ? null : reader.GetString(2), // Handle potential null
+                                    BookingReference = reader.IsDBNull(2) ? null : reader.GetString(2),
                                     BookingDate = reader.GetDateTime(3),
                                     TotalAmount = reader.GetDecimal(4),
                                     ClientName = reader.GetString(5) // Fetch the ClientName
+                                });
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Exception: " + ex.Message);
+            }
+
+            return Bookinglist;
+        }
+        public List<Booking> SearchBookings(string searchTerm)
+        {
+            var Bookinglist = new List<Booking>();
+
+            try
+            {
+                using (var connection = new SqlConnection(connectionString))
+                {
+                    connection.Open();
+                    var query = @"
+                SELECT 
+                    b.BookingID, 
+                    b.ClientID, 
+                    b.BookingReference, 
+                    b.BookingDate, 
+                    b.TotalAmount, 
+                    c.Name AS ClientName
+                FROM 
+                    Bookings b
+                JOIN 
+                    Clients c ON b.ClientID = c.ClientID
+                WHERE 
+                    c.Name LIKE @SearchTerm OR b.BookingReference LIKE @SearchTerm";
+
+                    using (var command = new SqlCommand(query, connection))
+                    {
+                        command.Parameters.AddWithValue("@SearchTerm", "%" + searchTerm + "%");
+
+                        using (var reader = command.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                Bookinglist.Add(new Booking
+                                {
+                                    BookingID = reader.GetInt32(0),
+                                    ClientID = reader.GetInt32(1),
+                                    BookingReference = reader.IsDBNull(2) ? null : reader.GetString(2),
+                                    BookingDate = reader.GetDateTime(3),
+                                    TotalAmount = reader.GetDecimal(4),
+                                    ClientName = reader.GetString(5)
                                 });
                             }
                         }
@@ -207,9 +260,9 @@ namespace WindowsFormsApp1.Repositories
 
                     // Query to check if there is already a booking on the selected date for the specific client
                     string sql = @"
-                SELECT COUNT(1)
-                FROM Bookings
-                WHERE ClientID = @ClientID AND CAST(BookingDate AS DATE) = @BookingDate";
+                            SELECT COUNT(1)
+                            FROM Bookings
+                            WHERE ClientID = @ClientID AND CAST(BookingDate AS DATE) = @BookingDate";
 
                     using (SqlCommand command = new SqlCommand(sql, connection))
                     {

@@ -1,1 +1,2 @@
-﻿SELECT * FROM Services ORDER BY ServiceID DESC
+﻿ALTER TABLE Bookings
+ADD CONSTRAINT UQ_BookingReference UNIQUE (BookingReference);

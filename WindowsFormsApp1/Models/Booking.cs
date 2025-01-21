@@ -12,7 +12,7 @@ namespace WindowsFormsApp1.Models
 
         public int BookingID { get; set; }
         public int ClientID { get; set; }
-        public string BookingReference { get; set; } // Add the BookingReference property
+        public string BookingReference { get; set; } = "DefaultReference";
         public DateTime BookingDate { get; set; }
 
         // Validate setting the TotalAmount field

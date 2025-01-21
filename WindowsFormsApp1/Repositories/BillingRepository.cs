@@ -4,6 +4,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using WindowsFormsApp1.Models;
 
 namespace WindowsFormsApp1.Repositories
@@ -11,6 +12,11 @@ namespace WindowsFormsApp1.Repositories
     public class BillingRepository
     {
         private readonly string connectionString = "Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=AlexisconstructionDB;Integrated Security=True";
+        // Method to generate a unique BillingReference
+        private string GenerateBillingReference()
+        {
+            return "BILL" + DateTime.Now.Ticks.ToString().Substring(10); // Example: "BILL" followed by a unique timestamp
+        }
 
         public List<Billing> GetBillings()
         {
@@ -20,7 +26,7 @@ namespace WindowsFormsApp1.Repositories
                 using (SqlConnection connection = new SqlConnection(connectionString))
                 {
                     connection.Open();
-                    string sql = "SELECT * FROM Billings";
+                    string sql = "SELECT BillingID, BookingID, AmountDue, AmountPaid, PaymentStatus, BillingReference FROM Billings";
                     using (SqlCommand command = new SqlCommand(sql, connection))
                     {
                         using (SqlDataReader reader = command.ExecuteReader())
@@ -33,7 +39,8 @@ namespace WindowsFormsApp1.Repositories
                                     BookingID = reader.GetInt32(1),
                                     AmountDue = reader.GetDecimal(2),
                                     AmountPaid = reader.GetDecimal(3),
-                                    PaymentStatus = reader.GetString(4)
+                                    PaymentStatus = reader.GetString(4),
+                                    BillingReference = reader.GetString(5)  // Ensure this line correctly maps the BillingReference
                                 };
                                 billingList.Add(billing);
                             }
@@ -50,29 +57,20 @@ namespace WindowsFormsApp1.Repositories
 
         public void CreateBilling(Billing billing)
         {
-            try
+            using (var connection = new SqlConnection(connectionString))
             {
-                using (SqlConnection connection = new SqlConnection(connectionString))
-                {
-                    connection.Open();
-                    string sql = @"
-                INSERT INTO Billings (BookingID, AmountDue, AmountPaid, PaymentStatus)
-                VALUES (@BookingID, @AmountDue, @AmountPaid, @PaymentStatus)";
+                string query = "INSERT INTO Billings (BookingID, AmountDue, AmountPaid, PaymentStatus, BillingReference) " +
+                               "VALUES (@BookingID, @AmountDue, @AmountPaid, @PaymentStatus, @BillingReference)";
 
-                    using (SqlCommand command = new SqlCommand(sql, connection))
-                    {
-                        command.Parameters.AddWithValue("@BookingID", billing.BookingID);
-                        command.Parameters.AddWithValue("@AmountDue", billing.AmountDue);
-                        command.Parameters.AddWithValue("@AmountPaid", billing.AmountPaid);
-                        command.Parameters.AddWithValue("@PaymentStatus", billing.PaymentStatus);
+                var command = new SqlCommand(query, connection);
+                command.Parameters.AddWithValue("@BookingID", billing.BookingID);
+                command.Parameters.AddWithValue("@AmountDue", billing.AmountDue);
+                command.Parameters.AddWithValue("@AmountPaid", billing.AmountPaid);
+                command.Parameters.AddWithValue("@PaymentStatus", billing.PaymentStatus);
+                command.Parameters.AddWithValue("@BillingReference", billing.BillingReference); // Add BillingReference parameter
 
-                        command.ExecuteNonQuery();
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine("Exception: " + ex.Message);
+                connection.Open();
+                command.ExecuteNonQuery();
             }
         }
 
@@ -136,7 +134,46 @@ namespace WindowsFormsApp1.Repositories
                 Console.WriteLine($"Exception: {ex.Message}");
             }
         }
+        public Billing GetBillingByBookingID(int bookingID)
+        {
+            Billing billing = null;
 
+
+
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                // SQL query to get the billing details by BookingID
+                string query = "SELECT BillingID, BookingID, AmountDue, AmountPaid, PaymentStatus FROM Billings WHERE BookingID = @BookingID";
+
+                SqlCommand command = new SqlCommand(query, connection);
+                command.Parameters.AddWithValue("@BookingID", bookingID);
+
+                try
+                {
+                    connection.Open();
+                    SqlDataReader reader = command.ExecuteReader();
+
+                    if (reader.HasRows)
+                    {
+                        reader.Read();
+                        billing = new Billing
+                        {
+                            BillingID = reader.GetInt32(reader.GetOrdinal("BillingID")),
+                            BookingID = reader.GetInt32(reader.GetOrdinal("BookingID")),
+                            AmountDue = reader.GetDecimal(reader.GetOrdinal("AmountDue")),
+                            AmountPaid = reader.GetDecimal(reader.GetOrdinal("AmountPaid")),
+                            PaymentStatus = reader.GetString(reader.GetOrdinal("PaymentStatus"))
+                        };
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Error retrieving billing data: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+
+            return billing;
+        }
 
     }
 }

@@ -15,58 +15,69 @@ namespace WindowsFormsApp1
     public partial class BillingPage : Form
     {
         private BillingRepository billingRepo = new BillingRepository();
+        private Bookingsrepository bookingsRepo = new Bookingsrepository();
         public BillingPage()
         {
             InitializeComponent();
-            dataGridBilling.CellClick += dataGridBilling_CellClick;  // Add this line
             LoadBookingsDropdown();
+            cbBookingID.SelectedIndexChanged += cbBookingID_SelectedIndexChanged;
             LoadBillingData();
         }
         // Load Billing data into DataGridView
         private void LoadBillingData()
         {
-            var billingData = billingRepo.GetBillings();
-            var dataTable = new DataTable();
+            DataTable dataTable = new DataTable();
 
             dataTable.Columns.Add("BillingID");
             dataTable.Columns.Add("BookingID");
-            dataTable.Columns.Add("Amount Due");
-            dataTable.Columns.Add("Amount Paid");
-            dataTable.Columns.Add("Payment Status");
+            dataTable.Columns.Add("BillingReference");  // Add BillingReference column
+            dataTable.Columns.Add("AmountDue");
+            dataTable.Columns.Add("AmountPaid");
+            dataTable.Columns.Add("PaymentStatus");
 
-            foreach (var billing in billingData)
+            var repo = new BillingRepository();
+            var billings = repo.GetBillings();
+
+            foreach (var billing in billings)
             {
                 var row = dataTable.NewRow();
+
                 row["BillingID"] = billing.BillingID;
                 row["BookingID"] = billing.BookingID;
-                row["Amount Due"] = billing.AmountDue;
-                row["Amount Paid"] = billing.AmountPaid;
-                row["Payment Status"] = billing.PaymentStatus;
+                row["BillingReference"] = billing.BillingReference ?? "N/A";  // Ensure null is handled
+                row["AmountDue"] = billing.AmountDue;
+                row["AmountPaid"] = billing.AmountPaid;
+                row["PaymentStatus"] = billing.PaymentStatus;
+
                 dataTable.Rows.Add(row);
             }
 
-            dataGridBilling.DataSource = dataTable;
+            this.dataGridBilling.DataSource = dataTable;
 
-            // Set SelectionMode to FullRowSelect
-            dataGridBilling.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            // Clear the selection after refreshing the data
+            dataGridBilling.ClearSelection();
 
-            // Optionally, you can also set ReadOnly if you want
-            dataGridBilling.ReadOnly = true;
+            
+            if (this.dataGridBilling.Columns["BookingID"] != null)
+            {
+                this.dataGridBilling.Columns["BookingID"].Visible = false;
+            }
+            if (this.dataGridBilling.Columns["BillingID"] != null)
+            {
+                this.dataGridBilling.Columns["BillingID"].Visible = false;
+            }
+
+
         }
         // Load Booking IDs into ComboBox
         private void LoadBookingsDropdown()
         {
-            // Assuming you have a Bookingsrepository that fetches bookings from your database or another source
-            var bookingsRepo = new Bookingsrepository();
             var bookings = bookingsRepo.GetBookings(); // Get all bookings from the repository
 
             // Bind the ComboBox to the list of bookings
             cbBookingID.DataSource = bookings;
             cbBookingID.DisplayMember = "BookingID";  // Display BookingID in the dropdown
             cbBookingID.ValueMember = "BookingID";    // Use BookingID as the ValueMember to bind
-
-            // Optionally, you can set an event listener here if needed
-            cbBookingID.SelectedIndexChanged += cbBookingID_SelectedIndexChanged;
         }
         // Event Handler to Display Amount Due for Selected Booking
         private void cbBookingID_SelectedIndexChanged(object sender, EventArgs e)
@@ -75,16 +86,20 @@ namespace WindowsFormsApp1
                 return;
 
             int selectedBookingID = Convert.ToInt32(cbBookingID.SelectedValue);
-            var bookingsRepo = new Bookingsrepository();
+
+            // Fetch the corresponding booking details
             var booking = bookingsRepo.GetBooking(selectedBookingID);
 
+            // If booking is found, set the Client Name and Amount Due
             if (booking != null)
             {
-                amttb.Text = booking.TotalAmount.ToString("0.00"); // Display the TotalAmount as Amount Due
+                ClientNametb.Text = booking.ClientName; // Display the Client Name
+                amttb.Text = booking.TotalAmount.ToString("0.00"); // Display the Total Amount as Amount Due
             }
             else
             {
-                amttb.Text = "0.00"; // Default if no booking is found
+                ClientNametb.Text = ""; // Default to empty if booking is not found
+                amttb.Text = "0.00"; // Default to "0.00" if Amount Due is not found
             }
         }
         
@@ -97,7 +112,7 @@ namespace WindowsFormsApp1
                 if (cbBookingID.SelectedIndex == -1)
                 {
                     MessageBox.Show("Please select a booking from the dropdown.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return;  // Stop execution if no BookingID is selected
+                    return;
                 }
 
                 // Check if Amount Paid is entered, if not, set it to 0
@@ -110,13 +125,17 @@ namespace WindowsFormsApp1
                 // Set the label to show the payment status
                 paymentlabel.Text = paymentStatus;
 
+                // Generate a unique BillingReference
+                string billingReference = "BILL-" + DateTime.Now.ToString("yyyyMMddHHmmss");
+
                 // Create a new Billing object
                 Billing billing = new Billing
                 {
                     BookingID = Convert.ToInt32(cbBookingID.SelectedValue),
                     AmountDue = amountDue,
                     AmountPaid = amountPaid,
-                    PaymentStatus = paymentStatus // Automatically set the Payment Status
+                    PaymentStatus = paymentStatus,
+                    BillingReference = billingReference
                 };
 
                 // Call the repository to create the billing record
@@ -127,6 +146,9 @@ namespace WindowsFormsApp1
 
                 // Reload the billing data in the grid
                 LoadBillingData();
+
+                // Clear fields after adding
+                ClearFields();
             }
             catch (FormatException)
             {
@@ -146,7 +168,6 @@ namespace WindowsFormsApp1
                 return;
             }
 
-            // Get the selected row from the DataGrid
             var selectedRow = dataGridBilling.SelectedRows[0];
             int billingID = Convert.ToInt32(selectedRow.Cells["BillingID"].Value);
 
@@ -156,44 +177,37 @@ namespace WindowsFormsApp1
                 if (cbBookingID.SelectedIndex == -1)
                 {
                     MessageBox.Show("Please select a booking from the dropdown.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return;  // Stop execution if no BookingID is selected
+                    return;
                 }
 
-                // Check if Amount Paid is entered, if not, set it to 0
                 decimal amountPaid = string.IsNullOrEmpty(amtpaidtb.Text) ? 0 : decimal.Parse(amtpaidtb.Text);
-
-                // Check if Amount Due is provided, it should not be empty
                 decimal amountDue = decimal.Parse(amttb.Text);
+
                 if (amountDue <= 0)
                 {
                     MessageBox.Show("Amount Due should be greater than zero.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return; // Stop execution if Amount Due is invalid
+                    return;
                 }
 
-                // Check if Amount Paid is greater than or equal to Amount Due
                 string paymentStatus = amountPaid >= amountDue ? "Paid" : "Pending";
-
-                // Set the label to show the payment status
                 paymentlabel.Text = paymentStatus;
 
-                // Create a new Billing object with the updated data
                 Billing billing = new Billing
                 {
                     BillingID = billingID,
                     BookingID = Convert.ToInt32(cbBookingID.SelectedValue),
                     AmountDue = amountDue,
                     AmountPaid = amountPaid,
-                    PaymentStatus = paymentStatus // Automatically set the Payment Status
+                    PaymentStatus = paymentStatus
                 };
 
-                // Call the repository to update the billing record
                 billingRepo.UpdateBilling(billing);
 
-                // Show success message
                 MessageBox.Show("Billing record updated successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-                // Reload the billing data in the grid
                 LoadBillingData();
+
+                ClearFields(); // Clear fields after updating
             }
             catch (FormatException)
             {
@@ -209,28 +223,60 @@ namespace WindowsFormsApp1
         // Populate fields when a DataGrid row is clicked
         private void dataGridBilling_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            // Ensure a valid row is clicked
-            if (e.RowIndex >= 0)
+            // Ensure the clicked row index is valid
+            if (e.RowIndex >= 0 && e.RowIndex < dataGridBilling.Rows.Count)
             {
+                // Clear previous selection
+                dataGridBilling.ClearSelection();
+                dataGridBilling.Rows[e.RowIndex].Selected = true;
+
                 var row = dataGridBilling.Rows[e.RowIndex];
 
-                // Ensure the Value is being properly set
-                if (row.Cells["BookingID"].Value != DBNull.Value)
+                // Safely extract row values
+                var bookingIDValue = row.Cells["BookingID"].Value;
+                var billingReferenceValue = row.Cells["BillingReference"].Value;
+                var amountDueValue = row.Cells["AmountDue"].Value;
+                var amountPaidValue = row.Cells["AmountPaid"].Value;
+                var paymentStatusValue = row.Cells["PaymentStatus"].Value;
+
+                // Log or use these values for debugging
+                Console.WriteLine($"BookingID: {bookingIDValue}, BillingReference: {billingReferenceValue}, AmountDue: {amountDueValue}, AmountPaid: {amountPaidValue}, PaymentStatus: {paymentStatusValue}");
+
+                // Set the ComboBox value to the BookingID from the row
+                cbBookingID.SelectedValue = bookingIDValue; // Select the appropriate BookingID in the ComboBox
+
+                // Manually trigger the SelectedIndexChanged event to update textboxes
+                cbBookingID_SelectedIndexChanged(sender, e);
+
+                // Populate the textboxes and labels with this billing data
+                amttb.Text = amountDueValue.ToString(); // Amount Due
+                amtpaidtb.Text = amountPaidValue.ToString(); // Amount Paid
+                paymentlabel.Text = paymentStatusValue.ToString(); // Payment Status
+
+                // If you want to populate the Client Name, you should fetch the booking details using the BookingID
+                var booking = bookingsRepo.GetBooking(Convert.ToInt32(bookingIDValue));
+
+                if (booking != null)
                 {
-                    int bookingID = Convert.ToInt32(row.Cells["BookingID"].Value);  // Convert to correct type
-                    cbBookingID.SelectedValue = bookingID;  // Set ComboBox selected value
+                    ClientNametb.Text = booking.ClientName; // Set the client name from the booking
                 }
-
-                // Populate Amount Due and Amount Paid textboxes
-                amttb.Text = row.Cells["Amount Due"].Value.ToString();
-                amtpaidtb.Text = row.Cells["Amount Paid"].Value.ToString();
-
-                // Set the Payment Status label based on row data
-                paymentlabel.Text = row.Cells["Payment Status"].Value.ToString();
+                else
+                {
+                    ClientNametb.Clear(); // Clear the client name textbox if no booking is found
+                }
             }
         }
+     
+        private void ClearFields()
+        {
+            cbBookingID.SelectedIndex = -1; // Clear ComboBox selection
+            amttb.Clear(); // Clear Amount Due textbox
+            amtpaidtb.Clear(); // Clear Amount Paid textbox
+            paymentlabel.Text = ""; // Clear Payment Status label
+            ClientNametb.Clear(); // Clear Client Name textbox
+        }
 
-        private void btnDeleteTool_Click(object sender, EventArgs e)
+        private void btnDeleteTool_Click_1(object sender, EventArgs e)
         {
             if (dataGridBilling.SelectedRows.Count == 0)
             {
@@ -250,7 +296,5 @@ namespace WindowsFormsApp1
                 LoadBillingData();
             }
         }
-
-       
     }
 }

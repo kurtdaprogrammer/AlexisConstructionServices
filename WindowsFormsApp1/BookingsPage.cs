@@ -17,11 +17,8 @@ namespace WindowsFormsApp1
         public BookingsPage()
         {
             InitializeComponent();
-
-            // Attach event handlers
             BookingsTable.CellClick += BookingsTable_CellClick;
-        
-
+            txtSearch.TextChanged += TxtSearch_TextChanged;
             ReadBookings();
         }
 
@@ -42,9 +39,9 @@ namespace WindowsFormsApp1
             {
                 var row = dataTable.NewRow();
 
+                row["BookingReference"] = booking.BookingReference ?? "N/A";  // Ensure null is handled
                 row["BookingID"] = booking.BookingID;
-                row["ClientName"] = booking.ClientName; // Populate ClientName
-                row["BookingReference"] = booking.BookingReference; // Populate BookingReference
+                row["ClientName"] = booking.ClientName;
                 row["BookingDate"] = booking.BookingDate;
                 row["TotalAmount"] = booking.TotalAmount;
 
@@ -228,6 +225,50 @@ namespace WindowsFormsApp1
             clientcmb.DataSource = clients;
             clientcmb.DisplayMember = "Name"; // Display the client name
             clientcmb.ValueMember = "ClientID";    // Store the ClientID in the value of ComboBox
+        }
+        private void TxtSearch_TextChanged(object sender, EventArgs e)
+        {
+            string searchText = txtSearch.Text.Trim(); // Get the search text
+
+            var repo = new Bookingsrepository();
+            var searchResults = repo.SearchBookings(searchText); // Search based on input
+
+            // Update the DataGridView with the search results
+            UpdateBookingTable(searchResults);
+        }
+        // Helper method to update the DataGridView with a list of bookings
+        private void UpdateBookingTable(List<Booking> bookings)
+        {
+            DataTable dataTable = new DataTable();
+
+            dataTable.Columns.Add("BookingID");
+            dataTable.Columns.Add("ClientName");
+            dataTable.Columns.Add("BookingReference");
+            dataTable.Columns.Add("BookingDate");
+            dataTable.Columns.Add("TotalAmount");
+
+            foreach (var booking in bookings)
+            {
+                var row = dataTable.NewRow();
+
+                row["BookingID"] = booking.BookingID;
+                row["ClientName"] = booking.ClientName;
+                row["BookingReference"] = booking.BookingReference;
+                row["BookingDate"] = booking.BookingDate;
+                row["TotalAmount"] = booking.TotalAmount;
+
+                dataTable.Rows.Add(row);
+            }
+
+            BookingsTable.DataSource = dataTable;
+
+            // Hide the BookingID column
+            if (BookingsTable.Columns["BookingID"] != null)
+            {
+                BookingsTable.Columns["BookingID"].Visible = false;
+            }
+
+            BookingsTable.ClearSelection(); // Clear selection after updating
         }
     }
 }

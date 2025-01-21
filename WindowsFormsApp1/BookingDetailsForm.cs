@@ -31,7 +31,7 @@ namespace WindowsFormsApp1
                 return; // Prevent further execution
             }
 
-            bookingidtb.Text = _currentBooking.BookingID.ToString();
+           
             clienttb.Text = _currentBooking.ClientName;
             bookingtb.Value = _currentBooking.BookingDate;
             totalamounttb.Text = _currentBooking.TotalAmount.ToString("F2");

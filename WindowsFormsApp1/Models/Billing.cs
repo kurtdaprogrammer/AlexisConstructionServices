@@ -8,10 +8,11 @@ namespace WindowsFormsApp1.Models
 {
     public class Billing
     {
-        public int BillingID { get; set; } // Primary Key
-        public int BookingID { get; set; } // Foreign Key from Bookings Table
-        public decimal AmountDue { get; set; } // Total amount due
-        public decimal AmountPaid { get; set; } // Amount paid so far
-        public string PaymentStatus { get; set; } // Status (Paid/Pending)
+        public int BillingID { get; set; }
+        public int BookingID { get; set; }
+        public decimal AmountDue { get; set; }
+        public decimal AmountPaid { get; set; }
+        public string PaymentStatus { get; set; }
+        public string BillingReference { get; set; }
     }
 }
