@@ -12,7 +12,6 @@ namespace WindowsFormsApp1.Repositories
 {
     public class Clientrepository
     {
-        private readonly string connectionString = "Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=AlexisconstructionDB;Integrated Security=True";
 
         public List<Client> GetClients()
         {
@@ -21,7 +20,7 @@ namespace WindowsFormsApp1.Repositories
 
             try
             {
-                using (SqlConnection connection = new SqlConnection(connectionString))
+                using (SqlConnection connection = new SqlConnection(Properties.Settings.Default.AlexisconstructionDBConnectionString))
                 {
                     connection.Open();
 
@@ -57,7 +56,7 @@ namespace WindowsFormsApp1.Repositories
         {
             try
             {
-                using (SqlConnection connection = new SqlConnection(connectionString))
+                using (SqlConnection connection = new SqlConnection(Properties.Settings.Default.AlexisconstructionDBConnectionString))
                 {
                     connection.Open();
                     string sql = ALEXISMessages.SelectGetClients;
@@ -92,7 +91,7 @@ namespace WindowsFormsApp1.Repositories
         {
             try
             {
-                using (SqlConnection connection = new SqlConnection(connectionString))
+                using (SqlConnection connection = new SqlConnection(Properties.Settings.Default.AlexisconstructionDBConnectionString))
                 {
                     connection.Open();
                     string sql = ALEXISMessages.CreateClient;
@@ -117,7 +116,7 @@ namespace WindowsFormsApp1.Repositories
         {
             try
             {
-                using (SqlConnection connection = new SqlConnection(connectionString))
+                using (SqlConnection connection = new SqlConnection(Properties.Settings.Default.AlexisconstructionDBConnectionString))
                 {
                     connection.Open();
                     string sql = ALEXISMessages.UpdateClient;
@@ -143,7 +142,7 @@ namespace WindowsFormsApp1.Repositories
         {
             try
             {
-                using (SqlConnection connection = new SqlConnection(connectionString))
+                using (SqlConnection connection = new SqlConnection(Properties.Settings.Default.AlexisconstructionDBConnectionString))
                 {
                     connection.Open();
 

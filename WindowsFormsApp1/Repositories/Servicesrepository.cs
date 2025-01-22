@@ -12,7 +12,6 @@ namespace WindowsFormsApp1.Repositories
 {
     internal class Servicesrepository
     {
-        private readonly string connectionString = "Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=AlexisconstructionDB;Integrated Security=True";
 
         public List<Service> GetServices() 
         {
@@ -20,7 +19,7 @@ namespace WindowsFormsApp1.Repositories
 
             try
             {
-                using (SqlConnection connection = new SqlConnection(connectionString))
+                using (SqlConnection connection = new SqlConnection(Properties.Settings.Default.AlexisconstructionDBConnectionString))
                 {
                     connection.Open();
                     string sql = ALEXISMessages.GetServices;
@@ -55,7 +54,7 @@ namespace WindowsFormsApp1.Repositories
         {
             try
             {
-                using (SqlConnection connection = new SqlConnection(connectionString))
+                using (SqlConnection connection = new SqlConnection(Properties.Settings.Default.AlexisconstructionDBConnectionString))
                 {
                     connection.Open();
                     string sql = ALEXISMessages.GetService;
@@ -91,7 +90,7 @@ namespace WindowsFormsApp1.Repositories
         {
             try
             {
-                using (SqlConnection connection = new SqlConnection(connectionString))
+                using (SqlConnection connection = new SqlConnection(Properties.Settings.Default.AlexisconstructionDBConnectionString))
                 {
                     connection.Open();
                     string sql = ALEXISMessages.CreateService;
@@ -115,7 +114,7 @@ namespace WindowsFormsApp1.Repositories
         {
             try
             {
-                using (SqlConnection connection = new SqlConnection(connectionString))
+                using (SqlConnection connection = new SqlConnection(Properties.Settings.Default.AlexisconstructionDBConnectionString))
                 {
                     connection.Open();
                     string sql = ALEXISMessages.UpdateService;
@@ -142,7 +141,7 @@ namespace WindowsFormsApp1.Repositories
         {
             try
             {
-                using (SqlConnection connection = new SqlConnection(connectionString))
+                using (SqlConnection connection = new SqlConnection(Properties.Settings.Default.AlexisconstructionDBConnectionString))
                 {
                     connection.Open();
 

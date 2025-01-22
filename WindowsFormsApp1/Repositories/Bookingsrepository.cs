@@ -11,7 +11,6 @@ namespace WindowsFormsApp1.Repositories
 {
     public class Bookingsrepository
     {
-        private readonly string connectionString = "Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=AlexisconstructionDB;Integrated Security=True";
 
         public List<Booking> GetBookings()  // Changed method name to GetBookings
         {
@@ -19,7 +18,7 @@ namespace WindowsFormsApp1.Repositories
 
             try
             {
-                using (var connection = new SqlConnection(connectionString))
+                using (var connection = new SqlConnection(Properties.Settings.Default.AlexisconstructionDBConnectionString))
                 {
                     connection.Open();
                     var query = ALEXISMessages.Getbookings;
@@ -56,7 +55,7 @@ namespace WindowsFormsApp1.Repositories
 
             try
             {
-                using (var connection = new SqlConnection(connectionString))
+                using (var connection = new SqlConnection(Properties.Settings.Default.AlexisconstructionDBConnectionString))
                 {
                     connection.Open();
                     var query = ALEXISMessages.Searchbooking;
@@ -95,7 +94,7 @@ namespace WindowsFormsApp1.Repositories
         {
             try
             {
-                using (SqlConnection connection = new SqlConnection(connectionString))
+                using (SqlConnection connection = new SqlConnection(Properties.Settings.Default.AlexisconstructionDBConnectionString))
                 {
                     connection.Open();
                     string sql = ALEXISMessages.Getbooking;
@@ -136,7 +135,7 @@ namespace WindowsFormsApp1.Repositories
         {
             try
             {
-                using (var connection = new SqlConnection(connectionString))
+                using (var connection = new SqlConnection(Properties.Settings.Default.AlexisconstructionDBConnectionString))
                 {
                     connection.Open();
 
@@ -172,7 +171,7 @@ namespace WindowsFormsApp1.Repositories
         {
             try
             {
-                using (SqlConnection connection = new SqlConnection(connectionString))
+                using (SqlConnection connection = new SqlConnection(Properties.Settings.Default.AlexisconstructionDBConnectionString))
                 {
                     connection.Open();
 
@@ -196,7 +195,7 @@ namespace WindowsFormsApp1.Repositories
         {
             try
             {
-                using (SqlConnection connection = new SqlConnection(connectionString))
+                using (SqlConnection connection = new SqlConnection(Properties.Settings.Default.AlexisconstructionDBConnectionString))
                 {
                     connection.Open();
 
@@ -222,7 +221,7 @@ namespace WindowsFormsApp1.Repositories
         {
             try
             {
-                using (SqlConnection connection = new SqlConnection(connectionString))
+                using (SqlConnection connection = new SqlConnection(Properties.Settings.Default.AlexisconstructionDBConnectionString))
                 {
                     connection.Open();
 

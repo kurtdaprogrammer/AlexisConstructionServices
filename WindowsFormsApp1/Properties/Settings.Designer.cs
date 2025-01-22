@@ -16,7 +16,8 @@ namespace WindowsFormsApp1.Properties {
     internal sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase {
         
         private static Settings defaultInstance = ((Settings)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new Settings())));
-        
+        private readonly string connectionString = "Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=AlexisconstructionDB;Integrated Security=True";
+
         public static Settings Default {
             get {
                 return defaultInstance;
@@ -30,7 +31,7 @@ namespace WindowsFormsApp1.Properties {
             "d Security=True")]
         public string AlexisconstructionDBConnectionString {
             get {
-                return ((string)(this["AlexisconstructionDBConnectionString"]));
+                return ((string)(this.connectionString));
             }
         }
     }

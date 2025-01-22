@@ -12,7 +12,6 @@ namespace WindowsFormsApp1.Repositories
 {
     public class InventoryRepository
     {
-        private readonly string connectionString = "Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=AlexisconstructionDB;Integrated Security=True";
 
         public List<Inventory> GetInventories()
         {
@@ -21,7 +20,7 @@ namespace WindowsFormsApp1.Repositories
 
             try
             {
-                using (SqlConnection connection = new SqlConnection(connectionString))
+                using (SqlConnection connection = new SqlConnection(Properties.Settings.Default.AlexisconstructionDBConnectionString))
                 {
                     connection.Open();
                     string sql = ALEXISMessages.GetInventories;
@@ -57,7 +56,7 @@ namespace WindowsFormsApp1.Repositories
         {
             try
             {
-                using (SqlConnection connection = new SqlConnection(connectionString))
+                using (SqlConnection connection = new SqlConnection(Properties.Settings.Default.AlexisconstructionDBConnectionString))
                 {
                     connection.Open();
                     string sql = ALEXISMessages.GetInventory;
@@ -91,7 +90,7 @@ namespace WindowsFormsApp1.Repositories
         {
             try
             {
-                using (SqlConnection connection = new SqlConnection(connectionString))
+                using (SqlConnection connection = new SqlConnection(Properties.Settings.Default.AlexisconstructionDBConnectionString))
                 {
                     connection.Open();
                     string sql = ALEXISMessages.CreateTool;
@@ -116,7 +115,7 @@ namespace WindowsFormsApp1.Repositories
         {
             try
             {
-                using (SqlConnection connection = new SqlConnection(connectionString))
+                using (SqlConnection connection = new SqlConnection(Properties.Settings.Default.AlexisconstructionDBConnectionString))
                 {
                     connection.Open();
                     string sql = ALEXISMessages.DeleteTool;
@@ -142,7 +141,7 @@ namespace WindowsFormsApp1.Repositories
         {
             try
             {
-                using (SqlConnection connection = new SqlConnection(connectionString))
+                using (SqlConnection connection = new SqlConnection(Properties.Settings.Default.AlexisconstructionDBConnectionString))
                 {
                     connection.Open();
 
