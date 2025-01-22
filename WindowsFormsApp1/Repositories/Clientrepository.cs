@@ -5,6 +5,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using WindowsFormsApp1.Messages;
 using WindowsFormsApp1.Models;
 
 namespace WindowsFormsApp1.Repositories
@@ -24,7 +25,7 @@ namespace WindowsFormsApp1.Repositories
                 {
                     connection.Open();
 
-                    string sql = "SELECT * FROM Clients ORDER BY ClientID DESC";
+                    string sql = ALEXISMessages.SelectClients;
                     using (SqlCommand command = new SqlCommand(sql, connection))
                     {
                         using (SqlDataReader reader = command.ExecuteReader())
@@ -38,8 +39,6 @@ namespace WindowsFormsApp1.Repositories
                                 client.Address = reader.GetString(3);
 
                                 clientList.Add(client);
-
-                               
                             }
                         }
                     }
@@ -61,7 +60,7 @@ namespace WindowsFormsApp1.Repositories
                 using (SqlConnection connection = new SqlConnection(connectionString))
                 {
                     connection.Open();
-                    string sql = "SELECT * FROM Clients WHERE ClientID=@ClientID";
+                    string sql = ALEXISMessages.SelectGetClients;
                     using (SqlCommand command = new SqlCommand(sql, connection))
                     {
                         command.Parameters.AddWithValue("@ClientID", ClientID);
@@ -96,9 +95,7 @@ namespace WindowsFormsApp1.Repositories
                 using (SqlConnection connection = new SqlConnection(connectionString))
                 {
                     connection.Open();
-                    string sql = "INSERT INTO Clients" +
-                        "(Name, Contact, Address) VALUES " +
-                        "(@Name, @Contact, @Address);";
+                    string sql = ALEXISMessages.CreateClient;
 
                     using(SqlCommand command = new SqlCommand(sql, connection))
                     {
@@ -123,9 +120,7 @@ namespace WindowsFormsApp1.Repositories
                 using (SqlConnection connection = new SqlConnection(connectionString))
                 {
                     connection.Open();
-                    string sql = "UPDATE Clients " +
-                        "SET Name=@Name, Contact=@Contact, Address=@Address " +
-                        "WHERE ClientID=@ClientID";
+                    string sql = ALEXISMessages.UpdateClient;
 
                     using (SqlCommand command = new SqlCommand(sql, connection))
                     {
@@ -140,7 +135,6 @@ namespace WindowsFormsApp1.Repositories
             }
             catch (Exception ex)
             {
-
                 Console.WriteLine("Exception " + ex.Message);
             }
         }
@@ -153,7 +147,7 @@ namespace WindowsFormsApp1.Repositories
                 {
                     connection.Open();
 
-                    string sql = "DELETE FROM Clients WHERE ClientID=@ClientID";
+                    string sql = ALEXISMessages.DeleteClient;
                     using (SqlCommand command = new SqlCommand(sql, connection)) 
                     {
                         command.Parameters.AddWithValue("@ClientID", ClientID);
@@ -164,7 +158,6 @@ namespace WindowsFormsApp1.Repositories
             }
             catch (Exception ex)
             {
-
                 Console.WriteLine("Exception " + ex.Message);
             }
         }

@@ -76,6 +76,7 @@
             this.ServicesTable.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.ServicesTable.Location = new System.Drawing.Point(289, 92);
             this.ServicesTable.Name = "ServicesTable";
+            this.ServicesTable.ReadOnly = true;
             this.ServicesTable.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.ServicesTable.Size = new System.Drawing.Size(464, 248);
             this.ServicesTable.TabIndex = 0;
@@ -162,6 +163,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.ClientSize = new System.Drawing.Size(765, 353);
             this.Controls.Add(this.HourlyRatetb);
             this.Controls.Add(this.Servicetb);

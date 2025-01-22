@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using WindowsFormsApp1.Messages;
 using WindowsFormsApp1.Models;
 
 namespace WindowsFormsApp1.Repositories
@@ -23,11 +24,7 @@ namespace WindowsFormsApp1.Repositories
                 using (SqlConnection connection = new SqlConnection(connectionString))
                 {
                     connection.Open();
-                    string sql = @"
-                SELECT i.ToolID, i.ToolName, s.ServiceName, i.QuantityAvailable
-                FROM Inventory i
-                INNER JOIN Services s ON i.ServiceID = s.ServiceID
-                ORDER BY i.ToolID DESC";
+                    string sql = ALEXISMessages.GetInventories;
 
                     using (SqlCommand command = new SqlCommand(sql, connection))
                     {
@@ -63,7 +60,7 @@ namespace WindowsFormsApp1.Repositories
                 using (SqlConnection connection = new SqlConnection(connectionString))
                 {
                     connection.Open();
-                    string sql = "SELECT * FROM Inventory WHERE InventoryID=@InventoryID";
+                    string sql = ALEXISMessages.GetInventory;
                     using (SqlCommand command = new SqlCommand(sql, connection))
                     {
                         command.Parameters.AddWithValue("@InventoryID", InventoryID);
@@ -97,9 +94,7 @@ namespace WindowsFormsApp1.Repositories
                 using (SqlConnection connection = new SqlConnection(connectionString))
                 {
                     connection.Open();
-                    string sql = "INSERT INTO Inventory" +
-                        "(ToolName, ServiceID, QuantityAvailable) VALUES " +
-                        "(@ToolName, @ServiceID, @QuantityAvailable);";
+                    string sql = ALEXISMessages.CreateTool;
 
                     using (SqlCommand command = new SqlCommand(sql, connection))
                     {
@@ -124,7 +119,7 @@ namespace WindowsFormsApp1.Repositories
                 using (SqlConnection connection = new SqlConnection(connectionString))
                 {
                     connection.Open();
-                    string sql = "DELETE FROM Inventory WHERE ToolID = @ToolID";
+                    string sql = ALEXISMessages.DeleteTool;
 
                     using (SqlCommand command = new SqlCommand(sql, connection))
                     {
@@ -151,9 +146,7 @@ namespace WindowsFormsApp1.Repositories
                 {
                     connection.Open();
 
-                    string sql = "UPDATE Inventory " +
-                                 "SET ToolName = @ToolName, ServiceID = @ServiceID, QuantityAvailable = @QuantityAvailable " +
-                                 "WHERE ToolID = @ToolID";
+                    string sql = ALEXISMessages.UpdateTool;
 
                     using (SqlCommand command = new SqlCommand(sql, connection))
                     {

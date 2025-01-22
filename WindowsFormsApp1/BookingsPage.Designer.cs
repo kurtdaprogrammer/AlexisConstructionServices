@@ -82,6 +82,15 @@
             totalAmountLabel.TabIndex = 9;
             totalAmountLabel.Text = "Total Amount:";
             // 
+            // Search
+            // 
+            Search.AutoSize = true;
+            Search.Location = new System.Drawing.Point(664, 50);
+            Search.Name = "Search";
+            Search.Size = new System.Drawing.Size(44, 13);
+            Search.TabIndex = 20;
+            Search.Text = "Search:";
+            // 
             // BookingsTable
             // 
             this.BookingsTable.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -132,7 +141,7 @@
             // btnEditBooking
             // 
             this.btnEditBooking.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnEditBooking.Location = new System.Drawing.Point(176, 184);
+            this.btnEditBooking.Location = new System.Drawing.Point(107, 184);
             this.btnEditBooking.Name = "btnEditBooking";
             this.btnEditBooking.Size = new System.Drawing.Size(96, 23);
             this.btnEditBooking.TabIndex = 15;
@@ -191,19 +200,11 @@
             this.txtSearch.Size = new System.Drawing.Size(196, 20);
             this.txtSearch.TabIndex = 19;
             // 
-            // Search
-            // 
-            Search.AutoSize = true;
-            Search.Location = new System.Drawing.Point(664, 50);
-            Search.Name = "Search";
-            Search.Size = new System.Drawing.Size(44, 13);
-            Search.TabIndex = 20;
-            Search.Text = "Search:";
-            // 
             // BookingsPage
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.ClientSize = new System.Drawing.Size(928, 387);
             this.Controls.Add(Search);
             this.Controls.Add(this.txtSearch);

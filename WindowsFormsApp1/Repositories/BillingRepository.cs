@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using WindowsFormsApp1.Messages;
 using WindowsFormsApp1.Models;
 
 namespace WindowsFormsApp1.Repositories
@@ -26,11 +27,7 @@ namespace WindowsFormsApp1.Repositories
                 using (SqlConnection connection = new SqlConnection(connectionString))
                 {
                     connection.Open();
-                    string sql = @"
-                SELECT b.BillingID, b.BookingID, b.AmountDue, b.AmountPaid, b.PaymentStatus, b.BillingReference, c.Name AS ClientName
-                FROM Billings b
-                INNER JOIN Bookings bo ON b.BookingID = bo.BookingID
-                INNER JOIN Clients c ON bo.ClientID = c.ClientID";
+                    string sql = ALEXISMessages.Getbillings;
 
                     using (SqlCommand command = new SqlCommand(sql, connection))
                     {
@@ -72,8 +69,7 @@ namespace WindowsFormsApp1.Repositories
 
             using (var connection = new SqlConnection(connectionString))
             {
-                string query = "INSERT INTO Billings (BookingID, AmountDue, AmountPaid, PaymentStatus, BillingReference) " +
-                               "VALUES (@BookingID, @AmountDue, @AmountPaid, @PaymentStatus, @BillingReference)";
+                string query = ALEXISMessages.InsertBilling;
 
                 var command = new SqlCommand(query, connection);
                 command.Parameters.AddWithValue("@BookingID", billing.BookingID);
@@ -104,10 +100,7 @@ namespace WindowsFormsApp1.Repositories
                 using (SqlConnection connection = new SqlConnection(connectionString))
                 {
                     connection.Open();
-                    string sql = @"
-            UPDATE Billings
-            SET BookingID = @BookingID, AmountDue = @AmountDue, AmountPaid = @AmountPaid, PaymentStatus = @PaymentStatus
-            WHERE BillingID = @BillingID";
+                    string sql = ALEXISMessages.UpdateBilling;
 
                     using (SqlCommand command = new SqlCommand(sql, connection))
                     {
@@ -134,7 +127,7 @@ namespace WindowsFormsApp1.Repositories
                 {
                     connection.Open();
 
-                    string sql = "DELETE FROM Billings WHERE BillingID=@BillingID";
+                    string sql = ALEXISMessages.DeleteBilling;
                     using (SqlCommand command = new SqlCommand(sql, connection))
                     {
                         command.Parameters.AddWithValue("@BillingID", billingID);
@@ -156,7 +149,7 @@ namespace WindowsFormsApp1.Repositories
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 // SQL query to get the billing details by BookingID
-                string query = "SELECT BillingID, BookingID, AmountDue, AmountPaid, PaymentStatus FROM Billings WHERE BookingID = @BookingID";
+                string query = ALEXISMessages.Getbillingbyid;
 
                 SqlCommand command = new SqlCommand(query, connection);
                 command.Parameters.AddWithValue("@BookingID", bookingID);

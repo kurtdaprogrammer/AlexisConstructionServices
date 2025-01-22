@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Xml.Linq;
+using WindowsFormsApp1.Messages;
 using WindowsFormsApp1.Models;
 using WindowsFormsApp1.Repositories;
 
@@ -67,7 +68,7 @@ namespace WindowsFormsApp1
 
             if (string.IsNullOrEmpty(Nametb.Text) && string.IsNullOrEmpty(Contacttb.Text) && string.IsNullOrEmpty(Addresstb.Text))
             {
-                MessageBox.Show("There are empty fields. Please enter a Fill the Values.");
+                MessageBox.Show(ALEXISMessages.Erroremptyfields);
                 return;
             }
 

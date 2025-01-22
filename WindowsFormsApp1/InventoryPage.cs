@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using WindowsFormsApp1.Messages;
 using WindowsFormsApp1.Models;
 using WindowsFormsApp1.Repositories;
 
@@ -42,7 +43,7 @@ namespace WindowsFormsApp1
 
             if (services == null || services.Count == 0)
             {
-                MessageBox.Show("No services found in the database.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show(ALEXISMessages.NoServices, "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
@@ -59,21 +60,21 @@ namespace WindowsFormsApp1
                 // Validate the tool name
                 if (string.IsNullOrWhiteSpace(Tooltb.Text))
                 {
-                    MessageBox.Show("Tool name cannot be empty.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    MessageBox.Show(ALEXISMessages.ToolNotempty, "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
 
                 // Validate the service selection
                 if (servicecb.SelectedValue == null || !int.TryParse(servicecb.SelectedValue.ToString(), out int serviceID))
                 {
-                    MessageBox.Show("Please select a valid service.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    MessageBox.Show(ALEXISMessages.SelectValid, "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
 
                 // Validate the quantity
                 if (numericUpDown1.Value <= 0)
                 {
-                    MessageBox.Show("Quantity must be greater than zero.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    MessageBox.Show(ALEXISMessages.QuantityGreater, "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
 
@@ -91,7 +92,7 @@ namespace WindowsFormsApp1
 
                 // Refresh the DataGridView to show the updated inventory
                 ReadInventory();
-                MessageBox.Show("Tool added successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show(ALEXISMessages.ToolAdded, "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                 // Clear the fields after adding the tool
                 ClearFields();
@@ -110,20 +111,20 @@ namespace WindowsFormsApp1
 
                 if (dataGridInventory.SelectedRows.Count == 0)
                 {
-                    MessageBox.Show("Please select a row to delete.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    MessageBox.Show(ALEXISMessages.Selectarow, "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
 
                 var val = dataGridInventory.SelectedRows[0].Cells["ToolID"].Value?.ToString();
                 if (string.IsNullOrEmpty(val))
                 {
-                    MessageBox.Show("Selected row has an invalid ToolID.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    MessageBox.Show(ALEXISMessages.Selectarowinv, "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
 
                 int inventoryID = int.Parse(val);
 
-                DialogResult dialogResult = MessageBox.Show("Are you sure you want to delete this Tool?", "Delete Inventory", MessageBoxButtons.YesNo);
+                DialogResult dialogResult = MessageBox.Show(ALEXISMessages.DeleteConfirm, "Delete Inventory", MessageBoxButtons.YesNo);
                 Console.WriteLine($"Dialog result: {dialogResult}");
 
                 if (dialogResult == DialogResult.No)
@@ -136,7 +137,7 @@ namespace WindowsFormsApp1
 
                 // Refresh the grid and show success message
                 ReadInventory();
-                MessageBox.Show("Tool deleted successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show(ALEXISMessages.DeleteSuccess, "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             catch (FormatException ex)
             {
@@ -213,7 +214,7 @@ namespace WindowsFormsApp1
             // Check if a row is selected in the grid
             if (dataGridInventory.SelectedRows.Count == 0)
             {
-                MessageBox.Show("Please select a row to update.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show(ALEXISMessages.Selectrowupdate, "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
@@ -223,7 +224,7 @@ namespace WindowsFormsApp1
             var toolIDValue = selectedRow.Cells["ToolID"].Value?.ToString();
             if (string.IsNullOrEmpty(toolIDValue))
             {
-                MessageBox.Show("Invalid Tool ID selected.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(ALEXISMessages.InvalidToolID, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
@@ -237,7 +238,7 @@ namespace WindowsFormsApp1
             // Validate the input
             if (string.IsNullOrEmpty(newToolName))
             {
-                MessageBox.Show("Tool name cannot be empty.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show(ALEXISMessages.InvalidToolname, "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
@@ -256,7 +257,7 @@ namespace WindowsFormsApp1
             {
                 repo.UpdateTool(updatedInventory);
                 ReadInventory(); // Refresh the grid
-                MessageBox.Show("Tool updated successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show(ALEXISMessages.ToolUpdateSuccess, "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                 // Clear the fields after update
                 ClearFields();

@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using WindowsFormsApp1.Messages;
 using WindowsFormsApp1.Models;
 
 namespace WindowsFormsApp1.Repositories
@@ -22,7 +23,7 @@ namespace WindowsFormsApp1.Repositories
                 using (SqlConnection connection = new SqlConnection(connectionString))
                 {
                     connection.Open();
-                    string sql = "SELECT * FROM Services ORDER BY ServiceID DESC";
+                    string sql = ALEXISMessages.GetServices;
                     using (SqlCommand command = new SqlCommand(sql, connection))
                     {
                         using (SqlDataReader reader = command.ExecuteReader())
@@ -57,7 +58,7 @@ namespace WindowsFormsApp1.Repositories
                 using (SqlConnection connection = new SqlConnection(connectionString))
                 {
                     connection.Open();
-                    string sql = "SELECT * FROM Services WHERE ServiceID=@ServiceID";
+                    string sql = ALEXISMessages.GetService;
                     using (SqlCommand command = new SqlCommand(sql, connection))
                     {
                         command.Parameters.AddWithValue("@ServiceID", ServiceID); // Use the method parameter ServiceID
@@ -93,9 +94,7 @@ namespace WindowsFormsApp1.Repositories
                 using (SqlConnection connection = new SqlConnection(connectionString))
                 {
                     connection.Open();
-                    string sql = "INSERT INTO Services" +
-                        "(ServiceName, HourlyRate) VALUES " +
-                        "(@ServiceName, @HourlyRate);";
+                    string sql = ALEXISMessages.CreateService;
 
                     using (SqlCommand command = new SqlCommand(sql, connection))
                     {
@@ -119,9 +118,7 @@ namespace WindowsFormsApp1.Repositories
                 using (SqlConnection connection = new SqlConnection(connectionString))
                 {
                     connection.Open();
-                    string sql = "UPDATE Services " +
-                                 "SET ServiceName=@ServiceName, HourlyRate=@HourlyRate " +
-                                 "WHERE ServiceID=@ServiceID";
+                    string sql = ALEXISMessages.UpdateService;
 
                     using (SqlCommand command = new SqlCommand(sql, connection))
                     {
@@ -149,7 +146,7 @@ namespace WindowsFormsApp1.Repositories
                 {
                     connection.Open();
 
-                    string sql = "DELETE FROM Services WHERE ServiceID=@ServiceID";
+                    string sql = ALEXISMessages.DeleteService;
                     using (SqlCommand command = new SqlCommand(sql, connection))
                     {
                         command.Parameters.AddWithValue("@ServiceID", ServiceID);

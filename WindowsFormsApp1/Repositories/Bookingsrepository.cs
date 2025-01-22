@@ -4,6 +4,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using WindowsFormsApp1.Messages;
 using WindowsFormsApp1.Models;
 
 namespace WindowsFormsApp1.Repositories
@@ -21,18 +22,7 @@ namespace WindowsFormsApp1.Repositories
                 using (var connection = new SqlConnection(connectionString))
                 {
                     connection.Open();
-                    var query = @"
-                SELECT 
-                    b.BookingID, 
-                    b.ClientID, 
-                    b.BookingReference, 
-                    b.BookingDate, 
-                    b.TotalAmount, 
-                    c.Name AS ClientName
-                FROM 
-                    Bookings b
-                JOIN 
-                    Clients c ON b.ClientID = c.ClientID";
+                    var query = ALEXISMessages.Getbookings;
                     using (var command = new SqlCommand(query, connection))
                     {
                         using (var reader = command.ExecuteReader())
@@ -69,20 +59,7 @@ namespace WindowsFormsApp1.Repositories
                 using (var connection = new SqlConnection(connectionString))
                 {
                     connection.Open();
-                    var query = @"
-                SELECT 
-                    b.BookingID, 
-                    b.ClientID, 
-                    b.BookingReference, 
-                    b.BookingDate, 
-                    b.TotalAmount, 
-                    c.Name AS ClientName
-                FROM 
-                    Bookings b
-                JOIN 
-                    Clients c ON b.ClientID = c.ClientID
-                WHERE 
-                    c.Name LIKE @SearchTerm OR b.BookingReference LIKE @SearchTerm";
+                    var query = ALEXISMessages.Searchbooking;
 
                     using (var command = new SqlCommand(query, connection))
                     {
@@ -121,11 +98,7 @@ namespace WindowsFormsApp1.Repositories
                 using (SqlConnection connection = new SqlConnection(connectionString))
                 {
                     connection.Open();
-                    string sql = @"
-                SELECT b.BookingID, b.ClientID, b.BookingDate, b.TotalAmount, c.Name AS ClientName 
-                FROM Bookings b
-                JOIN Clients c ON b.ClientID = c.ClientID
-                WHERE b.BookingID = @BookingID";
+                    string sql = ALEXISMessages.Getbooking;
 
                     using (SqlCommand command = new SqlCommand(sql, connection))
                     {
@@ -170,9 +143,7 @@ namespace WindowsFormsApp1.Repositories
                     // Generate a unique BookingReference
                     string bookingReference = GenerateBookingReference();
 
-                    string sql = @"
-                INSERT INTO Bookings (ClientID, BookingDate, TotalAmount, BookingReference) 
-                VALUES (@ClientID, @BookingDate, @TotalAmount, @BookingReference);";
+                    string sql = ALEXISMessages.CreateBooking;
 
                     using (var command = new SqlCommand(sql, connection))
                     {
@@ -205,7 +176,7 @@ namespace WindowsFormsApp1.Repositories
                 {
                     connection.Open();
 
-                    string sql = "DELETE FROM Bookings WHERE BookingID=@BookingID";
+                    string sql = ALEXISMessages.DeleteBooking;
                     using (SqlCommand command = new SqlCommand(sql, connection))
                     {
                         command.Parameters.AddWithValue("@BookingID", BookingID);
@@ -229,10 +200,7 @@ namespace WindowsFormsApp1.Repositories
                 {
                     connection.Open();
 
-                    string sql = @"
-                UPDATE Bookings 
-                SET ClientID = @ClientID, BookingDate = @BookingDate, TotalAmount = @TotalAmount
-                WHERE BookingID = @BookingID";
+                    string sql = ALEXISMessages.UpdateBooking;
 
                     using (SqlCommand command = new SqlCommand(sql, connection))
                     {
@@ -259,10 +227,7 @@ namespace WindowsFormsApp1.Repositories
                     connection.Open();
 
                     // Query to check if there is already a booking on the selected date for the specific client
-                    string sql = @"
-                            SELECT COUNT(1)
-                            FROM Bookings
-                            WHERE ClientID = @ClientID AND CAST(BookingDate AS DATE) = @BookingDate";
+                    string sql = ALEXISMessages.isdatebooked;
 
                     using (SqlCommand command = new SqlCommand(sql, connection))
                     {

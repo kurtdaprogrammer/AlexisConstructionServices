@@ -49,42 +49,46 @@
             // 
             // ClientPage
             // 
+            this.ClientPage.BackColor = System.Drawing.Color.White;
             this.ClientPage.Location = new System.Drawing.Point(666, 80);
             this.ClientPage.Name = "ClientPage";
             this.ClientPage.Size = new System.Drawing.Size(107, 20);
             this.ClientPage.TabIndex = 0;
             this.ClientPage.Text = "Add Client";
-            this.ClientPage.UseVisualStyleBackColor = true;
+            this.ClientPage.UseVisualStyleBackColor = false;
             this.ClientPage.Click += new System.EventHandler(this.ClientPage_Click);
             // 
             // Bookings
             // 
+            this.Bookings.BackColor = System.Drawing.Color.White;
             this.Bookings.Location = new System.Drawing.Point(666, 133);
             this.Bookings.Name = "Bookings";
             this.Bookings.Size = new System.Drawing.Size(107, 24);
             this.Bookings.TabIndex = 1;
             this.Bookings.Text = "Bookings";
-            this.Bookings.UseVisualStyleBackColor = true;
+            this.Bookings.UseVisualStyleBackColor = false;
             this.Bookings.Click += new System.EventHandler(this.Bookings_Click);
             // 
             // Billings
             // 
+            this.Billings.BackColor = System.Drawing.Color.White;
             this.Billings.Location = new System.Drawing.Point(666, 163);
             this.Billings.Name = "Billings";
             this.Billings.Size = new System.Drawing.Size(107, 22);
             this.Billings.TabIndex = 2;
             this.Billings.Text = "Billings";
-            this.Billings.UseVisualStyleBackColor = true;
+            this.Billings.UseVisualStyleBackColor = false;
             this.Billings.Click += new System.EventHandler(this.Billings_Click);
             // 
             // Inventory
             // 
+            this.Inventory.BackColor = System.Drawing.Color.White;
             this.Inventory.Location = new System.Drawing.Point(666, 191);
             this.Inventory.Name = "Inventory";
             this.Inventory.Size = new System.Drawing.Size(107, 22);
             this.Inventory.TabIndex = 3;
             this.Inventory.Text = "Inventory";
-            this.Inventory.UseVisualStyleBackColor = true;
+            this.Inventory.UseVisualStyleBackColor = false;
             this.Inventory.Click += new System.EventHandler(this.Inventory_Click);
             // 
             // contextMenuStrip1
@@ -94,12 +98,13 @@
             // 
             // Services
             // 
+            this.Services.BackColor = System.Drawing.Color.White;
             this.Services.Location = new System.Drawing.Point(666, 106);
             this.Services.Name = "Services";
             this.Services.Size = new System.Drawing.Size(107, 21);
             this.Services.TabIndex = 6;
             this.Services.Text = "Services";
-            this.Services.UseVisualStyleBackColor = true;
+            this.Services.UseVisualStyleBackColor = false;
             this.Services.Click += new System.EventHandler(this.Services_Click);
             // 
             // MainmenuDGT
@@ -147,18 +152,20 @@
             // 
             // Refresh
             // 
+            this.Refresh.BackColor = System.Drawing.Color.White;
             this.Refresh.Location = new System.Drawing.Point(666, 416);
             this.Refresh.Name = "Refresh";
             this.Refresh.Size = new System.Drawing.Size(107, 22);
             this.Refresh.TabIndex = 9;
             this.Refresh.Text = "Refresh";
-            this.Refresh.UseVisualStyleBackColor = true;
+            this.Refresh.UseVisualStyleBackColor = false;
             this.Refresh.Click += new System.EventHandler(this.Refresh_Click);
             // 
             // MainMenu
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.ClientSize = new System.Drawing.Size(781, 450);
             this.Controls.Add(this.Refresh);
             this.Controls.Add(this.label1);

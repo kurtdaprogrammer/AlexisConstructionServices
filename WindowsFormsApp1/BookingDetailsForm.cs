@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using WindowsFormsApp1.Messages;
 using WindowsFormsApp1.Models;
 using WindowsFormsApp1.Repositories;
 
@@ -27,7 +28,7 @@ namespace WindowsFormsApp1
         {
             if (_currentBooking == null)
             {
-                MessageBox.Show("Booking details could not be loaded.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(ALEXISMessages.Bookingnotload, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return; // Prevent further execution
             }
 
@@ -67,13 +68,20 @@ namespace WindowsFormsApp1
 
             if (services == null || services.Count == 0)
             {
-                MessageBox.Show("No services found in the database.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show(ALEXISMessages.Noservicesdatabase, "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
+
+            // Add a placeholder item to indicate no selection
+            var placeholder = new Service { ServiceID = 0, ServiceName = "Select a Service" };
+            services.Insert(0, placeholder); // Insert the placeholder at the top of the list
 
             servicecmb.DataSource = services;
             servicecmb.DisplayMember = "ServiceName"; // Display the service name in the ComboBox
             servicecmb.ValueMember = "ServiceID";    // Store the ServiceID in the value of ComboBox
+
+            // Set the default selected item to the placeholder
+            servicecmb.SelectedIndex = 0;    // Store the ServiceID in the value of ComboBox
         }
 
 
@@ -92,7 +100,7 @@ namespace WindowsFormsApp1
 
                 if (hours > 8)
                 {
-                    MessageBox.Show("Service hours cannot exceed 8 hours.");
+                    MessageBox.Show(ALEXISMessages.ServiceHourserr);
                     return;
                 }
 
@@ -115,18 +123,18 @@ namespace WindowsFormsApp1
                 // Update the total amount
                 totalamounttb.Text = _currentBooking.TotalAmount.ToString("F2");
 
-                MessageBox.Show("Service added to the booking!");
+                MessageBox.Show(ALEXISMessages.Serviceaddsucc);
             }
             else
             {
-                MessageBox.Show("Service not found.");
+                MessageBox.Show(ALEXISMessages.Serviceaddnotfound);
             }
         }
         private void LoadServicesToGrid()
         {
             if (_currentBooking == null || _currentBooking.ServiceDetails == null)
             {
-                MessageBox.Show("No services available for this booking.");
+                MessageBox.Show(ALEXISMessages.Serviceaddnoadd);
                 return;
             }
 
@@ -179,87 +187,6 @@ namespace WindowsFormsApp1
                 DataPropertyName = "TotalAmount"
             });
         }
-
-        private void servicesdatagrid_CellClick(object sender, DataGridViewCellEventArgs e)
-        {
-            // Ensure the clicked row index is valid (greater than or equal to 0)
-            if (e.RowIndex >= 0 && e.RowIndex < servicesdatagrid.Rows.Count)
-            {
-                // Clear previous selection
-                servicesdatagrid.ClearSelection();
-                servicesdatagrid.Rows[e.RowIndex].Selected = true;
-
-                var row = servicesdatagrid.Rows[e.RowIndex];
-
-                // Safe check for null values before proceeding
-                var serviceID = row.Cells["ServiceID"].Value;
-                var serviceName = row.Cells["ServiceName"].Value;
-
-                Console.WriteLine($"Selected Service - ServiceID: {serviceID}, ServiceName: {serviceName}");
-
-                if (serviceID != null && serviceID != DBNull.Value)
-                {
-                    _selectedServiceDetail = _currentBooking.ServiceDetails
-                        .FirstOrDefault(sd => sd.ServiceID == (int)serviceID);
-
-                    if (_selectedServiceDetail != null)
-                    {
-                        Console.WriteLine($"Service found: {_selectedServiceDetail.ServiceName}");
-                    }
-                    else
-                    {
-                        Console.WriteLine("Selected service not found in the booking's service list.");
-                    }
-                }
-                else
-                {
-                    Console.WriteLine("No valid service selected.");
-                }
-            }
-            else
-            {
-                Console.WriteLine("Invalid row clicked, no selection.");
-            }
-
-        }
-
-        private void Removeservice_Click(object sender, EventArgs e)
-        {
-            // Check if a service has been selected
-            if (_selectedServiceDetail == null)
-            {
-                MessageBox.Show("No service selected to remove.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
-
-            // Confirm removal of the selected service
-            var result = MessageBox.Show($"Are you sure you want to remove {_selectedServiceDetail.ServiceName}?",
-                                         "Confirm Remove", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-
-            if (result == DialogResult.Yes)
-            {
-                // Check if the selected service exists in the booking's service details list
-                if (_currentBooking.ServiceDetails.Contains(_selectedServiceDetail))
-                {
-                    // Remove the selected service
-                    _currentBooking.ServiceDetails.Remove(_selectedServiceDetail);
-
-                    // Recalculate the total amount after removal
-                    _currentBooking.TotalAmount = _currentBooking.ServiceDetails.Sum(sd => sd.TotalAmount);
-
-                    // Refresh the services grid and update the total amount
-                    LoadServicesToGrid();
-                    totalamounttb.Text = _currentBooking.TotalAmount.ToString("F2");
-
-                    MessageBox.Show("Service removed successfully!");
-                }
-                else
-                {
-                    MessageBox.Show("The selected service could not be found in the list.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-            }
-        }
-
         private void bookingsave_Click(object sender, EventArgs e)
         {
             // Update booking details
@@ -273,7 +200,7 @@ namespace WindowsFormsApp1
             var repo = new Bookingsrepository();
             repo.UpdateBooking(_currentBooking);
 
-            MessageBox.Show("Booking updated successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            MessageBox.Show(ALEXISMessages.Bookingupdatesuccess, "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
             // Close the form
             this.DialogResult = DialogResult.OK;

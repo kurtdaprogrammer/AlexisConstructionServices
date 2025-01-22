@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using WindowsFormsApp1.Messages;
 using WindowsFormsApp1.Models;
 using WindowsFormsApp1.Repositories;
 
@@ -73,14 +74,14 @@ namespace WindowsFormsApp1
                 // Call the repository to update the billing record
                 billingRepo.UpdateBilling(updatedBilling);
 
-                MessageBox.Show("Billing record updated successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show(ALEXISMessages.Billinggupdatesuccess, "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                 // Close the form
                 this.Close();
             }
             catch (FormatException)
             {
-                MessageBox.Show("Please enter valid numeric values for Amount Due and Amount Paid.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(ALEXISMessages.Invalidnumeric, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             catch (Exception ex)
             {

@@ -48,37 +48,6 @@
             paymentstat = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
-            // Amtdue
-            // 
-            this.Amtdue.Location = new System.Drawing.Point(123, 105);
-            this.Amtdue.Name = "Amtdue";
-            this.Amtdue.ReadOnly = true;
-            this.Amtdue.Size = new System.Drawing.Size(224, 20);
-            this.Amtdue.TabIndex = 23;
-            // 
-            // Amtpaid
-            // 
-            this.Amtpaid.Location = new System.Drawing.Point(124, 176);
-            this.Amtpaid.Name = "Amtpaid";
-            this.Amtpaid.Size = new System.Drawing.Size(224, 20);
-            this.Amtpaid.TabIndex = 22;
-            // 
-            // Nametb
-            // 
-            this.Nametb.Location = new System.Drawing.Point(123, 77);
-            this.Nametb.Name = "Nametb";
-            this.Nametb.ReadOnly = true;
-            this.Nametb.Size = new System.Drawing.Size(224, 20);
-            this.Nametb.TabIndex = 21;
-            // 
-            // lbbillingreference
-            // 
-            this.lbbillingreference.AutoSize = true;
-            this.lbbillingreference.Location = new System.Drawing.Point(120, 51);
-            this.lbbillingreference.Name = "lbbillingreference";
-            this.lbbillingreference.Size = new System.Drawing.Size(0, 13);
-            this.lbbillingreference.TabIndex = 20;
-            // 
             // BillingLabel
             // 
             BillingLabel.AutoSize = true;
@@ -115,6 +84,46 @@
             AmountDue.TabIndex = 19;
             AmountDue.Text = "Amount Due:";
             // 
+            // paymentstat
+            // 
+            paymentstat.AutoSize = true;
+            paymentstat.Location = new System.Drawing.Point(24, 137);
+            paymentstat.Name = "paymentstat";
+            paymentstat.Size = new System.Drawing.Size(81, 13);
+            paymentstat.TabIndex = 30;
+            paymentstat.Text = "Payment Status";
+            // 
+            // Amtdue
+            // 
+            this.Amtdue.Location = new System.Drawing.Point(123, 105);
+            this.Amtdue.Name = "Amtdue";
+            this.Amtdue.ReadOnly = true;
+            this.Amtdue.Size = new System.Drawing.Size(224, 20);
+            this.Amtdue.TabIndex = 23;
+            // 
+            // Amtpaid
+            // 
+            this.Amtpaid.Location = new System.Drawing.Point(124, 176);
+            this.Amtpaid.Name = "Amtpaid";
+            this.Amtpaid.Size = new System.Drawing.Size(224, 20);
+            this.Amtpaid.TabIndex = 22;
+            // 
+            // Nametb
+            // 
+            this.Nametb.Location = new System.Drawing.Point(123, 77);
+            this.Nametb.Name = "Nametb";
+            this.Nametb.ReadOnly = true;
+            this.Nametb.Size = new System.Drawing.Size(224, 20);
+            this.Nametb.TabIndex = 21;
+            // 
+            // lbbillingreference
+            // 
+            this.lbbillingreference.AutoSize = true;
+            this.lbbillingreference.Location = new System.Drawing.Point(120, 51);
+            this.lbbillingreference.Name = "lbbillingreference";
+            this.lbbillingreference.Size = new System.Drawing.Size(0, 13);
+            this.lbbillingreference.TabIndex = 20;
+            // 
             // label2
             // 
             this.label2.AutoSize = true;
@@ -145,15 +154,6 @@
             this.btnSave.UseVisualStyleBackColor = true;
             this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
             // 
-            // paymentstat
-            // 
-            paymentstat.AutoSize = true;
-            paymentstat.Location = new System.Drawing.Point(24, 137);
-            paymentstat.Name = "paymentstat";
-            paymentstat.Size = new System.Drawing.Size(81, 13);
-            paymentstat.TabIndex = 30;
-            paymentstat.Text = "Payment Status";
-            // 
             // pmtlbl
             // 
             this.pmtlbl.AutoSize = true;
@@ -166,6 +166,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.ClientSize = new System.Drawing.Size(364, 251);
             this.Controls.Add(this.pmtlbl);
             this.Controls.Add(paymentstat);

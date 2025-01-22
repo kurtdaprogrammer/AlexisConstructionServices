@@ -124,8 +124,7 @@ namespace WindowsFormsApp1
                 decimal amountDue = decimal.Parse(amttb.Text);
                 string paymentStatus = amountPaid >= amountDue ? "Paid" : "Pending";
 
-                // Set the label to show the payment status
-                paymentlabel.Text = paymentStatus;
+           
 
                 // Generate a unique BillingReference
                 string billingReference = "BILL-" + DateTime.Now.ToString("yyyyMMddHHmmss");
@@ -164,6 +163,14 @@ namespace WindowsFormsApp1
 
         private void Update_Click(object sender, EventArgs e)
         {
+            // Ensure there are rows in the DataGridView
+            if (dataGridBilling.Rows.Count == 0)
+            {
+                MessageBox.Show("No rows available to update.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            // Check if any row is selected
             if (dataGridBilling.SelectedRows.Count == 0)
             {
                 MessageBox.Show("Please select a row to update.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -171,25 +178,33 @@ namespace WindowsFormsApp1
             }
 
             var selectedRow = dataGridBilling.SelectedRows[0];
-            int billingID = Convert.ToInt32(selectedRow.Cells["BillingID"].Value);
-            int bookingID = Convert.ToInt32(selectedRow.Cells["BookingID"].Value);
-            string billingReference = selectedRow.Cells["BillingReference"].Value.ToString();
-            decimal amountDue = Convert.ToDecimal(selectedRow.Cells["AmountDue"].Value);
-            decimal amountPaid = Convert.ToDecimal(selectedRow.Cells["AmountPaid"].Value);
-            string paymentStatus = selectedRow.Cells["PaymentStatus"].Value.ToString();
 
-            // Fetch client name using the BookingID
-            var booking = bookingsRepo.GetBooking(bookingID);
-            string clientName = booking?.ClientName ?? "Unknown";  // Fallback if client name is not found
+            try
+            {
+                int billingID = Convert.ToInt32(selectedRow.Cells["BillingID"].Value);
+                int bookingID = Convert.ToInt32(selectedRow.Cells["BookingID"].Value);
+                string billingReference = selectedRow.Cells["BillingReference"].Value.ToString();
+                decimal amountDue = Convert.ToDecimal(selectedRow.Cells["AmountDue"].Value);
+                decimal amountPaid = Convert.ToDecimal(selectedRow.Cells["AmountPaid"].Value);
+                string paymentStatus = selectedRow.Cells["PaymentStatus"].Value.ToString();
 
-            // Create an instance of the update form with the correct parameters
-            var updateForm = new BillingUpdateForm(billingID, bookingID, billingReference, amountDue, amountPaid, paymentStatus, clientName);
+                // Fetch client name using the BookingID
+                var booking = bookingsRepo.GetBooking(bookingID);
+                string clientName = booking?.ClientName ?? "Unknown";  // Fallback if client name is not found
 
-            // Show the update form
-            updateForm.ShowDialog();
+                // Create an instance of the update form with the correct parameters
+                var updateForm = new BillingUpdateForm(billingID, bookingID, billingReference, amountDue, amountPaid, paymentStatus, clientName);
 
-            // After closing the update form, reload the data grid if necessary
-            LoadBillingData();
+                // Show the update form
+                updateForm.ShowDialog();
+
+                // After closing the update form, reload the data grid if necessary
+                LoadBillingData();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"An error occurred while attempting to update the record: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
 
@@ -228,7 +243,7 @@ namespace WindowsFormsApp1
             cbBookingID.SelectedIndex = -1; // Clear ComboBox selection
             amttb.Clear(); // Clear Amount Due textbox
             amtpaidtb.Clear(); // Clear Amount Paid textbox
-            paymentlabel.Text = ""; // Clear Payment Status label
+           
             ClientNametb.Clear(); // Clear Client Name textbox
         }
 
@@ -311,6 +326,5 @@ namespace WindowsFormsApp1
             // Clear the selection after binding the data
             dataGridBilling.ClearSelection();
         }
-
     }
 }

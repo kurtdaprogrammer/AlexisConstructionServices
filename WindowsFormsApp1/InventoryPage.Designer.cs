@@ -76,6 +76,15 @@
             Services.TabIndex = 23;
             Services.Text = "Service:";
             // 
+            // label1
+            // 
+            label1.AutoSize = true;
+            label1.Location = new System.Drawing.Point(425, 51);
+            label1.Name = "label1";
+            label1.Size = new System.Drawing.Size(44, 13);
+            label1.TabIndex = 29;
+            label1.Text = "Search:";
+            // 
             // dataGridInventory
             // 
             this.dataGridInventory.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -161,19 +170,11 @@
             this.txtSearchInventory.Size = new System.Drawing.Size(129, 20);
             this.txtSearchInventory.TabIndex = 28;
             // 
-            // label1
-            // 
-            label1.AutoSize = true;
-            label1.Location = new System.Drawing.Point(425, 51);
-            label1.Name = "label1";
-            label1.Size = new System.Drawing.Size(44, 13);
-            label1.TabIndex = 29;
-            label1.Text = "Search:";
-            // 
             // InventoryPage
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.ClientSize = new System.Drawing.Size(613, 524);
             this.Controls.Add(label1);
             this.Controls.Add(this.txtSearchInventory);

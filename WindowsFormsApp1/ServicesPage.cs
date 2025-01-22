@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using WindowsFormsApp1.Messages;
 using WindowsFormsApp1.Models;
 using WindowsFormsApp1.Repositories;
 
@@ -74,13 +75,13 @@ namespace WindowsFormsApp1
             // Validate input fields before proceeding
             if (string.IsNullOrEmpty(Servicetb.Text) || string.IsNullOrEmpty(HourlyRatetb.Text))
             {
-                MessageBox.Show("There are empty fields. Please fill in all the values.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show(ALEXISMessages.ErrorEmpty, "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
             if (!decimal.TryParse(HourlyRatetb.Text, out decimal hourlyRate))
             {
-                MessageBox.Show("Invalid Hourly Rate. Please enter a valid decimal value.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show(ALEXISMessages.InvalidRate, "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
@@ -108,7 +109,7 @@ namespace WindowsFormsApp1
         {
             if (this.ServicesTable.SelectedRows.Count == 0)
             {
-                MessageBox.Show("Please select a row to edit.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show(ALEXISMessages.Selectedit, "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
@@ -116,13 +117,13 @@ namespace WindowsFormsApp1
 
             if (string.IsNullOrEmpty(val))
             {
-                MessageBox.Show("ServiceID is missing or invalid. Please refresh the list and try again.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show(ALEXISMessages.Servicemissing, "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
             if (!int.TryParse(val, out int serviceID))
             {
-                MessageBox.Show("Invalid ServiceID format. Please refresh the list and try again.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show(ALEXISMessages.InvalidFormat, "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
@@ -131,21 +132,21 @@ namespace WindowsFormsApp1
 
             if (service == null)
             {
-                MessageBox.Show("Service not found. Please refresh the list and try again.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show(ALEXISMessages.Servicenotfound, "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
             service.ServiceName = Servicetb.Text;
             if (!decimal.TryParse(HourlyRatetb.Text, out decimal hourlyRate))
             {
-                MessageBox.Show("Invalid Hourly Rate. Please enter a valid decimal value.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show(ALEXISMessages.InvalidHourlyRate, "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
             service.HourlyRate = hourlyRate;
 
             if (string.IsNullOrEmpty(Servicetb.Text))
             {
-                MessageBox.Show("Service Name cannot be empty.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show(ALEXISMessages.ServiceNameEmpty, "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
@@ -153,7 +154,7 @@ namespace WindowsFormsApp1
 
             ReadServices();
 
-            MessageBox.Show("Service updated successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            MessageBox.Show(ALEXISMessages.UpdateSuccess, "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
         }
 
@@ -178,7 +179,7 @@ namespace WindowsFormsApp1
 
             if (this.ServicesTable.SelectedRows.Count == 0)
             {
-                MessageBox.Show("Please select a row to delete.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show(ALEXISMessages.SelectRow, "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
@@ -186,17 +187,17 @@ namespace WindowsFormsApp1
 
             if (string.IsNullOrEmpty(val))
             {
-                MessageBox.Show("ServiceID is missing or invalid. Please refresh the list and try again.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show(ALEXISMessages.Servicemissing, "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
             if (!int.TryParse(val, out int serviceID))
             {
-                MessageBox.Show("Invalid ServiceID format. Please refresh the list and try again.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show(ALEXISMessages.InvalidFormat, "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
-            DialogResult dialogResult = MessageBox.Show("Are you sure you want to delete this Service?", "Delete Service", MessageBoxButtons.YesNo);
+            DialogResult dialogResult = MessageBox.Show(ALEXISMessages.Deleteconf, "Delete Service", MessageBoxButtons.YesNo);
 
             if (dialogResult == DialogResult.No)
             {

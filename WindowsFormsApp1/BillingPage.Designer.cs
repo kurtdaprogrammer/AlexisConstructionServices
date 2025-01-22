@@ -31,7 +31,6 @@
             System.Windows.Forms.Label bookingid;
             System.Windows.Forms.Label contactLabel;
             System.Windows.Forms.Label addressLabel;
-            System.Windows.Forms.Label label1;
             System.Windows.Forms.Label label3;
             System.Windows.Forms.Label label4;
             this.dataGridBilling = new System.Windows.Forms.DataGridView();
@@ -39,7 +38,6 @@
             this.Update = new System.Windows.Forms.Button();
             this.btnDeleteTool = new System.Windows.Forms.Button();
             this.btnAddBill = new System.Windows.Forms.Button();
-            this.paymentlabel = new System.Windows.Forms.Label();
             this.amttb = new System.Windows.Forms.TextBox();
             this.amtpaidtb = new System.Windows.Forms.TextBox();
             this.cbBookingID = new System.Windows.Forms.ComboBox();
@@ -48,7 +46,6 @@
             bookingid = new System.Windows.Forms.Label();
             contactLabel = new System.Windows.Forms.Label();
             addressLabel = new System.Windows.Forms.Label();
-            label1 = new System.Windows.Forms.Label();
             label3 = new System.Windows.Forms.Label();
             label4 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridBilling)).BeginInit();
@@ -57,7 +54,7 @@
             // bookingid
             // 
             bookingid.AutoSize = true;
-            bookingid.Location = new System.Drawing.Point(12, 51);
+            bookingid.Location = new System.Drawing.Point(12, 79);
             bookingid.Name = "bookingid";
             bookingid.Size = new System.Drawing.Size(102, 13);
             bookingid.TabIndex = 17;
@@ -66,7 +63,7 @@
             // contactLabel
             // 
             contactLabel.AutoSize = true;
-            contactLabel.Location = new System.Drawing.Point(12, 104);
+            contactLabel.Location = new System.Drawing.Point(12, 132);
             contactLabel.Name = "contactLabel";
             contactLabel.Size = new System.Drawing.Size(69, 13);
             contactLabel.TabIndex = 18;
@@ -75,29 +72,29 @@
             // addressLabel
             // 
             addressLabel.AutoSize = true;
-            addressLabel.Location = new System.Drawing.Point(12, 133);
+            addressLabel.Location = new System.Drawing.Point(12, 161);
             addressLabel.Name = "addressLabel";
             addressLabel.Size = new System.Drawing.Size(70, 13);
             addressLabel.TabIndex = 19;
             addressLabel.Text = "Amount Paid:";
             // 
-            // label1
-            // 
-            label1.AutoSize = true;
-            label1.Location = new System.Drawing.Point(12, 168);
-            label1.Name = "label1";
-            label1.Size = new System.Drawing.Size(84, 13);
-            label1.TabIndex = 24;
-            label1.Text = "Payment Status:";
-            // 
             // label3
             // 
             label3.AutoSize = true;
-            label3.Location = new System.Drawing.Point(12, 78);
+            label3.Location = new System.Drawing.Point(12, 106);
             label3.Name = "label3";
             label3.Size = new System.Drawing.Size(64, 13);
             label3.TabIndex = 38;
             label3.Text = "Client Name";
+            // 
+            // label4
+            // 
+            label4.AutoSize = true;
+            label4.Location = new System.Drawing.Point(668, 51);
+            label4.Name = "label4";
+            label4.Size = new System.Drawing.Size(44, 13);
+            label4.TabIndex = 40;
+            label4.Text = "Search:";
             // 
             // dataGridBilling
             // 
@@ -116,7 +113,7 @@
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(379, 9);
+            this.label2.Location = new System.Drawing.Point(388, 9);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(126, 25);
             this.label2.TabIndex = 26;
@@ -125,7 +122,7 @@
             // Update
             // 
             this.Update.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.Update.Location = new System.Drawing.Point(90, 194);
+            this.Update.Location = new System.Drawing.Point(90, 222);
             this.Update.Name = "Update";
             this.Update.Size = new System.Drawing.Size(86, 24);
             this.Update.TabIndex = 30;
@@ -136,7 +133,7 @@
             // btnDeleteTool
             // 
             this.btnDeleteTool.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnDeleteTool.Location = new System.Drawing.Point(355, 194);
+            this.btnDeleteTool.Location = new System.Drawing.Point(355, 222);
             this.btnDeleteTool.Name = "btnDeleteTool";
             this.btnDeleteTool.Size = new System.Drawing.Size(69, 24);
             this.btnDeleteTool.TabIndex = 29;
@@ -146,7 +143,7 @@
             // 
             // btnAddBill
             // 
-            this.btnAddBill.Location = new System.Drawing.Point(15, 194);
+            this.btnAddBill.Location = new System.Drawing.Point(15, 222);
             this.btnAddBill.Name = "btnAddBill";
             this.btnAddBill.Size = new System.Drawing.Size(69, 24);
             this.btnAddBill.TabIndex = 28;
@@ -154,17 +151,9 @@
             this.btnAddBill.UseVisualStyleBackColor = true;
             this.btnAddBill.Click += new System.EventHandler(this.btnAddBill_Click);
             // 
-            // paymentlabel
-            // 
-            this.paymentlabel.AutoSize = true;
-            this.paymentlabel.Location = new System.Drawing.Point(103, 168);
-            this.paymentlabel.Name = "paymentlabel";
-            this.paymentlabel.Size = new System.Drawing.Size(0, 13);
-            this.paymentlabel.TabIndex = 32;
-            // 
             // amttb
             // 
-            this.amttb.Location = new System.Drawing.Point(120, 101);
+            this.amttb.Location = new System.Drawing.Point(120, 129);
             this.amttb.Name = "amttb";
             this.amttb.ReadOnly = true;
             this.amttb.Size = new System.Drawing.Size(304, 20);
@@ -172,7 +161,7 @@
             // 
             // amtpaidtb
             // 
-            this.amtpaidtb.Location = new System.Drawing.Point(120, 130);
+            this.amtpaidtb.Location = new System.Drawing.Point(120, 158);
             this.amtpaidtb.Name = "amtpaidtb";
             this.amtpaidtb.Size = new System.Drawing.Size(304, 20);
             this.amtpaidtb.TabIndex = 35;
@@ -180,14 +169,14 @@
             // cbBookingID
             // 
             this.cbBookingID.FormattingEnabled = true;
-            this.cbBookingID.Location = new System.Drawing.Point(120, 48);
+            this.cbBookingID.Location = new System.Drawing.Point(120, 76);
             this.cbBookingID.Name = "cbBookingID";
             this.cbBookingID.Size = new System.Drawing.Size(304, 21);
             this.cbBookingID.TabIndex = 36;
             // 
             // ClientNametb
             // 
-            this.ClientNametb.Location = new System.Drawing.Point(120, 75);
+            this.ClientNametb.Location = new System.Drawing.Point(120, 103);
             this.ClientNametb.Name = "ClientNametb";
             this.ClientNametb.ReadOnly = true;
             this.ClientNametb.Size = new System.Drawing.Size(304, 20);
@@ -200,19 +189,11 @@
             this.Searchbox.Size = new System.Drawing.Size(205, 20);
             this.Searchbox.TabIndex = 39;
             // 
-            // label4
-            // 
-            label4.AutoSize = true;
-            label4.Location = new System.Drawing.Point(668, 51);
-            label4.Name = "label4";
-            label4.Size = new System.Drawing.Size(44, 13);
-            label4.TabIndex = 40;
-            label4.Text = "Search:";
-            // 
             // BillingPage
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.ClientSize = new System.Drawing.Size(951, 494);
             this.Controls.Add(label4);
             this.Controls.Add(this.Searchbox);
@@ -221,12 +202,10 @@
             this.Controls.Add(this.cbBookingID);
             this.Controls.Add(this.amtpaidtb);
             this.Controls.Add(this.amttb);
-            this.Controls.Add(this.paymentlabel);
             this.Controls.Add(this.Update);
             this.Controls.Add(this.btnDeleteTool);
             this.Controls.Add(this.btnAddBill);
             this.Controls.Add(this.label2);
-            this.Controls.Add(label1);
             this.Controls.Add(bookingid);
             this.Controls.Add(contactLabel);
             this.Controls.Add(addressLabel);
@@ -246,7 +225,6 @@
         private System.Windows.Forms.Button Update;
         private System.Windows.Forms.Button btnDeleteTool;
         private System.Windows.Forms.Button btnAddBill;
-        private System.Windows.Forms.Label paymentlabel;
         private System.Windows.Forms.TextBox amttb;
         private System.Windows.Forms.TextBox amtpaidtb;
         private System.Windows.Forms.ComboBox cbBookingID;

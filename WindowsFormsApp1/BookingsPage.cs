@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using WindowsFormsApp1.Messages;
 using WindowsFormsApp1.Models;
 using WindowsFormsApp1.Repositories;
 
@@ -79,7 +80,7 @@ namespace WindowsFormsApp1
         {
             if (clientcmb.SelectedValue == null || !int.TryParse(clientcmb.SelectedValue.ToString(), out int clientId))
             {
-                MessageBox.Show("Please select a valid Client.");
+                MessageBox.Show(ALEXISMessages.SelectValidClient);
                 return;
             }
 
@@ -91,7 +92,7 @@ namespace WindowsFormsApp1
 
             if (isDateBooked)
             {
-                MessageBox.Show("This client already has a booking on the selected date. Please choose a different date.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(ALEXISMessages.ClientBooked, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
@@ -135,22 +136,22 @@ namespace WindowsFormsApp1
                         }
                         else
                         {
-                            MessageBox.Show("Booking not found in the database.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            MessageBox.Show(ALEXISMessages.BookingNotFound, "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         }
                     }
                     else
                     {
-                        MessageBox.Show("Booking ID is not a valid number.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MessageBox.Show(ALEXISMessages.BookingNotValid, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
                 }
                 else
                 {
-                    MessageBox.Show("No valid Booking ID found in the selected row.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    MessageBox.Show(ALEXISMessages.BookingNoSelect, "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
             }
             else
             {
-                MessageBox.Show("No booking selected. Please select a booking to edit.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show(ALEXISMessages.BookingNotSelect, "Error", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
 
@@ -188,7 +189,7 @@ namespace WindowsFormsApp1
 
             if (this.BookingsTable.SelectedRows.Count == 0)
             {
-                MessageBox.Show("Please select a row to delete.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show(ALEXISMessages.Selectrowtodelete, "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
@@ -198,7 +199,7 @@ namespace WindowsFormsApp1
 
             int bookingID = int.Parse(val);
 
-            DialogResult dialogResult = MessageBox.Show("Are you sure you want to delete this Booking?", "Delete Booking", MessageBoxButtons.YesNo);
+            DialogResult dialogResult = MessageBox.Show(ALEXISMessages.Deleteconfirm, "Delete Booking", MessageBoxButtons.YesNo);
             Console.WriteLine($"Dialog result: {dialogResult}");
 
             if (dialogResult == DialogResult.No)
@@ -218,7 +219,7 @@ namespace WindowsFormsApp1
 
             if (clients == null || clients.Count == 0)
             {
-                MessageBox.Show("No clients found in the database.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show(ALEXISMessages.Noclientsfound, "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 

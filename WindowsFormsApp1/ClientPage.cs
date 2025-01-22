@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using WindowsFormsApp1.Messages;
 using WindowsFormsApp1.Repositories;
 
 namespace WindowsFormsApp1
@@ -112,7 +113,7 @@ namespace WindowsFormsApp1
 
             int clientId = int.Parse(val);
 
-            DialogResult dialogResult = MessageBox.Show("Are you sure you want to delete this Client?", "Delete Client", MessageBoxButtons.YesNo);
+            DialogResult dialogResult = MessageBox.Show(ALEXISMessages.ClientDelete, "Delete Client", MessageBoxButtons.YesNo);
 
             if (dialogResult == DialogResult.No)
             {
