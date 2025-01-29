@@ -61,8 +61,8 @@ namespace WindowsFormsApp1
             DataTable dataTable = new DataTable();
 
             dataTable.Columns.Add("BookingID");
-            dataTable.Columns.Add("ClientName");  // Add ClientName column
-            dataTable.Columns.Add("BookingReference");  // Add BookingReference column
+            dataTable.Columns.Add("BookingReference");// Add ClientName column
+            dataTable.Columns.Add("ClientName");// Add BookingReference column
             dataTable.Columns.Add("BookingDate");
             dataTable.Columns.Add("TotalAmount");
 
@@ -91,6 +91,10 @@ namespace WindowsFormsApp1
             if (this.MainmenuDGT.Columns["BookingID"] != null)
             {
                 this.MainmenuDGT.Columns["BookingID"].Visible = false;
+            }
+            if (this.MainmenuDGT.Columns["TotalAmount"] != null)
+            {
+                this.MainmenuDGT.Columns["TotalAmount"].Visible = false;
             }
 
         }

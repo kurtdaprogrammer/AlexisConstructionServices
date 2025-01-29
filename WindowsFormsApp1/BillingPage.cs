@@ -166,39 +166,44 @@ namespace WindowsFormsApp1
             // Ensure there are rows in the DataGridView
             if (dataGridBilling.Rows.Count == 0)
             {
-                MessageBox.Show("No rows available to update.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("No billing records available to update.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
-            // Check if any row is selected
+            // Check if a row is selected
             if (dataGridBilling.SelectedRows.Count == 0)
             {
-                MessageBox.Show("Please select a row to update.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Please select a billing record to update.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
             var selectedRow = dataGridBilling.SelectedRows[0];
 
+            // Ensure the selected row is valid
+            if (selectedRow.Cells["BillingID"].Value == null || selectedRow.Cells["BookingID"].Value == null)
+            {
+                MessageBox.Show("Invalid selection. Please select a valid billing record.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
             try
             {
                 int billingID = Convert.ToInt32(selectedRow.Cells["BillingID"].Value);
                 int bookingID = Convert.ToInt32(selectedRow.Cells["BookingID"].Value);
-                string billingReference = selectedRow.Cells["BillingReference"].Value.ToString();
+                string billingReference = selectedRow.Cells["BillingReference"].Value?.ToString() ?? "N/A";
                 decimal amountDue = Convert.ToDecimal(selectedRow.Cells["AmountDue"].Value);
                 decimal amountPaid = Convert.ToDecimal(selectedRow.Cells["AmountPaid"].Value);
-                string paymentStatus = selectedRow.Cells["PaymentStatus"].Value.ToString();
+                string paymentStatus = selectedRow.Cells["PaymentStatus"].Value?.ToString() ?? "Unknown";
 
                 // Fetch client name using the BookingID
                 var booking = bookingsRepo.GetBooking(bookingID);
-                string clientName = booking?.ClientName ?? "Unknown";  // Fallback if client name is not found
+                string clientName = booking?.ClientName ?? "Unknown"; // Fallback if client name is not found
 
-                // Create an instance of the update form with the correct parameters
+                // Open the update form and pass the necessary data
                 var updateForm = new BillingUpdateForm(billingID, bookingID, billingReference, amountDue, amountPaid, paymentStatus, clientName);
-
-                // Show the update form
                 updateForm.ShowDialog();
 
-                // After closing the update form, reload the data grid if necessary
+                // Reload data after update
                 LoadBillingData();
             }
             catch (Exception ex)

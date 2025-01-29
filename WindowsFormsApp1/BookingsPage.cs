@@ -28,8 +28,8 @@ namespace WindowsFormsApp1
             DataTable dataTable = new DataTable();
 
             dataTable.Columns.Add("BookingID");
-            dataTable.Columns.Add("ClientName");  // Add ClientName column
-            dataTable.Columns.Add("BookingReference");  // Add BookingReference column
+            dataTable.Columns.Add("BookingReference");
+            dataTable.Columns.Add("ClientName");            
             dataTable.Columns.Add("BookingDate");
             dataTable.Columns.Add("TotalAmount");
 
@@ -40,7 +40,7 @@ namespace WindowsFormsApp1
             {
                 var row = dataTable.NewRow();
 
-                row["BookingReference"] = booking.BookingReference ?? "N/A";  // Ensure null is handled
+                row["BookingReference"] = booking.BookingReference ?? "N/A";  
                 row["BookingID"] = booking.BookingID;
                 row["ClientName"] = booking.ClientName;
                 row["BookingDate"] = booking.BookingDate;
@@ -51,10 +51,10 @@ namespace WindowsFormsApp1
 
             this.BookingsTable.DataSource = dataTable;
 
-            // Clear the selection after refreshing the data
+
             BookingsTable.ClearSelection();
 
-            // Optionally, hide the BookingID column
+
             if (this.BookingsTable.Columns["BookingID"] != null)
             {
                 this.BookingsTable.Columns["BookingID"].Visible = false;
@@ -71,7 +71,6 @@ namespace WindowsFormsApp1
 
         private void BookingsPage_Load(object sender, EventArgs e)
         {
-            // TODO: This line of code loads data into the 'alexisconstructionDBDataSet.Bookings' table. You can move, or remove it, as needed.
             this.bookingsTableAdapter.Fill(this.alexisconstructionDBDataSet.Bookings);
             LoadClientsDropdown();
         }
