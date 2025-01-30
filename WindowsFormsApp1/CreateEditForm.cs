@@ -33,7 +33,7 @@ namespace WindowsFormsApp1
             this.lbTitle.Text = "Edit Client";
 
           
-            this.lbclient.Text = client.ClientID.ToString();
+    
             this.Nametb.Text = client.Name;
             this.Addresstb.Text = client.Address;
             this.Contacttb.Text = client.Contact;

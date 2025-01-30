@@ -19,8 +19,7 @@ namespace WindowsFormsApp1
         public BillingPage()
         {
             InitializeComponent();
-            LoadBookingsDropdown();
-            cbBookingID.SelectedIndexChanged += cbBookingID_SelectedIndexChanged;
+   
             LoadBillingData();
             ClearFields();
             Searchbox.TextChanged += Searchbox_TextChanged;
@@ -68,52 +67,19 @@ namespace WindowsFormsApp1
 
 
         }
-        // Load Booking IDs into ComboBox
-        private void LoadBookingsDropdown()
-        {
-            var bookings = bookingsRepo.GetBookings(); // Get all bookings from the repository
+     
 
-            // Bind the ComboBox to the list of bookings
-            cbBookingID.DataSource = bookings;
-            cbBookingID.DisplayMember = "BookingReference";  // Display BookingReference in the dropdown
-            cbBookingID.ValueMember = "BookingID";    // Use BookingID as the ValueMember to bind
-
-            // Clear ComboBox selection by default
-            cbBookingID.SelectedIndex = -1;    // Use BookingID as the ValueMember to bind
-        }
-        // Event Handler to Display Amount Due for Selected Booking
-        private void cbBookingID_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (cbBookingID.SelectedValue == null)
-                return;
-
-            int selectedBookingID = Convert.ToInt32(cbBookingID.SelectedValue);
-
-            // Fetch the corresponding booking details using the BookingID
-            var booking = bookingsRepo.GetBooking(selectedBookingID);
-
-            // If booking is found, set the Client Name and Amount Due
-            if (booking != null)
-            {
-                ClientNametb.Text = booking.ClientName; // Display the Client Name
-                amttb.Text = booking.TotalAmount.ToString("0.00"); // Display the Total Amount as Amount Due
-            }
-            else
-            {
-                ClientNametb.Text = ""; // Default to empty if booking is not found
-                amttb.Text = "0.00"; // Default to "0.00" if Amount Due is not found
-            }
-        }
+     
         
 
         private void btnAddBill_Click(object sender, EventArgs e)
         {
             try
             {
-                // Check if BookingID is selected
-                if (cbBookingID.SelectedIndex == -1)
+                // Check if BookingID is selected from the SelectedRef TextBox
+                if (string.IsNullOrEmpty(SelectedRef.Text))
                 {
-                    MessageBox.Show("Please select a booking from the dropdown.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("Please select a booking reference.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
 
@@ -124,15 +90,13 @@ namespace WindowsFormsApp1
                 decimal amountDue = decimal.Parse(amttb.Text);
                 string paymentStatus = amountPaid >= amountDue ? "Paid" : "Pending";
 
-           
-
                 // Generate a unique BillingReference
                 string billingReference = "BILL-" + DateTime.Now.ToString("yyyyMMddHHmmss");
 
                 // Create a new Billing object
                 Billing billing = new Billing
                 {
-                    BookingID = Convert.ToInt32(cbBookingID.SelectedValue),
+                    BookingID = Convert.ToInt32(SelectedRef.Tag), // Use the BookingID stored in the Tag property of SelectedRef
                     AmountDue = amountDue,
                     AmountPaid = amountPaid,
                     PaymentStatus = paymentStatus,
@@ -237,7 +201,12 @@ namespace WindowsFormsApp1
                 var booking = bookingsRepo.GetBooking(bookingID);
                 string clientName = booking?.ClientName ?? "Unknown";  // Fallback if client name is not found
 
-                // Open the update form and pass the necessary data
+                // Populate textboxes on BillingPage form
+                ClientNametb.Text = clientName;
+                amttb.Text = amountDue.ToString();
+                amtpaidtb.Text = amountPaid.ToString();
+
+                // Open the update form and pass the necessary data (optional)
                 BillingUpdateForm updateForm = new BillingUpdateForm(billingID, bookingID, billingReference, amountDue, amountPaid, paymentStatus, clientName);
                 updateForm.ShowDialog();  // Show the form as a modal dialog
             }
@@ -245,7 +214,7 @@ namespace WindowsFormsApp1
      
         private void ClearFields()
         {
-            cbBookingID.SelectedIndex = -1; // Clear ComboBox selection
+            
             amttb.Clear(); // Clear Amount Due textbox
             amtpaidtb.Clear(); // Clear Amount Paid textbox
            
@@ -330,6 +299,25 @@ namespace WindowsFormsApp1
 
             // Clear the selection after binding the data
             dataGridBilling.ClearSelection();
+        }
+
+        private void SelectBooking_Click(object sender, EventArgs e)
+        {
+            using (SelectBookingRefForm selectBookingRefForm = new SelectBookingRefForm())
+            {
+                // Show the dialog and check if the user clicked OK
+                if (selectBookingRefForm.ShowDialog() == DialogResult.OK)
+                {
+                    // Populate the fields with the selected booking information
+                    SelectedRef.Text = selectBookingRefForm.SelectedBookingReference; // BookingReference
+                    SelectedRef.Tag = selectBookingRefForm.SelectedBookingID;         // Store BookingID in the Tag property
+
+                    // Optionally, populate other fields based on the selected booking
+                    // Example: Assuming you have these fields to update in BillingPage
+                    ClientNametb.Text = selectBookingRefForm.ClientName;   // Populate client name
+                    amttb.Text = selectBookingRefForm.TotalAmount.ToString(); // Populate amount due
+                }
+            }
         }
     }
 }

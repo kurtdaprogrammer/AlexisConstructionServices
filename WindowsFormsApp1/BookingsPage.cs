@@ -72,12 +72,12 @@ namespace WindowsFormsApp1
         private void BookingsPage_Load(object sender, EventArgs e)
         {
             this.bookingsTableAdapter.Fill(this.alexisconstructionDBDataSet.Bookings);
-            LoadClientsDropdown();
+   
         }
 
         private void btnAddBooking_Click(object sender, EventArgs e)
         {
-            if (clientcmb.SelectedValue == null || !int.TryParse(clientcmb.SelectedValue.ToString(), out int clientId))
+            if (Selectedclient.Tag == null || !int.TryParse(Selectedclient.Tag.ToString(), out int clientId))
             {
                 MessageBox.Show(ALEXISMessages.SelectValidClient);
                 return;
@@ -95,7 +95,7 @@ namespace WindowsFormsApp1
                 return;
             }
 
-            // If date is not booked, proceed to create the booking
+            // Create the booking
             Booking booking = new Booking
             {
                 ClientID = clientId,
@@ -211,21 +211,7 @@ namespace WindowsFormsApp1
 
             ReadBookings();
         }
-        private void LoadClientsDropdown()
-        {
-            var repo = new Clientrepository();
-            var clients = repo.GetClients(); // Fetch all clients from the repository
-
-            if (clients == null || clients.Count == 0)
-            {
-                MessageBox.Show(ALEXISMessages.Noclientsfound, "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
-
-            clientcmb.DataSource = clients;
-            clientcmb.DisplayMember = "Name"; // Display the client name
-            clientcmb.ValueMember = "ClientID";    // Store the ClientID in the value of ComboBox
-        }
+      
         private void TxtSearch_TextChanged(object sender, EventArgs e)
         {
             string searchText = txtSearch.Text.Trim(); // Get the search text
@@ -269,6 +255,19 @@ namespace WindowsFormsApp1
             }
 
             BookingsTable.ClearSelection(); // Clear selection after updating
+        }
+
+        private void SelectClient_Click(object sender, EventArgs e)
+        {
+            using (SelectClientForm selectClientForm = new SelectClientForm())
+            {
+                if (selectClientForm.ShowDialog() == DialogResult.OK)
+                {
+                    // Set the selected client name in the textbox
+                    Selectedclient.Text = selectClientForm.SelectedClientName;
+                    Selectedclient.Tag = selectClientForm.SelectedClientID; // Store ClientID
+                }
+            }
         }
     }
 }

@@ -115,6 +115,18 @@
     <Compile Include="Repositories\Clientrepository.cs" />
     <Compile Include="Repositories\InventoryRepository.cs" />
     <Compile Include="Repositories\Servicesrepository.cs" />
+    <Compile Include="SelectBookingRefForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SelectBookingRefForm.Designer.cs">
+      <DependentUpon>SelectBookingRefForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SelectClientForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SelectClientForm.Designer.cs">
+      <DependentUpon>SelectClientForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="ServicesPage.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -154,6 +166,12 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="SelectBookingRefForm.resx">
+      <DependentUpon>SelectBookingRefForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SelectClientForm.resx">
+      <DependentUpon>SelectClientForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="ServicesPage.resx">
       <DependentUpon>ServicesPage.cs</DependentUpon>
     </EmbeddedResource>

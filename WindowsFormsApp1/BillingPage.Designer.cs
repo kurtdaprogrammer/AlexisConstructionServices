@@ -40,9 +40,10 @@
             this.btnAddBill = new System.Windows.Forms.Button();
             this.amttb = new System.Windows.Forms.TextBox();
             this.amtpaidtb = new System.Windows.Forms.TextBox();
-            this.cbBookingID = new System.Windows.Forms.ComboBox();
             this.ClientNametb = new System.Windows.Forms.TextBox();
             this.Searchbox = new System.Windows.Forms.TextBox();
+            this.SelectedRef = new System.Windows.Forms.TextBox();
+            this.SelectBooking = new System.Windows.Forms.Button();
             bookingid = new System.Windows.Forms.Label();
             contactLabel = new System.Windows.Forms.Label();
             addressLabel = new System.Windows.Forms.Label();
@@ -63,7 +64,7 @@
             // contactLabel
             // 
             contactLabel.AutoSize = true;
-            contactLabel.Location = new System.Drawing.Point(12, 132);
+            contactLabel.Location = new System.Drawing.Point(12, 163);
             contactLabel.Name = "contactLabel";
             contactLabel.Size = new System.Drawing.Size(69, 13);
             contactLabel.TabIndex = 18;
@@ -72,7 +73,7 @@
             // addressLabel
             // 
             addressLabel.AutoSize = true;
-            addressLabel.Location = new System.Drawing.Point(12, 161);
+            addressLabel.Location = new System.Drawing.Point(12, 192);
             addressLabel.Name = "addressLabel";
             addressLabel.Size = new System.Drawing.Size(70, 13);
             addressLabel.TabIndex = 19;
@@ -81,7 +82,7 @@
             // label3
             // 
             label3.AutoSize = true;
-            label3.Location = new System.Drawing.Point(12, 106);
+            label3.Location = new System.Drawing.Point(12, 137);
             label3.Name = "label3";
             label3.Size = new System.Drawing.Size(64, 13);
             label3.TabIndex = 38;
@@ -122,7 +123,7 @@
             // Update
             // 
             this.Update.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.Update.Location = new System.Drawing.Point(90, 222);
+            this.Update.Location = new System.Drawing.Point(90, 253);
             this.Update.Name = "Update";
             this.Update.Size = new System.Drawing.Size(86, 24);
             this.Update.TabIndex = 30;
@@ -133,7 +134,7 @@
             // btnDeleteTool
             // 
             this.btnDeleteTool.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnDeleteTool.Location = new System.Drawing.Point(355, 222);
+            this.btnDeleteTool.Location = new System.Drawing.Point(355, 253);
             this.btnDeleteTool.Name = "btnDeleteTool";
             this.btnDeleteTool.Size = new System.Drawing.Size(69, 24);
             this.btnDeleteTool.TabIndex = 29;
@@ -143,7 +144,7 @@
             // 
             // btnAddBill
             // 
-            this.btnAddBill.Location = new System.Drawing.Point(15, 222);
+            this.btnAddBill.Location = new System.Drawing.Point(15, 253);
             this.btnAddBill.Name = "btnAddBill";
             this.btnAddBill.Size = new System.Drawing.Size(69, 24);
             this.btnAddBill.TabIndex = 28;
@@ -153,7 +154,7 @@
             // 
             // amttb
             // 
-            this.amttb.Location = new System.Drawing.Point(120, 129);
+            this.amttb.Location = new System.Drawing.Point(120, 160);
             this.amttb.Name = "amttb";
             this.amttb.ReadOnly = true;
             this.amttb.Size = new System.Drawing.Size(304, 20);
@@ -161,22 +162,14 @@
             // 
             // amtpaidtb
             // 
-            this.amtpaidtb.Location = new System.Drawing.Point(120, 158);
+            this.amtpaidtb.Location = new System.Drawing.Point(120, 189);
             this.amtpaidtb.Name = "amtpaidtb";
             this.amtpaidtb.Size = new System.Drawing.Size(304, 20);
             this.amtpaidtb.TabIndex = 35;
             // 
-            // cbBookingID
-            // 
-            this.cbBookingID.FormattingEnabled = true;
-            this.cbBookingID.Location = new System.Drawing.Point(120, 76);
-            this.cbBookingID.Name = "cbBookingID";
-            this.cbBookingID.Size = new System.Drawing.Size(304, 21);
-            this.cbBookingID.TabIndex = 36;
-            // 
             // ClientNametb
             // 
-            this.ClientNametb.Location = new System.Drawing.Point(120, 103);
+            this.ClientNametb.Location = new System.Drawing.Point(120, 134);
             this.ClientNametb.Name = "ClientNametb";
             this.ClientNametb.ReadOnly = true;
             this.ClientNametb.Size = new System.Drawing.Size(304, 20);
@@ -189,17 +182,36 @@
             this.Searchbox.Size = new System.Drawing.Size(205, 20);
             this.Searchbox.TabIndex = 39;
             // 
+            // SelectedRef
+            // 
+            this.SelectedRef.Location = new System.Drawing.Point(120, 79);
+            this.SelectedRef.Name = "SelectedRef";
+            this.SelectedRef.ReadOnly = true;
+            this.SelectedRef.Size = new System.Drawing.Size(304, 20);
+            this.SelectedRef.TabIndex = 42;
+            // 
+            // SelectBooking
+            // 
+            this.SelectBooking.Location = new System.Drawing.Point(325, 105);
+            this.SelectBooking.Name = "SelectBooking";
+            this.SelectBooking.Size = new System.Drawing.Size(99, 23);
+            this.SelectBooking.TabIndex = 41;
+            this.SelectBooking.Text = "Select Ref No.";
+            this.SelectBooking.UseVisualStyleBackColor = true;
+            this.SelectBooking.Click += new System.EventHandler(this.SelectBooking_Click);
+            // 
             // BillingPage
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.ClientSize = new System.Drawing.Size(951, 494);
+            this.Controls.Add(this.SelectedRef);
+            this.Controls.Add(this.SelectBooking);
             this.Controls.Add(label4);
             this.Controls.Add(this.Searchbox);
             this.Controls.Add(label3);
             this.Controls.Add(this.ClientNametb);
-            this.Controls.Add(this.cbBookingID);
             this.Controls.Add(this.amtpaidtb);
             this.Controls.Add(this.amttb);
             this.Controls.Add(this.Update);
@@ -227,8 +239,9 @@
         private System.Windows.Forms.Button btnAddBill;
         private System.Windows.Forms.TextBox amttb;
         private System.Windows.Forms.TextBox amtpaidtb;
-        private System.Windows.Forms.ComboBox cbBookingID;
         private System.Windows.Forms.TextBox ClientNametb;
         private System.Windows.Forms.TextBox Searchbox;
+        private System.Windows.Forms.TextBox SelectedRef;
+        private System.Windows.Forms.Button SelectBooking;
     }
 }
